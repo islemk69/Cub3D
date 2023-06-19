@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 11:50:38 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/19 13:39:03 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:31:13 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,7 @@ int		ft_strchr_gnl(const char *s, int c);
 char	*ft_strjoin_gnl(char *s1, char *s2);
 
 void	ft_free_tab(char **tab);
+
+int		ft_strlen_dtab(char **tab);
 
 #endif

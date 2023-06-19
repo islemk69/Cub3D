@@ -6,7 +6,7 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/13 14:15:27 by ikaismou          #+#    #+#              #
-#    Updated: 2023/06/19 13:37:08 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/06/19 16:30:55 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c\
 		ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
 		ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
 		ft_tolower.c ft_toupper.c ft_printf.c ft_printf_utils.c get_next_line.c \
-		get_next_line_utils.c ft_free_tab.c
+		get_next_line_utils.c ft_free_tab.c ft_strlen_dtab.c
 
 BONUSSRCS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c\
