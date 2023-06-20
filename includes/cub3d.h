@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/19 16:56:34 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:28:21 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,30 @@
 # include <fcntl.h>
 # include <unistd.h>
 
+typedef struct	s_file
+{
+	char	**map;
+	char	*path_to_n;
+	char	*path_to_s;
+	char	*path_to_w;
+	char	*path_to_e;
+	int		color_floor;
+	int		color_sky;
+}						t_file;
 
-int	parsing(char *file);
+typedef struct s_data
+{
+	t_file	*head_file;
+}				t_data;
+
+int	parsing(char *file, t_data *data);
+int	fill_param(char *line, t_file *file);
+
+//////////////////LIST////////////////////////
+// t_map	*lstlast(t_map *lst);
+// t_map	*create_cell(char *line);
+// void	ft_lstad_back(t_map **lst, t_map *new);
+// int		lstsize(t_map *lst);
+// void	lstclear(t_map **lst);
 
 #endif

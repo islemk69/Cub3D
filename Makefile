@@ -6,13 +6,13 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/06/19 16:55:28 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/06/20 14:13:31 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-SRCS = src/main.c src/parsing/parsing.c
+SRCS = src/main.c src/parsing/parsing.c src/parsing/param.c src/utils/list.c
 		
 OBJS = $(SRCS:.c=.o)
 
