@@ -23,15 +23,22 @@
 # include <fcntl.h>
 # include <unistd.h>
 
+typedef struct s_tmpmap
+{
+	char *line;
+	struct s_tmpmap *next;
+}				t_tmpmap;
+
 typedef struct	s_file
 {
+	t_tmpmap *head_map;
 	char	**map;
 	char	*path_to_n;
 	char	*path_to_s;
 	char	*path_to_w;
 	char	*path_to_e;
-	int		color_floor;
-	int		color_sky;
+	int		[3]color_floor;
+	int		[3]color_sky;
 }						t_file;
 
 typedef struct s_data
@@ -40,13 +47,15 @@ typedef struct s_data
 }				t_data;
 
 int	parsing(char *file, t_data *data);
-int	fill_param(char *line, t_file *file);
+int	fill_param(char *line, t_file *file, int *flg);
+int	complete_param(t_file *file);
+void    fill_struct_map(t_tmpmap **map, char *line);
 
 //////////////////LIST////////////////////////
-// t_map	*lstlast(t_map *lst);
-// t_map	*create_cell(char *line);
-// void	ft_lstad_back(t_map **lst, t_map *new);
-// int		lstsize(t_map *lst);
-// void	lstclear(t_map **lst);
+t_tmpmap	*lstlast(t_tmpmap *lst);
+t_tmpmap	*create_cell(char *line);
+void	ft_lstad_back(t_tmpmap **lst, t_tmpmap *new);
+int		lstsize(t_tmpmap *lst);
+void	lstclear(t_tmpmap **lst);
 
 #endif

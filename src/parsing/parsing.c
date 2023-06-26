@@ -18,7 +18,7 @@ static int	check_extention(char *path_file, char *extention);
 
 int	parsing(char *file, t_data *data)
 {	
-	if (check_extention(file, "reb.") || open_file(file, data))
+	if (check_extention(file, "ebuc.") || open_file(file, data))
 		return (1);
 	return (0);
 }
@@ -87,17 +87,58 @@ int complete_param(t_file *file)
 	return (0);
 }
 
+void	init_struct_file(t_file *file)
+{
+	file->map = NULL;
+	file->path_to_n = NULL;
+	file->path_to_s = NULL;
+	file->path_to_e = NULL;
+	file->path_to_w = NULL;
+	file->color_floor = 0;
+	file->color_sky = 0;
+	file->head_map = NULL;
+}
+
+void	fill_map_tab(t_tmpmap **list, t_file *file)
+{
+	printf("\n////////////////////////////////////////////////\n");
+	printf("DEBUT DE LA MAP\n");
+	printf("////////////////////////////////////////////////\n");
+	t_tmpmap *head;
+	t_tmpmap *salam;
+	head = *list;
+	salam = *list;
+	int i = 0;
+	while (head)
+	{
+		head = head->next;
+		i++;
+	}
+	file->map = malloc(sizeof(char **) * (i + 1));
+	i = 0;
+	while (salam)
+	{
+		file->map[i] = ft_strdup(salam->line);
+		i++;
+		salam = salam->next;
+	}
+	file->map[i] = 0;
+	i = 0;
+	while (file->map[i])
+	{
+		printf("%s", file->map[i]);
+		i++;
+	}
+	printf("\n");
+}
+
 static int	check_file(int fd, t_data *data)
 {
 	char	*line;
+	int		flg;
 	
-	data->head_file->map = NULL;
-	data->head_file->path_to_n = NULL;
-	data->head_file->path_to_s = NULL;
-	data->head_file->path_to_e = NULL;
-	data->head_file->path_to_w = NULL;
-	data->head_file->color_floor = 0;
-	data->head_file->color_sky = 0;
+	flg = 0;
+	init_struct_file(data->head_file);
 	while (42)
 	{
 		line = get_next_line(fd);
@@ -108,11 +149,15 @@ static int	check_file(int fd, t_data *data)
 			free(line);
 			break;
 		}
-		if (fill_param(line, data->head_file))
-			return (ft_putstr_fd("Error Parameters\n", 2), 1);
+		if (flg)
+		{
+			fill_struct_map(&data->head_file->head_map, line);
+		}
+		else if (fill_param(line, data->head_file, &flg))
+				return (ft_putstr_fd("Error Parameters\n", 2), 1);
 		free(line);
 	}
-	
+	fill_map_tab(&data->head_file->head_map, data->head_file);
 	return (0);
 }
 

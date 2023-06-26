@@ -23,7 +23,7 @@ int	is_empty(char *line)
 
 //rempli les parametres et check si cellesci sont bien formatte
 
-int fill_param(char *line, t_file *file)
+int fill_param(char *line, t_file *file, int *flg)
 {
 	char	**line_split;
 	
@@ -45,5 +45,13 @@ int fill_param(char *line, t_file *file)
 	}
 	else
 		return (1);
+	if (!complete_param(file))
+	{
+		printf("PARAMETRES : \n%s\n%s\n%s\n%s\n", file->path_to_e, file->path_to_s, file->path_to_n, file->path_to_w);
+		printf("////////////////////////////////////////////////\n");
+		printf("CHECK PARAM OK\n");
+		printf("////////////////////////////////////////////////\n");
+		*flg = 1;
+	}
 	return (0);
 }

@@ -12,3 +12,9 @@
 
 #include "../../includes/cub3d.h"
 
+void    fill_struct_map(t_tmpmap **map, char *line)
+{
+    t_tmpmap *cell;
+    cell = create_cell(line);  
+    ft_lstad_back(map, cell);
+}
