@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/20 18:16:58 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:36:20 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	open_file(char *file, t_data *data)
 
 int complete_param(t_file *file)
 {
-	if (!file->path_to_e || !file->path_to_n || !file->path_to_s || !file->path_to_w)
+	if (!file->path_to_e || !file->path_to_n || !file->path_to_s || !file->path_to_w || !file->color_f_tmp || !file->color_s_tmp)
 		return (1);
 	return (0);
 }
@@ -94,8 +94,8 @@ void	init_struct_file(t_file *file)
 	file->path_to_s = NULL;
 	file->path_to_e = NULL;
 	file->path_to_w = NULL;
-	file->color_floor = 0;
-	file->color_sky = 0;
+	file->color_f_tmp = NULL;
+	file->color_s_tmp = NULL;
 	file->head_map = NULL;
 }
 
@@ -151,6 +151,11 @@ static int	check_file(int fd, t_data *data)
 		}
 		if (flg)
 		{
+			if (line[0] == '\n')
+			{
+				free(line);
+				continue ;
+			}
 			fill_struct_map(&data->head_file->head_map, line);
 		}
 		else if (fill_param(line, data->head_file, &flg))
