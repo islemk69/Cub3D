@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:50:18 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/20 14:01:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/06/29 13:00:47 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_lstad_back(t_tmpmap **lst, t_tmpmap *new)
 
 int	lstsize(t_tmpmap *lst)
 {
-	int		i;
+	int			i;
 	t_tmpmap	*cpy;
 
 	cpy = lst;
@@ -74,6 +74,7 @@ void	lstclear(t_tmpmap **lst)
 		while (*lst)
 		{
 			tmp = (*lst)->next;
+			free((*lst)->line);
 			free(*lst);
 			*lst = tmp;
 		}
