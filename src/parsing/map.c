@@ -62,6 +62,17 @@ int	check_char(char *str, int *p)
 	return (0);
 }
 
+void replace_space(char *line)
+{
+	while (*line)
+	{
+		if (*line == ' ')
+			*line = 'x';
+		line++;
+	}
+}
+
+
 int parse_map(t_file *file)
 {
 	int i = 0;
@@ -70,9 +81,23 @@ int parse_map(t_file *file)
 	{
 		if (check_char(file->map[i], &p))
 			return(1);
+		if (ft_strchr(file->map[i], ' '))
+			replace_space(file->map[i]);
 		i++;
 	}
 	if (p != 1)
 		return (1);
+	i = 0;
+	int j;
+	while (file->map[i])
+	{
+		j = 0;
+		while (file->map[i][j])
+		{
+			if (file->map[i][j] == 'x')
+				return (1);
+		}
+		i++;
+	}
 	return (0);
 }
