@@ -54,7 +54,6 @@ int	check_char(char *str, int *p)
 			return (printf("le char %c\n", str[i]), 1);
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
 		{
-			printf("je susi passe\n");
 			*p += 1;
 		}
 		i++;
@@ -72,6 +71,30 @@ void replace_space(char *line)
 	}
 }
 
+int only_wall(char *str)
+{
+	while (*str && *str != '\n')
+	{
+		if (*str != '1')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+int get_border(char **str, int index)
+{
+	if (!index)
+	{
+		while (only_wall(str[index]))
+			index++;
+		return (index);
+	}
+	while (only_wall(str[index]))
+		index--;
+	return (index);
+}
+
 
 int parse_map(t_file *file)
 {
@@ -87,17 +110,29 @@ int parse_map(t_file *file)
 	}
 	if (p != 1)
 		return (1);
+	if (only_wall(file->map[0]) || only_wall(file->map[ft_strlen_dtab(file->map) - 1]))
+		return (1);
 	i = 0;
-	int j;
 	while (file->map[i])
 	{
-		j = 0;
+		int j = 0;
 		while (file->map[i][j])
 		{
-			if (file->map[i][j] == 'x')
+			if (file->map[i][j] == '0' && (!file->map[i - 1][j] || file->map[i - 1][j] == '\n'
+				|| !file->map[i + 1][j] || file->map[i + 1][j] == '\n'
+				|| !file->map[i][j + 1] || file->map[i][j + 1] == '\n'
+				|| !file->map[i][j - 1] || file->map[i][j - 1] == '\n'))
 				return (1);
+			if (file->map[i][j] == 'x' && (file->map[i - 1][j] == '0'
+				 || file->map[i + 1][j] == '0'
+				 || file->map[i][j + 1] == '0'
+				 || file->map[i][j - 1] == '0'))
+				return (1);
+			j++;
 		}
 		i++;
 	}
+	// if (i == 0 || ft_strlen(file->map[i - 1]) < ft_strlen(file->map[i]))
+	// 	return (1);
 	return (0);
 }
