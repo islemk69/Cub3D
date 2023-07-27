@@ -76,7 +76,10 @@ int only_wall(char *str)
 	while (*str && *str != '\n')
 	{
 		if (*str != '1')
-			return (1);
+		{
+			if (*str != 'x')
+				return (printf("biip %c\n", *str), 1);
+		}
 		str++;
 	}
 	return (0);
@@ -123,11 +126,18 @@ int parse_map(t_file *file)
 				|| !file->map[i][j + 1] || file->map[i][j + 1] == '\n'
 				|| !file->map[i][j - 1] || file->map[i][j - 1] == '\n'))
 				return (1);
-			if (file->map[i][j] == 'x' && (file->map[i - 1][j] == '0'
-				 || file->map[i + 1][j] == '0'
-				 || file->map[i][j + 1] == '0'
-				 || file->map[i][j - 1] == '0'))
-				return (1);
+			else if (file->map[i][j] == 'x')
+			{
+				// Vérifier les limites de la matrice pour 'x'
+				if (i > 0 && file->map[i - 1][j] == '0')
+					return 1;
+				if (file->map[i + 1] && file->map[i + 1][j] == '0')
+					return 1;
+				if (j > 0 && file->map[i][j - 1] == '0')
+					return 1;
+				if (file->map[i][j + 1] && file->map[i][j + 1] == '0')
+					return 1;
+			}
 			j++;
 		}
 		i++;
