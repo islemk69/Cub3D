@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:44:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/29 14:15:55 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:00:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int fill_param(char *line, t_file *file, int *flg)
 			file->path_to_n = ft_strdup(line_split[1]);
 		else if (!ft_strncmp(line_split[0], "C\0", 2) && !file->color_s_tmp)
 		{
-			if (get_colors(line_split[1], 1, file))
+			if (line_split[1] && get_colors(line_split[1], 1, file))
 				return (ft_free_tab(line_split), 1);
 		}
 		else if (!ft_strncmp(line_split[0], "F\0", 2) && !file->color_f_tmp)
 		{
-			if (get_colors(line_split[1], 0, file))
+			if (line_split[1] && get_colors(line_split[1], 0, file))
 				return (ft_free_tab(line_split), 1);
 		}
 		else
@@ -103,6 +103,7 @@ static int	check_color(char **color_split, char *color)
 	int	nb;
 
 	i = 0;
+	nb = 0;
 	if (color[0] == ',' || color[ft_strlen(color) - 2] == ',')
 		return (1);
 	while (color[i])

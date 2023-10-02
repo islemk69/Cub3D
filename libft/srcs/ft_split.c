@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:43:07 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/03/30 22:27:35 by charlie          ###   ########.fr       */
+/*   Updated: 2023/10/01 19:09:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*ft_fill_tab(char const *s, char c, char *tab)
 	j = 0;
 	while (s[i] && s[i] != c)
 		i++;
-	tab = malloc(sizeof(char) * (i + 2));
+	tab = ft_calloc((i + 2), sizeof(char));
 	if (!tab)
 		return (NULL);
 	while (j < i)
@@ -100,3 +100,4 @@ char	**ft_split(char const *s, char c)
 		tab[j] = NULL;
 	return (tab);
 }
+

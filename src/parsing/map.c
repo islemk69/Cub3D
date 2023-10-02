@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/29 15:15:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:34:20 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	fill_map_tab(t_tmpmap **list, t_file *file)
 		head = head->next;
 	}
 	file->map[i] = 0;
-	lstclear(list);
+
 }
 
 int	check_char(char *str, int *p)

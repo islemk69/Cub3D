@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/29 14:58:35 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:36:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	init_struct_file(t_file *file)
 	file->path_to_w = NULL;
 	file->color_f_tmp = NULL;
 	file->color_s_tmp = NULL;
-	file->head_map = NULL;
 	file->color_floor[0] = 0;
 	file->color_floor[1] = 0;
 	file->color_floor[2] = 0;
@@ -98,9 +97,10 @@ static int	check_file(int fd, t_file *file)
 	int		flg;
 
 	flg = 0;
-	(void)flg;
 	line = NULL;
 	init_struct_file(file);
+	t_tmpmap *listmap;
+	listmap = NULL;
 	while (42)
 	{
 		if (line)
@@ -110,15 +110,16 @@ static int	check_file(int fd, t_file *file)
 		{
 			if (complete_param(file))
 				return (ft_putstr_fd("Error Parameters\n", 2), 1);
-			return (free(line), fill_map_tab(&file->head_map, file), 0);
+			fill_map_tab(&listmap, file);
+			return (free(line), lstclear(&listmap), 0);
 		}
 		if (flg)
 		{
 			if (line[0] == '\n')
 				continue ;
-			fill_struct_map(&file->head_map, line);
+			fill_struct_map(&listmap, line);
 		}
 		else if (fill_param(line, file, &flg))
-			return (ft_putstr_fd("Error Parameters\n", 2), 1);
+			return (ft_putstr_fd("Error Parameters\n", 2), free(line),1);
 	}
 }

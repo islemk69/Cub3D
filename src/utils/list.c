@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:50:18 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/29 13:00:47 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/01 18:32:04 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ t_tmpmap	*lstlast(t_tmpmap *lst)
 t_tmpmap	*create_cell(char *line)
 {
 	t_tmpmap	*cell;
-
+	
 	cell = malloc(sizeof(t_tmpmap));
 	if (!cell)
 		return (cell);
 	cell->line = ft_strdup(line);
+	cell->next = NULL;
 	return (cell);
 }
 

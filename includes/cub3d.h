@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/06/29 14:51:54 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:39:55 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_tmpmap
 
 typedef struct	s_file
 {
-	t_tmpmap *head_map;
 	char	**map;
 	char	*path_to_n;
 	char	*path_to_s;
