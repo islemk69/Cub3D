@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/01 16:39:55 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:38:09 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,30 @@ typedef struct	s_file
 	int		color_sky[3];
 }						t_file;
 
+typedef struct	s_winmlx
+{
+	void	*mlx;
+	void	*mlx_win;
+	void	*grass;
+	void	*wall;
+	void	*perso;
+	int		img_width;
+	int		img_height;
+}						t_winmlx;
+
+typedef struct	s_player
+{
+	int posx;
+	int	posy;
+	int	startposx;
+	int	startposy;
+}						t_player;
+
 typedef struct s_data
 {
 	t_file	*head_file;
+	t_winmlx *head_winmlx;
+	t_player *head_player;
 }				t_data;
 
 int	parsing(char *file, t_data *data);
@@ -61,5 +82,8 @@ t_tmpmap	*create_cell(char *line);
 void	ft_lstad_back(t_tmpmap **lst, t_tmpmap *new);
 int		lstsize(t_tmpmap *lst);
 void	lstclear(t_tmpmap **lst);
+
+
+int ft_init(t_winmlx *winmlx, t_data *data);
 
 #endif
