@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/03 14:36:16 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:19:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,50 +22,50 @@ int ft_key_hook(int keycode, t_data *data)
 	}
 	else if (keycode == 65362) // haut
 	{
-		printf("haut\n");
-		if (data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] == '1')
-		{
-			return (0);			
-		}
 		data->head_player->posy -= 2;
 		if (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy)
 		{
+			printf("MOVE !\n");
 			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-			data->head_file->map[(data->head_player->posy / 10) + 1][data->head_player->posx / 10] = '0';
+			if (data->head_file->map[(data->head_player->posy / 10) + 1][data->head_player->posx / 10] != '1')
+				data->head_file->map[(data->head_player->posy / 10) + 1][data->head_player->posx / 10] = '0';
 		}
 	}
 	else if (keycode == 65363) // droite
 	{
-		printf("droite\n");
-		if (data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) + 1] == '1')
-		{
-			return (0);			
-		}
 		data->head_player->posx += 2;
 		if (data->head_player->posx % 10 == 0 && data->head_player->posx != data->head_player->startposx)
 		{
+			printf("MOVE !\n");
 			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
+			if (data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) - 1] != '1')
 			data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) - 1] = '0';
 		}
 	}
 	else if (keycode == 65364) // bas
 	{
-		printf("bas\n");
 		data->head_player->posy += 2;
+		if (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy)
+		{
+			printf("MOVE !\n");
+			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
+			if (data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] != '1')
+				data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] = '0';
+		}
 	}
 	else if (keycode == 65361) // gauche
 	{
-		if (data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) - 1] == '1')
-		{
-			return (0);			
-		}
 		data->head_player->posx -= 2;
 		if (data->head_player->posx % 10 == 0 && data->head_player->posx != data->head_player->startposx)
 		{
+			printf("MOVE !\n");
 			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-			data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) - 1] = '0';
+			if (data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) + 1] != '1')
+				data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) + 1] = '0';
 		}
 	}
+	printf("%d\n", data->head_player->posy);
+	printf("%d\n", data->head_player->posx);
 	return (0);
 }
 
@@ -131,7 +131,10 @@ static int	random_next_frame(t_data *data)
 			else if (data->head_file->map[i][j] == '0')
 				drawsquare(data, H_GREEN, x, y);
 			else if (data->head_file->map[i][j] == 'N')
+			{
 				drawsquare(data, H_PINK, x, y);
+				my_mlx_pixel_put(data->head_winmlx, data->head_player->posx , data->head_player->posy, H_BLACK);
+			}
 			x+=10;
 			j++;
 		}
@@ -186,15 +189,14 @@ int get_pos(char c, char **map)
 int ft_init(t_winmlx *winmlx, t_data *data)
 {
 	(void)data;
-	// data->head_player->posx = get_pos('x', data->head_file->map) * 10;
-	// data->head_player->posy = get_pos('y', data->head_file->map) * 10;
-	// data->head_player->startposx = data->head_player->posx;
-	// data->head_player->startposy = data->head_player->posy;
-	// printf("%d  %d\n", data->head_player->posy, data->head_player->posx);
+	data->head_player->posx = get_pos('x', data->head_file->map) * 10;
+	data->head_player->posy = get_pos('y', data->head_file->map) * 10;
+	data->head_player->startposx = data->head_player->posx;
+	data->head_player->startposy = data->head_player->posy;
 	winmlx->mlx = mlx_init();
 	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 900, 900, "Cub3d");
 	// load_img(winmlx);
-	// mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, ft_key_hook, data);
+	mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, ft_key_hook, data);
 	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
 	mlx_loop(winmlx->mlx);
 	return (0);
