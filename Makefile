@@ -6,7 +6,7 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/06/29 11:43:05 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/10/02 11:06:25 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRC			=	main.c \
 				parsing/parsing.c \
 				parsing/param.c \
 				utils/list.c \
-				parsing/map.c
+				parsing/map.c \
+				2d/init.c
 
 
 LIBFT_DIR	=	libft/
