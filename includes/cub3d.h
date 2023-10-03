@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/02 16:38:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/03 12:07:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <unistd.h>
+
+
+# define H_WHITE            0xffffff
+# define H_BLACK            0x000000
+# define H_RED                0xff0000
+# define H_GREEN            0x00ff00
+# define H_DARKGREEN        0x01452c
+# define H_BLUE                0x0000ff
+# define H_YELLOW            0xffff00
+# define H_ORANGE            0xffa500
+# define H_PINK                0xffc0cb
+# define H_PURPLE            0x800080
+# define H_GREY                0x808080
 
 typedef struct s_tmpmap
 {
@@ -46,11 +59,11 @@ typedef struct	s_winmlx
 {
 	void	*mlx;
 	void	*mlx_win;
-	void	*grass;
-	void	*wall;
-	void	*perso;
-	int		img_width;
-	int		img_height;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 }						t_winmlx;
 
 typedef struct	s_player
