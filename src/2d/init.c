@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/04 16:36:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:59:18 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int ft_key_hook(int keycode, t_data *data)
 	}
     else if (keycode == 65362) // haut
     {
-        float moveX = 2 * cos(data->head_player->angle * M_PI / 180);
-        float moveY = 2 * sin(data->head_player->angle * M_PI / 180);
+        float moveX = 5 * cos(data->head_player->angle * M_PI / 180);
+        float moveY = 5 * sin(data->head_player->angle * M_PI / 180);
         data->head_player->posx += moveX;
         data->head_player->posy += moveY;
         printf("posx = %d\n", data->head_player->posx);
@@ -198,9 +198,6 @@ static int	random_next_frame(t_data *data)
 		y+=30;
 		i++;
 	}
-//	int u = data->head_player->posx + cos(data->head_player->angle * M_PI / 180) * 10;
-//	int v = data->head_player->posy + sin(data->head_player->angle * M_PI / 180) * 10;
-//	my_mlx_pixel_put(data->head_winmlx, u , v, H_BLACK);
     draw_arrow(data, data->head_player->posx, data->head_player->posy, data->head_player->angle * M_PI / 180);
 	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
 	mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
