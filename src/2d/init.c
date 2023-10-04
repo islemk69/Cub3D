@@ -12,6 +12,26 @@
 
 #include "../../includes/cub3d.h"
 
+void reset_player_position_on_map(t_data *data)
+{
+    int i = 0;
+    int j = 0;
+
+    while (data->head_file->map[i])
+    {
+        j = 0;
+        while (data->head_file->map[i][j])
+        {
+            if (data->head_file->map[i][j] == 'N')
+                data->head_file->map[i][j] = '0'; // Réinitialisez la position précédente du joueur à une case vide
+            j++;
+        }
+        i++;
+    }
+
+    // Mettez à jour la nouvelle position du joueur sur la carte
+    data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
+}
 
 void rotate_player(t_data *data, int direction)
 {
@@ -33,17 +53,25 @@ int ft_key_hook(int keycode, t_data *data)
 	{
 		printf("salut");
 	}
-	else if (keycode == 65362) // haut
-	{
-		data->head_player->posy -= 2;
-		if (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy)
-		{
-			printf("MOVE !\n");
-			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-			if (data->head_file->map[(data->head_player->posy / 10) + 1][data->head_player->posx / 10] != '1')
-				data->head_file->map[(data->head_player->posy / 10) + 1][data->head_player->posx / 10] = '0';
-		}
-	}
+    else if (keycode == 65362) // haut
+    {
+        float moveX = 2 * cos(data->head_player->angle * M_PI / 180);
+        float moveY = 2 * sin(data->head_player->angle * M_PI / 180);
+        data->head_player->posx += moveX;
+        data->head_player->posy += moveY;
+        printf("posx = %d\n", data->head_player->posx);
+        printf("posy = %d\n", data->head_player->posy);
+
+//        if ((data->head_player->posx % 10 == 0 && data->head_player->posx != data->head_player->startposx) ||
+//            (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy))
+//        {
+//            printf("MOVE !\n");
+//            data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
+//
+//            if (data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] != '1')
+//                data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = '0';
+//        }
+    }
 	else if (keycode == 65363) // droite
 	{
 		rotate_player(data, 1);
@@ -52,13 +80,13 @@ int ft_key_hook(int keycode, t_data *data)
 	else if (keycode == 65364) // bas
 	{
 		data->head_player->posy += 2;
-		if (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy)
-		{
-			printf("MOVE !\n");
-			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-			if (data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] != '1')
-				data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] = '0';
-		}
+//		if (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy)
+//		{
+//			printf("MOVE !\n");
+//			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
+//			if (data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] != '1')
+//				data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] = '0';
+//		}
 	}
 	else if (keycode == 65361) // gauche
 	{
@@ -106,39 +134,65 @@ int only_space(char *str)
 	}
 	return (1);
 }
-// void draw_arrow(t_data *data)
-// {
-//     int x1 = data->head_player->posx;
-//     int y1 = data->head_player->posy;
-//     int x2 = data->head_player->posx + cos(data->head_player->angle * M_PI / 180) * 10;
-//     int y2 = data->head_player->posy + sin(data->head_player->angle * M_PI / 180) * 10;
 
-//     // Draw the line of the arrow
-//     for (int i = x1; i <= x2; i++)
-//     {
-//         int y = y1 + (y2 - y1) * (i - x1) / (x2 - x1);
-//         mlx_pixel_put(data->head_winmlx->mlx, data->head_winmlx->mlx_win, i, y, 0x00FF0000);
-//     }
+void draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
+{
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
 
-//     // Draw the head of the arrow
-//     for (int i = -5; i <= 5; i++)
-//     {
-//         mlx_pixel_put(data->head_winmlx->mlx, data->head_winmlx->mlx_win, x2, y2 + i, 0x00FF0000);
-//         mlx_pixel_put(data->head_winmlx->mlx, data->head_winmlx->mlx_win, x2 + i, y2, 0x00FF0000);
-//     }
-// }
+    int sx = x0 < x1 ? 1 : -1;
+    int sy = y0 < y1 ? 1 : -1;
+
+    int err = (dx > dy ? dx : -dy) / 2;
+    int e2;
+
+    while (1)
+    {
+        my_mlx_pixel_put(data->head_winmlx, x0, y0, color);  // Dessinez le pixel à cette position
+
+        if (x0 == x1 && y0 == y1)
+            break;
+
+        e2 = err;
+
+        if (e2 > -dx)
+        {
+            err -= dy;
+            x0 += sx;
+        }
+        if (e2 < dy)
+        {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
+void draw_arrow(t_data *data, int x, int y, float angle)
+{
+    int tipX = x + (10 * cos(angle));  // Calculez la position de la pointe de la flèche
+    int tipY = y + (10 * sin(angle));
+
+    int wing1X = tipX - (5 * cos(angle + M_PI / 4));  // Calculez la position de la première aile
+    int wing1Y = tipY - (5 * sin(angle + M_PI / 4));
+
+    int wing2X = tipX - (5 * cos(angle - M_PI / 4));  // Calculez la position de la deuxième aile
+    int wing2Y = tipY - (5 * sin(angle - M_PI / 4));
+
+    draw_line(data, x, y, tipX, tipY, H_BLACK);  // Dessinez la tige
+    draw_line(data, tipX, tipY, wing1X, wing1Y, H_BLACK);  // Dessinez la première aile
+    draw_line(data, tipX, tipY, wing2X, wing2Y, H_BLACK);  // Dessinez la deuxième aile
+}
+
+
 
 static int	random_next_frame(t_data *data)
 {
-// 	// if (data->head_winmlx->mlx == NULL || data->head_winmlx->mlx_win == NULL || data->head_winmlx->grass == NULL) {
-//     //     printf("One of the pointers is NULL\n");
-//     //     exit(1);
-//     // }
-	
 	int i = 0;
 	int j;
 	int x = 0;
 	int y = 0;
+    reset_player_position_on_map(data);
 	data->head_winmlx->img = mlx_new_image(data->head_winmlx->mlx, 900, 900);
 	data->head_winmlx->addr = mlx_get_data_addr(data->head_winmlx->img, &data->head_winmlx->bits_per_pixel, &data->head_winmlx->line_length, &data->head_winmlx->endian);
 	// mlx_clear_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win);
@@ -163,29 +217,14 @@ static int	random_next_frame(t_data *data)
 		y+=10;
 		i++;
 	}
-	int u = data->head_player->posx + cos(data->head_player->angle * M_PI / 180) * 10;
-	int v = data->head_player->posy + sin(data->head_player->angle * M_PI / 180) * 10;
-	my_mlx_pixel_put(data->head_winmlx, u , v, H_BLACK);
+//	int u = data->head_player->posx + cos(data->head_player->angle * M_PI / 180) * 10;
+//	int v = data->head_player->posy + sin(data->head_player->angle * M_PI / 180) * 10;
+//	my_mlx_pixel_put(data->head_winmlx, u , v, H_BLACK);
+    draw_arrow(data, data->head_player->posx, data->head_player->posy, data->head_player->angle * M_PI / 180);
 	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
 	mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
 	return (0);
 }
-
-// void load_img(t_winmlx *winmlx)
-// {
-// 	winmlx->grass = mlx_xpm_file_to_image(winmlx->mlx, "src/xpm/grass.xpm",
-// 			&winmlx->img_width, &winmlx->img_height);
-// 	winmlx->wall = mlx_xpm_file_to_image(winmlx->mlx, "src/xpm/wall.xpm",
-// 			&winmlx->img_width, &winmlx->img_height);
-// 	winmlx->perso = mlx_xpm_file_to_image(winmlx->mlx, "src/xpm/perso.xpm",
-// 			&winmlx->img_width, &winmlx->img_height);
-// 	if (winmlx->grass == NULL) {
-//         printf("Failed to load image\n");
-// 		perror("Failed to load image");
-//         exit(1);
-//     }
-//     printf("Image loaded successfully\n");
-// }
 
 
 int get_pos(int mod, char **map)
