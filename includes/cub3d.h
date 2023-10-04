@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/03 12:07:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:01:08 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <math.h>
 # include <unistd.h>
 
 
@@ -70,6 +71,7 @@ typedef struct	s_player
 {
 	int posx;
 	int	posy;
+	int angle;
 	int	startposx;
 	int	startposy;
 }						t_player;

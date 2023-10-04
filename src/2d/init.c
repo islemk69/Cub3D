@@ -6,11 +6,24 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/03 16:19:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/04 14:13:03 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+
+void rotate_player(t_data *data, int direction)
+{
+    data->head_player->angle += direction * 5;
+    if (data->head_player->angle > 360)
+        data->head_player->angle -= 360;
+    else if (data->head_player->angle < 0)
+	{
+        data->head_player->angle += 360;
+	}
+	printf("OH%d\n", data->head_player->angle);
+}
 
 int ft_key_hook(int keycode, t_data *data)
 {
@@ -33,14 +46,8 @@ int ft_key_hook(int keycode, t_data *data)
 	}
 	else if (keycode == 65363) // droite
 	{
-		data->head_player->posx += 2;
-		if (data->head_player->posx % 10 == 0 && data->head_player->posx != data->head_player->startposx)
-		{
-			printf("MOVE !\n");
-			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-			if (data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) - 1] != '1')
-			data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) - 1] = '0';
-		}
+		rotate_player(data, 1);
+
 	}
 	else if (keycode == 65364) // bas
 	{
@@ -55,14 +62,8 @@ int ft_key_hook(int keycode, t_data *data)
 	}
 	else if (keycode == 65361) // gauche
 	{
-		data->head_player->posx -= 2;
-		if (data->head_player->posx % 10 == 0 && data->head_player->posx != data->head_player->startposx)
-		{
-			printf("MOVE !\n");
-			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-			if (data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) + 1] != '1')
-				data->head_file->map[data->head_player->posy / 10][(data->head_player->posx / 10) + 1] = '0';
-		}
+		rotate_player(data, -1);
+
 	}
 	printf("%d\n", data->head_player->posy);
 	printf("%d\n", data->head_player->posx);
@@ -105,6 +106,27 @@ int only_space(char *str)
 	}
 	return (1);
 }
+// void draw_arrow(t_data *data)
+// {
+//     int x1 = data->head_player->posx;
+//     int y1 = data->head_player->posy;
+//     int x2 = data->head_player->posx + cos(data->head_player->angle * M_PI / 180) * 10;
+//     int y2 = data->head_player->posy + sin(data->head_player->angle * M_PI / 180) * 10;
+
+//     // Draw the line of the arrow
+//     for (int i = x1; i <= x2; i++)
+//     {
+//         int y = y1 + (y2 - y1) * (i - x1) / (x2 - x1);
+//         mlx_pixel_put(data->head_winmlx->mlx, data->head_winmlx->mlx_win, i, y, 0x00FF0000);
+//     }
+
+//     // Draw the head of the arrow
+//     for (int i = -5; i <= 5; i++)
+//     {
+//         mlx_pixel_put(data->head_winmlx->mlx, data->head_winmlx->mlx_win, x2, y2 + i, 0x00FF0000);
+//         mlx_pixel_put(data->head_winmlx->mlx, data->head_winmlx->mlx_win, x2 + i, y2, 0x00FF0000);
+//     }
+// }
 
 static int	random_next_frame(t_data *data)
 {
@@ -141,6 +163,9 @@ static int	random_next_frame(t_data *data)
 		y+=10;
 		i++;
 	}
+	int u = data->head_player->posx + cos(data->head_player->angle * M_PI / 180) * 10;
+	int v = data->head_player->posy + sin(data->head_player->angle * M_PI / 180) * 10;
+	my_mlx_pixel_put(data->head_winmlx, u , v, H_BLACK);
 	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
 	mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
 	return (0);
@@ -163,7 +188,7 @@ static int	random_next_frame(t_data *data)
 // }
 
 
-int get_pos(char c, char **map)
+int get_pos(int mod, char **map)
 {
 	int i = 0;
 	int j = 0;
@@ -174,7 +199,7 @@ int get_pos(char c, char **map)
 		{
 			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
 			{
-				if (c == 'x')
+				if (mod)
 					return (j);
 				else
 					return (i);
@@ -189,8 +214,12 @@ int get_pos(char c, char **map)
 int ft_init(t_winmlx *winmlx, t_data *data)
 {
 	(void)data;
-    data->head_player->posx = get_pos('x', data->head_file->map) * 10;
-	data->head_player->posy = get_pos('y', data->head_file->map) * 10;
+	data->head_player = malloc(sizeof(t_player));
+	data->head_player->angle = 400;
+	data->head_player->posx = 10;
+	data->head_player->posy = 10;
+    data->head_player->posx = get_pos(1, data->head_file->map) * 10;
+	data->head_player->posy = get_pos(0, data->head_file->map) * 10;
 	data->head_player->startposx = data->head_player->posx;
 	data->head_player->startposy = data->head_player->posy;
 	winmlx->mlx = mlx_init();
