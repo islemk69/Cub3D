@@ -45,6 +45,19 @@ void rotate_player(t_data *data, int direction)
 	printf("OH%d\n", data->head_player->angle);
 }
 
+bool is_collision(t_data *data, int newX, int newY)
+{
+    // Convertir la position en indices de carte
+    int mapX = newX / 30;  // Assumant que chaque cellule mesure 30x30 pixels
+    int mapY = newY / 30;
+
+    // Vérifier si la position est à l'intérieur d'une cellule de mur
+    if (data->head_file->map[mapY][mapX] == '1')
+        return true;
+
+    return false;
+}
+
 int ft_key_hook(int keycode, t_data *data)
 {
 	(void)data;
@@ -55,10 +68,62 @@ int ft_key_hook(int keycode, t_data *data)
 	}
     else if (keycode == 65362) // haut
     {
-        float moveX = 5 * cos(data->head_player->angle * M_PI / 180);
-        float moveY = 5 * sin(data->head_player->angle * M_PI / 180);
-        data->head_player->posx += moveX;
-        data->head_player->posy += moveY;
+        float moveX = 2 * cos(data->head_player->angle * M_PI / 180);
+        float moveY = 2 * sin(data->head_player->angle * M_PI / 180);
+
+        int newX = data->head_player->posx + moveX;
+        int newY = data->head_player->posy + moveY;
+
+        if (!is_collision(data, newX, newY))
+        {
+            data->head_player->posx = newX;
+            data->head_player->posy = newY;
+        }
+        else
+        {
+            // Si le mouvement en X est bloqué, vérifier si le mouvement en Y est possible
+            if (!is_collision(data, data->head_player->posx, newY))
+            {
+                data->head_player->posy = newY;
+            }
+                // Si le mouvement en Y est bloqué, vérifier si le mouvement en X est possible
+            else if (!is_collision(data, newX, data->head_player->posy))
+            {
+                data->head_player->posx = newX;
+            }
+        }
+
+        printf("posx = %d\n", data->head_player->posx);
+        printf("posy = %d\n", data->head_player->posy);
+    }
+
+    else if (keycode == 65364) // bas
+    {
+        float moveX = -2 * cos(data->head_player->angle * M_PI / 180);
+        float moveY = -2 * sin(data->head_player->angle * M_PI / 180);
+
+        int newX = data->head_player->posx + moveX;
+        int newY = data->head_player->posy + moveY;
+
+        if (!is_collision(data, newX, newY))
+        {
+            data->head_player->posx = newX;
+            data->head_player->posy = newY;
+        }
+        else
+        {
+            // Si le mouvement en X est bloqué, vérifier si le mouvement en Y est possible
+            if (!is_collision(data, data->head_player->posx, newY))
+            {
+                data->head_player->posy = newY;
+            }
+                // Si le mouvement en Y est bloqué, vérifier si le mouvement en X est possible
+            else if (!is_collision(data, newX, data->head_player->posy))
+            {
+                data->head_player->posx = newX;
+            }
+        }
+
         printf("posx = %d\n", data->head_player->posx);
         printf("posy = %d\n", data->head_player->posy);
     }
@@ -67,10 +132,10 @@ int ft_key_hook(int keycode, t_data *data)
 		rotate_player(data, 1);
 
 	}
-	else if (keycode == 65364) // bas
-	{
-		data->head_player->posy += 2;
-	}
+//	else if (keycode == 65364) // bas
+//	{
+//		data->head_player->posy += 2;
+//	}
 	else if (keycode == 65361) // gauche
 	{
 		rotate_player(data, -1);
@@ -149,20 +214,35 @@ void draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
     }
 }
 
-void draw_arrow(t_data *data, int x, int y, float angle)
+void draw_part_of_circle(t_data *data, int x, int y, float angle)
 {
-    int tipX = x + (10 * cos(angle));  // Calculez la position de la pointe de la flèche
-    int tipY = y + (10 * sin(angle));
+    const int RADIUS = 10;
+    const float ARC_ANGLE = M_PI / 3;
 
-    int wing1X = tipX - (5 * cos(angle + M_PI / 4));  // Calculez la position de la première aile
-    int wing1Y = tipY - (5 * sin(angle + M_PI / 4));
+    float startAngle = angle + ARC_ANGLE / 2;
+    float endAngle = angle - ARC_ANGLE / 2;
 
-    int wing2X = tipX - (5 * cos(angle - M_PI / 4));  // Calculez la position de la deuxième aile
-    int wing2Y = tipY - (5 * sin(angle - M_PI / 4));
+    int tipX = x + RADIUS * cos(angle);
+    int tipY = y + RADIUS * sin(angle);
+    draw_line(data, x, y, tipX, tipY, H_BLACK);
 
-    draw_line(data, x, y, tipX, tipY, H_BLACK);  // Dessinez la tige
-    draw_line(data, tipX, tipY, wing1X, wing1Y, H_BLACK);  // Dessinez la première aile
-    draw_line(data, tipX, tipY, wing2X, wing2Y, H_BLACK);  // Dessinez la deuxième aile
+    for (float currentAngle = endAngle; currentAngle <= startAngle; currentAngle += 0.01)
+    {
+        for (int r = 0; r <= RADIUS; r++)
+        {
+            int pointX = x + r * cos(currentAngle);
+            int pointY = y + r * sin(currentAngle);
+            my_mlx_pixel_put(data->head_winmlx, pointX, pointY, H_BLACK);
+        }
+    }
+
+    int startX = x + RADIUS * cos(startAngle);
+    int startY = y + RADIUS * sin(startAngle);
+    draw_line(data, x, y, startX, startY, H_BLACK);
+
+    int endX = x + RADIUS * cos(endAngle);
+    int endY = y + RADIUS * sin(endAngle);
+    draw_line(data, x, y, endX, endY, H_BLACK);
 }
 
 
@@ -198,7 +278,7 @@ static int	random_next_frame(t_data *data)
 		y+=30;
 		i++;
 	}
-    draw_arrow(data, data->head_player->posx, data->head_player->posy, data->head_player->angle * M_PI / 180);
+    draw_part_of_circle(data, data->head_player->posx, data->head_player->posy, data->head_player->angle * M_PI / 180);
 	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
 	mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
 	return (0);
