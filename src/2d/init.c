@@ -189,7 +189,7 @@ int get_pos(char c, char **map)
 int ft_init(t_winmlx *winmlx, t_data *data)
 {
 	(void)data;
-	data->head_player->posx = get_pos('x', data->head_file->map) * 10;
+    data->head_player->posx = get_pos('x', data->head_file->map) * 10;
 	data->head_player->posy = get_pos('y', data->head_file->map) * 10;
 	data->head_player->startposx = data->head_player->posx;
 	data->head_player->startposy = data->head_player->posy;

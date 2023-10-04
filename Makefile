@@ -80,7 +80,7 @@ OBJ_DIR		=	.objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 CC			=	cc
-CC_FLAGS	=	-Wextra -Werror -Wall -g3 -O3
+CC_FLAGS	=	-Wextra -Werror -Wall -g3 -O3 -fsanitize=address
 
 all:
 	make -C libft
