@@ -6,7 +6,7 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/10/02 11:06:25 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/10/04 13:02:06 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ OBJ_DIR		=	.objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 CC			=	cc
-CC_FLAGS	=	-Wextra -Werror -Wall -g3 -O3
+CC_FLAGS	=	-Wextra -Werror -Wall -g3 -O3 -fsanitize=address
 
 all:
 	make -C libft
