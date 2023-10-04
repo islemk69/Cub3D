@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/04 14:13:03 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:36:39 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void reset_player_position_on_map(t_data *data)
     }
 
     // Mettez à jour la nouvelle position du joueur sur la carte
-    data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
+    data->head_file->map[data->head_player->posy / 30][data->head_player->posx / 30] = 'N';
 }
 
 void rotate_player(t_data *data, int direction)
@@ -61,16 +61,6 @@ int ft_key_hook(int keycode, t_data *data)
         data->head_player->posy += moveY;
         printf("posx = %d\n", data->head_player->posx);
         printf("posy = %d\n", data->head_player->posy);
-
-//        if ((data->head_player->posx % 10 == 0 && data->head_player->posx != data->head_player->startposx) ||
-//            (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy))
-//        {
-//            printf("MOVE !\n");
-//            data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-//
-//            if (data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] != '1')
-//                data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = '0';
-//        }
     }
 	else if (keycode == 65363) // droite
 	{
@@ -80,13 +70,6 @@ int ft_key_hook(int keycode, t_data *data)
 	else if (keycode == 65364) // bas
 	{
 		data->head_player->posy += 2;
-//		if (data->head_player->posy % 10 == 0 && data->head_player->posy != data->head_player->startposy)
-//		{
-//			printf("MOVE !\n");
-//			data->head_file->map[data->head_player->posy / 10][data->head_player->posx / 10] = 'N';
-//			if (data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] != '1')
-//				data->head_file->map[(data->head_player->posy / 10) - 1][data->head_player->posx / 10] = '0';
-//		}
 	}
 	else if (keycode == 65361) // gauche
 	{
@@ -109,11 +92,11 @@ void drawsquare(t_data *data, int color, int x, int y)
 	int i = 0;
 	int j;
 	int save = x;
-	while (i < 10)
+	while (i < 30)
 	{
 		j = 0;
 		x = save;
-		while (j < 10)
+		while (j < 30)
 		{
 			my_mlx_pixel_put(data->head_winmlx, x, y, color);
 			j++;
@@ -152,9 +135,7 @@ void draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
 
         if (x0 == x1 && y0 == y1)
             break;
-
         e2 = err;
-
         if (e2 > -dx)
         {
             err -= dy;
@@ -209,12 +190,12 @@ static int	random_next_frame(t_data *data)
 			else if (data->head_file->map[i][j] == 'N')
 			{
 				drawsquare(data, H_PINK, x, y);
-				my_mlx_pixel_put(data->head_winmlx, data->head_player->posx , data->head_player->posy, H_BLACK);
+				// my_mlx_pixel_put(data->head_winmlx, data->head_player->posx , data->head_player->posy, H_BLACK);
 			}
-			x+=10;
+			x+=30;
 			j++;
 		}
-		y+=10;
+		y+=30;
 		i++;
 	}
 //	int u = data->head_player->posx + cos(data->head_player->angle * M_PI / 180) * 10;
@@ -257,8 +238,8 @@ int ft_init(t_winmlx *winmlx, t_data *data)
 	data->head_player->angle = 400;
 	data->head_player->posx = 10;
 	data->head_player->posy = 10;
-    data->head_player->posx = get_pos(1, data->head_file->map) * 10;
-	data->head_player->posy = get_pos(0, data->head_file->map) * 10;
+    data->head_player->posx = get_pos(1, data->head_file->map) * 30;
+	data->head_player->posy = get_pos(0, data->head_file->map) * 30;
 	data->head_player->startposx = data->head_player->posx;
 	data->head_player->startposy = data->head_player->posy;
 	winmlx->mlx = mlx_init();
