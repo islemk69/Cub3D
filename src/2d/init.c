@@ -23,13 +23,11 @@ void reset_player_position_on_map(t_data *data)
         while (data->head_file->map[i][j])
         {
             if (data->head_file->map[i][j] == 'N')
-                data->head_file->map[i][j] = '0'; // Réinitialisez la position précédente du joueur à une case vide
+                data->head_file->map[i][j] = '0';
             j++;
         }
         i++;
     }
-
-    // Mettez à jour la nouvelle position du joueur sur la carte
     data->head_file->map[data->head_player->posy / 30][data->head_player->posx / 30] = 'N';
 }
 
@@ -47,8 +45,7 @@ void rotate_player(t_data *data, int direction)
 
 bool is_collision(t_data *data, int newX, int newY)
 {
-    // Convertir la position en indices de carte
-    int mapX = newX / 30;  // Assumant que chaque cellule mesure 30x30 pixels
+    int mapX = newX / 30;
     int mapY = newY / 30;
 
     // Vérifier si la position est à l'intérieur d'une cellule de mur
@@ -72,60 +69,38 @@ int ft_key_hook(int keycode, t_data *data)
         float moveY = 2 * sin(data->head_player->angle * M_PI / 180);
 
         int newX = data->head_player->posx + moveX;
-        int newY = data->head_player->posy + moveY;
+        int newY = data->head_player->posy;
 
+        // Vérifiez d'abord le mouvement en X
         if (!is_collision(data, newX, newY))
-        {
             data->head_player->posx = newX;
+
+        newX = data->head_player->posx;  // Mettez à jour la valeur de newX après le mouvement
+        newY = data->head_player->posy + moveY;
+
+        // Vérifiez ensuite le mouvement en Y
+        if (!is_collision(data, newX, newY))
             data->head_player->posy = newY;
-        }
-        else
-        {
-            // Si le mouvement en X est bloqué, vérifier si le mouvement en Y est possible
-            if (!is_collision(data, data->head_player->posx, newY))
-            {
-                data->head_player->posy = newY;
-            }
-                // Si le mouvement en Y est bloqué, vérifier si le mouvement en X est possible
-            else if (!is_collision(data, newX, data->head_player->posy))
-            {
-                data->head_player->posx = newX;
-            }
-        }
 
         printf("posx = %d\n", data->head_player->posx);
         printf("posy = %d\n", data->head_player->posy);
     }
-
     else if (keycode == 65364) // bas
     {
         float moveX = -2 * cos(data->head_player->angle * M_PI / 180);
         float moveY = -2 * sin(data->head_player->angle * M_PI / 180);
 
         int newX = data->head_player->posx + moveX;
-        int newY = data->head_player->posy + moveY;
+        int newY = data->head_player->posy;
 
         if (!is_collision(data, newX, newY))
-        {
             data->head_player->posx = newX;
-            data->head_player->posy = newY;
-        }
-        else
-        {
-            // Si le mouvement en X est bloqué, vérifier si le mouvement en Y est possible
-            if (!is_collision(data, data->head_player->posx, newY))
-            {
-                data->head_player->posy = newY;
-            }
-                // Si le mouvement en Y est bloqué, vérifier si le mouvement en X est possible
-            else if (!is_collision(data, newX, data->head_player->posy))
-            {
-                data->head_player->posx = newX;
-            }
-        }
 
-        printf("posx = %d\n", data->head_player->posx);
-        printf("posy = %d\n", data->head_player->posy);
+        newX = data->head_player->posx;
+        newY = data->head_player->posy + moveY;
+
+        if (!is_collision(data, newX, newY))
+            data->head_player->posy = newY;
     }
 	else if (keycode == 65363) // droite
 	{
