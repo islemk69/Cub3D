@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/04 16:59:18 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/07 12:58:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int ft_key_hook(int keycode, t_data *data)
     }
     else if (keycode == 65364) // bas
     {
-        float moveX = -2 * cos(data->head_player->angle * M_PI / 180);
-        float moveY = -2 * sin(data->head_player->angle * M_PI / 180);
+        float moveX = -5 * cos(data->head_player->angle * M_PI / 180);
+        float moveY = -5 * sin(data->head_player->angle * M_PI / 180);
 
         int newX = data->head_player->posx + moveX;
         int newY = data->head_player->posy;
@@ -293,9 +293,9 @@ int get_pos(int mod, char **map)
 
 int ft_init(t_winmlx *winmlx, t_data *data)
 {
-	data->head_player->angle = 400;
-    data->head_player->posx = (get_pos(1, data->head_file->map) * 30) + 10;
-	data->head_player->posy = (get_pos(0, data->head_file->map) * 30) + 10;
+	data->head_player->angle = -90;
+    data->head_player->posx = (get_pos(1, data->head_file->map) * 30) + 15;
+	data->head_player->posy = (get_pos(0, data->head_file->map) * 30) + 15;
 	winmlx->mlx = mlx_init();
 	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
 	mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, ft_key_hook, data);
