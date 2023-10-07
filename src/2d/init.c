@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/07 12:58:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/07 13:02:02 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int ft_key_hook(int keycode, t_data *data)
     }
     else if (keycode == 65364) // bas
     {
-        float moveX = -5 * cos(data->head_player->angle * M_PI / 180);
-        float moveY = -5 * sin(data->head_player->angle * M_PI / 180);
+        float moveX = -6 * cos(data->head_player->angle * M_PI / 180);
+        float moveY = -6 * sin(data->head_player->angle * M_PI / 180);
 
         int newX = data->head_player->posx + moveX;
         int newY = data->head_player->posy;
