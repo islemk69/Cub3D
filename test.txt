@@ -1,0 +1,51 @@
+Avec cette nouvelle version, valgrind m'affiche ceci :
+```
+==697786== Invalid read of size 8
+==697786==    at 0x4031E7: is_collision (init.c:54)
+==697786==    by 0x40344E: ft_key_hook (init.c:0)
+==697786==    by 0x406085: mlx_loop (in /nfs/homes/blakehal/Cub3D/cub3d)
+==697786==    by 0x4040A9: ft_init (init.c:346)
+==697786==    by 0x40255B: main (main.c:33)
+==697786==  Address 0x4d55cf0 is 16 bytes before a block of size 31 alloc'd
+==697786==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==697786==    by 0x404BF4: ft_strdup (in /nfs/homes/blakehal/Cub3D/cub3d)
+==697786==    by 0x402C37: fill_map_tab (map.c:40)
+==697786==    by 0x402702: check_file (parsing.c:113)
+==697786==    by 0x402702: open_file (parsing.c:67)
+==697786==    by 0x402702: parsing (parsing.c:21)
+==697786==    by 0x4024C9: main (main.c:24)
+==697786==
+==697786== Invalid read of size 1
+==697786==    at 0x4031F3: is_collision (init.c:54)
+==697786==    by 0x40344E: ft_key_hook (init.c:0)
+==697786==    by 0x406085: mlx_loop (in /nfs/homes/blakehal/Cub3D/cub3d)
+==697786==    by 0x4040A9: ft_init (init.c:346)
+==697786==    by 0x40255B: main (main.c:33)
+==697786==  Address 0x12 is not stack'd, malloc'd or (recently) free'd
+==697786==
+==697786==
+==697786== Process terminating with default action of signal 11 (SIGSEGV)
+==697786==  Access not within mapped region at address 0x12
+==697786==    at 0x4031F3: is_collision (init.c:54)
+==697786==    by 0x40344E: ft_key_hook (init.c:0)
+==697786==    by 0x406085: mlx_loop (in /nfs/homes/blakehal/Cub3D/cub3d)
+==697786==    by 0x4040A9: ft_init (init.c:346)
+==697786==    by 0x40255B: main (main.c:33)
+==697786==  If you believe this happened as a result of a stack
+==697786==  overflow in your program's main thread (unlikely but
+==697786==  possible), you can try to increase the size of the
+==697786==  main thread stack using the --main-stacksize= flag.
+==697786==  The main thread stack size used in this run was 8388608.
+==697786==
+==697786== HEAP SUMMARY:
+==697786==     in use at exit: 101,889 bytes in 122 blocks
+==697786==   total heap usage: 4,446 allocs, 4,324 frees, 294,663 bytes allocated
+==697786==
+==697786== LEAK SUMMARY:
+==697786==    definitely lost: 0 bytes in 0 blocks
+==697786==    indirectly lost: 0 bytes in 0 blocks
+==697786==      possibly lost: 0 bytes in 0 blocks
+==697786==    still reachable: 101,889 bytes in 122 blocks
+==697786==         suppressed: 0 bytes in 0 blocks
+```
+Corrige cet erreur
