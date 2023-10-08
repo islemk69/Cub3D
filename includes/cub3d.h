@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/03 12:07:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:01:08 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <math.h>
 # include <unistd.h>
 
 
@@ -35,6 +36,17 @@
 # define H_PINK                0xffc0cb
 # define H_PURPLE            0x800080
 # define H_GREY                0x808080
+#define PI 3.14159265
+#define TILE_SIZE 30
+#define FOV_ANGLE 60
+#define mapX 8      // map width
+#define mapY 8      // map height
+#define P2 PI / 2
+#define P3 3 * PI / 2
+# define DR 0.0174533 //one degre in radiant
+
+
+
 
 typedef struct s_tmpmap
 {
@@ -68,10 +80,11 @@ typedef struct	s_winmlx
 
 typedef struct	s_player
 {
-	int posx;
-	int	posy;
-	int	startposx;
-	int	startposy;
+	float px;
+	float	py;
+	float	pdx;
+	float	pdy;
+	float pa;
 }						t_player;
 
 typedef struct s_data
