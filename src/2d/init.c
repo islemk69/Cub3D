@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/07 13:02:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/08 18:49:10 by blakehal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,6 @@ void reset_player_position_on_map(t_data *data)
     data->head_file->map[(int)data->head_player->py / 30][(int)data->head_player->px / 30] = 'N';
 }
 
-// void rotate_player(t_data *data, int direction)
-// {
-//     data->head_player->angle += direction * 5;
-//     if (data->head_player->angle > 360)
-//         data->head_player->angle -= 360;
-//     else if (data->head_player->angle < 0)
-// 	{
-//         data->head_player->angle += 360;
-// 	}
-// 	printf("OH%d\n", data->head_player->angle);
-// }
-
  bool is_collision(t_data *data, int newX, int newY)
  {
      int map_posX = newX / 30;
@@ -60,80 +48,6 @@ void reset_player_position_on_map(t_data *data)
 
      return false;
  }
-
-
-// void cast_rays(t_data *data) {
-//     int num_rays = 30;  // Nombre de rayons à lancer
-//     float fov = 60.0;   // Champ de vision en degrés
-//     float angle_increment = fov / num_rays;
-
-//     for (int i = 0; i < num_rays; i++) {
-//         // Calcule l'angle du rayon en fonction du champ de vision et de l'itération
-//         float ray_angle = data->head_player->angle - (fov / 2) + i * angle_increment;
-
-//         // Convertit l'angle en radians
-//         float ray_angle_rad = ray_angle * M_PI / 180.0;
-
-//         // Initialise les coordonnées du rayon à la position du joueur
-//         float ray_x = data->head_player->posx;
-//         float ray_y = data->head_player->posy;
-
-//         // Initialise les coordonnées du point d'impact potentiel
-//         float hit_x = ray_x;
-//         float hit_y = ray_y;
-
-//         // Avance le rayon jusqu'à ce qu'il atteigne une nouvelle case
-// 		while (1) {
-// 			// Obtient les indices de la case actuelle dans la grille
-// 			int map_x = (int)(hit_x / 30);
-// 			int map_y = (int)(hit_y / 30);
-
-// 			// Vérifie si le rayon est sorti de la grille
-
-// 			// Vérifie si la case actuelle est un mur
-// 			if (data->head_file->map[map_y][map_x] == '1') {
-// 				// Dessine une ligne du joueur au point de collision avec le mur
-// 				draw_line(data, data->head_player->posx, data->head_player->posy, (int)hit_x, (int)hit_y, H_RED);
-// 				break;  // Sort de la boucle interne
-// 			}
-
-// 			hit_x += cos(ray_angle_rad) * 0.1;
-// 			hit_y += sin(ray_angle_rad) * 0.1;
-// 		}
-//     }
-// }
-
-
-//int ft_key_hook(int keycode, t_data *data)
-//{
-//    if (keycode == 65362) // haut
-//    {
-//        data->head_player->px += data->head_player->pdx;
-//        data->head_player->py += data->head_player->pdy;
-//    }
-//    else if (keycode == 65364) // bas
-//    {
-//        data->head_player->px -= data->head_player->pdx;
-//        data->head_player->py -= data->head_player->pdy;
-//    }
-//	else if (keycode == 65363) // droite
-//    {
-//        data->head_player->pa += 0.1;
-//        if (data->head_player->pa > 2 * PI)
-//            data->head_player->pa -= 2 * PI;
-//        data->head_player->pdx = cos(data->head_player->pa) * 5;
-//        data->head_player->pdy = sin(data->head_player->pa) * 5;
-//    }
-//	else if (keycode == 65361) // gauche
-//    {
-//        data->head_player->pa -= 0.1;
-//        if (data->head_player->pa < 0)
-//            data->head_player->pa += 2 * PI;
-//        data->head_player->pdx = cos(data->head_player->pa) * 5;
-//        data->head_player->pdy = sin(data->head_player->pa) * 5;
-//    }
-//	return (0);
-//}
 
 int ft_key_hook(int keycode, t_data *data)
 {
@@ -353,20 +267,20 @@ void drawRays2D(t_data *data)
         {
             rx = data->head_player->px;
             ry = data->head_player->py;
-            dof = 8;
+            dof = data->head_file->greather;
         }
 
-        while (dof < 8)
+        while (dof < data->head_file->greather)
         {
             mx = (int)(rx / 30);
             my = (int)(ry / 30);
 
-            if (mx >= 0 && mx < mapX && my >= 0 && my < mapY && data->head_file->map[my][mx] == '1')
+            if (mx >= 0 && mx < data->head_file->wmap && my >= 0 && my < data->head_file->hmap && data->head_file->map[my][mx] == '1')
             {
                 hx = rx;
                 hy = ry;
                 disH = dist(data->head_player->px, data->head_player->py, hx, hy, ra); // Corrigé ici
-                dof = 8;
+                dof = data->head_file->greather;
             }
             else
             {
@@ -399,20 +313,20 @@ void drawRays2D(t_data *data)
         {
             rx = data->head_player->px;
             ry = data->head_player->py;
-            dof = 8;
+            dof = data->head_file->greather;
         }
 
-        while (dof < 8)
+        while (dof < data->head_file->greather)
         {
             mx = (int)(rx / 30);
             my = (int)(ry / 30);
 
-            if (mx >= 0 && mx < mapX && my >= 0 && my < mapY && data->head_file->map[my][mx] == '1')
+            if (mx >= 0 && mx < data->head_file->wmap && my >= 0 && my < data->head_file->hmap && data->head_file->map[my][mx] == '1')
             {
                 vx = rx;
                 vy = ry;
                 disV = dist(data->head_player->px, data->head_player->py, vx, vy, ra); // Corrigé ici
-                dof = 8;
+                break ;
             }
             else
             {
@@ -473,7 +387,7 @@ static int	random_next_frame(t_data *data)
     drawmap(data);
 	drawplayer(data, data->head_player->px, data->head_player->py);
 	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
-	mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
+    mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
 	return (0);
 }
 
@@ -501,6 +415,37 @@ int get_pos(int mod, char **map)
 	return (0);
 }
 
+void getdimention(t_file *file) {
+    // Vérification que la carte n'est pas vide
+    if (file->map == NULL || file->map[0] == NULL) {
+        fprintf(stderr, "Erreur : la carte est vide.\n");
+        return;
+    }
+
+    // Initialisation des dimensions à 0
+    file->wmap = 0;
+    file->hmap = 0;
+
+    // Parcours de la carte pour trouver les dimensions
+    for (int i = 0; file->map[i] != NULL; ++i) {
+        int current_length = 0;
+
+        // Calcul de la longueur de la ligne actuelle
+        while (file->map[i][current_length] != '\0') {
+            ++current_length;
+        }
+
+        // Mise à jour de la largeur maximale
+        if (current_length > file->wmap) {
+            file->wmap = current_length;
+        }
+
+        // Mise à jour de la hauteur
+        ++file->hmap;
+    }
+}
+
+
 int ft_init(t_winmlx *winmlx, t_data *data)
 {
 	data->head_player->pa = 0;
@@ -508,6 +453,16 @@ int ft_init(t_winmlx *winmlx, t_data *data)
 	data->head_player->py = (get_pos(0, data->head_file->map) * 30) + 15;
     data->head_player->pdx = cos(data->head_player->pa) * 5;
     data->head_player->pdy = sin(data->head_player->pa) * 5;
+    getdimention(data->head_file);
+    printf("%d\n", data->head_file->hmap);
+    data->head_file->wmap -= 1;
+     printf("%d\n", data->head_file->wmap);
+    if (data->head_file->hmap > data->head_file->wmap)
+        data->head_file->greather = data->head_file->hmap;
+    else
+    {
+        data->head_file->greather = data->head_file->wmap;
+    }
 	winmlx->mlx = mlx_init();
 	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
 	mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, ft_key_hook, data);
