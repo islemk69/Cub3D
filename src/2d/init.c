@@ -49,17 +49,17 @@ void reset_player_position_on_map(t_data *data)
 // 	printf("OH%d\n", data->head_player->angle);
 // }
 
-// bool is_collision(t_data *data, int newX, int newY)
-// {
-//     int mapX = newX / 30;
-//     int mapY = newY / 30;
+ bool is_collision(t_data *data, int newX, int newY)
+ {
+     int map_posX = newX / 30;
+     int map_posY = newY / 30;
 
-//     // Vérifier si la position est à l'intérieur d'une cellule de mur
-//     if (data->head_file->map[mapY][mapX] == '1')
-//         return true;
+     // Vérifier si la position est à l'intérieur d'une cellule de mur
+     if (data->head_file->map[map_posY][map_posX] == '1')
+         return true;
 
-//     return false;
-// }
+     return false;
+ }
 
 
 // void cast_rays(t_data *data) {
@@ -104,37 +104,94 @@ void reset_player_position_on_map(t_data *data)
 // }
 
 
+//int ft_key_hook(int keycode, t_data *data)
+//{
+//    if (keycode == 65362) // haut
+//    {
+//        data->head_player->px += data->head_player->pdx;
+//        data->head_player->py += data->head_player->pdy;
+//    }
+//    else if (keycode == 65364) // bas
+//    {
+//        data->head_player->px -= data->head_player->pdx;
+//        data->head_player->py -= data->head_player->pdy;
+//    }
+//	else if (keycode == 65363) // droite
+//    {
+//        data->head_player->pa += 0.1;
+//        if (data->head_player->pa > 2 * PI)
+//            data->head_player->pa -= 2 * PI;
+//        data->head_player->pdx = cos(data->head_player->pa) * 5;
+//        data->head_player->pdy = sin(data->head_player->pa) * 5;
+//    }
+//	else if (keycode == 65361) // gauche
+//    {
+//        data->head_player->pa -= 0.1;
+//        if (data->head_player->pa < 0)
+//            data->head_player->pa += 2 * PI;
+//        data->head_player->pdx = cos(data->head_player->pa) * 5;
+//        data->head_player->pdy = sin(data->head_player->pa) * 5;
+//    }
+//	return (0);
+//}
+
 int ft_key_hook(int keycode, t_data *data)
 {
+    float moveX, moveY;
+    int newX, newY;
+
     if (keycode == 65362) // haut
     {
-        data->head_player->px += data->head_player->pdx;
-        data->head_player->py += data->head_player->pdy;
+        moveX = data->head_player->pdx;
+        moveY = data->head_player->pdy;
+
+        newX = data->head_player->px + moveX;
+        newY = data->head_player->py;
+
+        if (!is_collision(data, newX, newY))
+            data->head_player->px = newX;
+
+        newX = data->head_player->px;
+        newY = data->head_player->py + moveY;
+
+        if (!is_collision(data, newX, newY))
+            data->head_player->py = newY;
     }
     else if (keycode == 65364) // bas
     {
-        data->head_player->px -= data->head_player->pdx;
-        data->head_player->py -= data->head_player->pdy;
+        moveX = -data->head_player->pdx;
+        moveY = -data->head_player->pdy;
+
+        newX = data->head_player->px + moveX;
+        newY = data->head_player->py;
+
+        if (!is_collision(data, newX, newY))
+            data->head_player->px = newX;
+
+        newX = data->head_player->px;
+        newY = data->head_player->py + moveY;
+
+        if (!is_collision(data, newX, newY))
+            data->head_player->py = newY;
     }
-	else if (keycode == 65363) // droite
+    else if (keycode == 65363) // droite
     {
         data->head_player->pa += 0.1;
-        if (data->head_player->pa > 2 * PI)
-            data->head_player->pa -= 2 * PI;
+        if (data->head_player->pa > 2 * M_PI)
+            data->head_player->pa -= 2 * M_PI;
         data->head_player->pdx = cos(data->head_player->pa) * 5;
         data->head_player->pdy = sin(data->head_player->pa) * 5;
     }
-	else if (keycode == 65361) // gauche
+    else if (keycode == 65361) // gauche
     {
         data->head_player->pa -= 0.1;
         if (data->head_player->pa < 0)
-            data->head_player->pa += 2 * PI;
+            data->head_player->pa += 2 * M_PI;
         data->head_player->pdx = cos(data->head_player->pa) * 5;
         data->head_player->pdy = sin(data->head_player->pa) * 5;
     }
-	return (0);
+    return (0);
 }
-
 
 
 void draw_line(t_data *data, int x1, int y1, int x2, int y2, int color) {
