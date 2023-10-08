@@ -354,6 +354,7 @@ static int	random_next_frame(t_data *data)
 	drawplayer(data, data->head_player->px, data->head_player->py);
     drawRays2D(data);
 	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
+    mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
 	return (0);
 }
 
