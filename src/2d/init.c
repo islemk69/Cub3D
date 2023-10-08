@@ -14,7 +14,7 @@
 
 void    my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color)
 {
-    if ((x >= 0 && x < 900) && (y >= 0 && y < 900))
+    if ((x >= 0 && x < 1920) && (y >= 0 && y < 1080))
         ((int *)draw->addr)[y * (draw->line_length >> 2) + x] = color;
 }
 
@@ -299,138 +299,24 @@ float dist(float ax, float ay, float bx, float by, float ang)
     return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
-//void drawRays2D(t_data *data)
-//{
-//    int dof, mx, my, r;
-//    float rx, ry, ra, xo, yo;
-//    ra = data->head_player->pa - DR * 30;
-//    if (ra < 0)
-//        ra += 2 * PI;
-//    if (ra > 2 * PI)
-//        ra -= 2 * PI;
-//    // check horizontal lines
-//    rx = 0;
-//    ry = 0;
-//    xo = 0;
-//    yo = 0;
-//
-//
-//    for (r = 0; r < 60; r++)
-//    {
-//        dof = 0;
-//        float disH = 100000000, hx=data->head_player->px, hy=data->head_player->py;
-//        float aTan = -1 / tan(ra);
-//        if (ra > PI) // looking up
-//        {
-//            ry = (float)(((int)data->head_player->py / 30) * 30) - 0.0001;
-//            rx = (data->head_player->py - ry) * aTan + data->head_player->px;
-//            yo = -30;
-//            xo = -yo * aTan;
-//        }
-//        if (ra < PI) // looking down
-//        {
-//            ry = (float)(((int)data->head_player->py / 30) * 30) + 30;
-//            rx = (data->head_player->py - ry) * aTan + data->head_player->px;
-//            yo = 30;
-//            xo = -yo * aTan;
-//        }
-//        if (ra == 0 || ra == PI) //looking straight left or right
-//        {
-//            rx = data->head_player->px;
-//            ry = data->head_player->py;
-//            dof = 8;
-//        }
-//
-//        while (dof < 8)
-//        {
-//            mx = (int)(rx / 30);
-//            my = (int)(ry / 30);
-//
-//            // Check if my and mx are within the bounds of the map
-//            if (my >= 0 && my < mapY && mx >= 0 && mx < mapX && data->head_file->map[my][mx] == '1')
-//            {
-//                hx = rx;
-//                hy = ry;
-//                disH = dist(data->head_player->px, data->head_player->px, hx, hy, ra);
-//                dof = 8;
-//
-//            }
-//            else
-//            {
-//                rx += xo;
-//                ry += yo;
-//                dof += 1;
-//            }
-//        }
-//
-//        //check vertical lines
-//        dof = 0;
-//        float disV = 1000000, vx=data->head_player->px, vy=data->head_player->py;
-//        float nTan = -tan(ra);
-//
-//        if (ra > P2 && ra < P3) // looking left
-//        {
-//            rx = (float)(((int)data->head_player->px / 30) * 30) - 0.0001;
-//            ry = (data->head_player->px - rx) * nTan + data->head_player->py;
-//            xo = -30;
-//            yo = -xo * nTan;
-//        }
-//        if (ra < P2 || ra > P3) // looking right
-//        {
-//            rx = (float)(((int)data->head_player->px / 30) * 30) + 30;
-//            ry = (data->head_player->px - rx) * nTan + data->head_player->py;
-//            xo = 30;
-//            yo = -xo * nTan;
-//        }
-//        if (ra == 0 || ra == PI) // looking straight up and down
-//        {
-//            rx = data->head_player->px;
-//            ry = data->head_player->py;
-//            dof = 8;
-//        }
-//
-//        while (dof < 8)
-//        {
-//            mx = (int)(rx / 30);
-//            my = (int)(ry / 30);
-//
-//            // Check if my and mx are within the bounds of the map
-//            if (my >= 0 && my < mapY && mx >= 0 && mx < mapX && data->head_file->map[my][mx] == '1')
-//            {
-//                vx = rx;
-//                vy = ry;
-//                disV = dist(data->head_player->px, data->head_player->px, vx, vy, ra);
-//                dof = 8;
-//            }
-//            else
-//            {
-//                rx += xo;
-//                ry += yo;
-//                dof += 1;
-//            }
-//        }
-//        if (disV < disH){rx = vx; ry = vy;};
-//        if (disH < disV){rx = hx; ry = hy;};
-//        // Dessiner le rayon
-//        int lineEndX = rx; // Utiliser les coordonnées finales
-//        int lineEndY = ry;
-//        draw_line(data, data->head_player->px, data->head_player->py, lineEndX, lineEndY, H_RED);
-//        ra += DR;
-//        if (ra < 0)
-//            ra += 2 * PI;
-//        if (ra > 2 * PI)
-//            ra -= 2 * PI;
-//        // Dessiner le rayon
-//
-//    }
-//
-//}
+float FixAng(float angle)
+{
+    while (angle < 0)
+        angle += 2 * PI;
+    while (angle >= 2 * PI)
+        angle -= 2 * PI;
+    return angle;
+}
+float degToRad(float deg)
+{
+    return deg * PI / 180.0;
+}
 
 void drawRays2D(t_data *data)
 {
     int dof, mx, my, r;
-    float rx, ry, ra, xo, yo;
-    ra = data->head_player->pa - DR * 30;  // Pas besoin de multiplier par 30 ici
+    float rx, ry, ra, xo, yo, disT;
+    ra = data->head_player->pa - DR * 30;
     if (ra < 0)
         ra += 2 * PI;
     if (ra > 2 * PI)
@@ -439,8 +325,11 @@ void drawRays2D(t_data *data)
     ry = 0;
     xo = 0;
     yo = 0;
+//    int winWidth = 1920;  // Updated for new window size
+    float winHeight = 1080.0; // Updated for new window size
+    float midHeight = winHeight / 2;
 
-    for (r = 0; r < 60; r++)
+    for (r = 0; r < 1920; r++)
     {
         dof = 0;
         float disH = 100000000, hx=data->head_player->px, hy=data->head_player->py;
@@ -534,19 +423,37 @@ void drawRays2D(t_data *data)
         }
 
         // Choisir le rayon à dessiner
+        int h_redded = 0;
         if (disV < disH)
         {
             rx = vx;
             ry = vy;
+            disT = disV;
+            h_redded = 1;
         }
         else
         {
             rx = hx;
             ry = hy;
+            disT = disH;
         }
+        float ca = FixAng(data->head_player->pa - ra);
+        disT = disT * cos(degToRad(ca));
+        float lineH = (30 * winHeight) / disT;  // Calcul de la hauteur de la colonne
+        if (lineH > winHeight)
+            lineH = winHeight;  // Limite la hauteur à la hauteur de la fenêtre
 
-        draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
-        ra += DR;
+        int lineOff = midHeight - (lineH / 2);  // Calcul de la position de départ de la colonne
+
+        for (int i = 0; i < lineH; i++)  // Dessine la colonne
+        {
+            if (h_redded == 1)
+                my_mlx_pixel_put(data->head_winmlx, r, lineOff + i, H_REDDED);
+            else
+                my_mlx_pixel_put(data->head_winmlx, r, lineOff + i, H_RED);
+        }
+//        draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
+        ra += DR * (60.0 / 1920.0);
         if (ra < 0)
             ra += 2 * PI;
         if (ra > 2 * PI)
@@ -562,9 +469,9 @@ static int	random_next_frame(t_data *data)
 	data->head_winmlx->img = mlx_new_image(data->head_winmlx->mlx, 1920, 1080);
 	data->head_winmlx->addr = mlx_get_data_addr(data->head_winmlx->img, &data->head_winmlx->bits_per_pixel, &data->head_winmlx->line_length, &data->head_winmlx->endian);
         reset_player_position_on_map(data);
+    drawRays2D(data);
     drawmap(data);
 	drawplayer(data, data->head_player->px, data->head_player->py);
-    drawRays2D(data);
 	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
 	mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
 	return (0);
