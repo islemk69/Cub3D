@@ -364,7 +364,6 @@ void drawRays2D(t_data *data)
         if (ra > 2 * PI)
             ra -= 2 * PI;
         // Dessiner le rayon
-
     }
 
 }
