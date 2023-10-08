@@ -57,6 +57,9 @@ typedef struct s_tmpmap
 typedef struct	s_file
 {
 	char	**map;
+	int		hmap;
+	int		wmap;
+	int		greather;
 	char	*path_to_n;
 	char	*path_to_s;
 	char	*path_to_w;
