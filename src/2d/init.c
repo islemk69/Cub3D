@@ -14,7 +14,7 @@
 
 void    my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color)
 {
-    if ((x >= 0 && x < 1920) && (y >= 0 && y < 1080))
+    if ((x >= 0 && x < WINDOW_WIDTH) && (y >= 0 && y < WINDOW_HEIGHT))
         ((int *)draw->addr)[y * (draw->line_length >> 2) + x] = color;
 }
 
@@ -34,13 +34,13 @@ void reset_player_position_on_map(t_data *data)
         }
         i++;
     }
-    data->head_file->map[(int)data->head_player->py / 30][(int)data->head_player->px / 30] = 'N';
+    data->head_file->map[(int)data->head_player->py / TILE_SIZE][(int)data->head_player->px / TILE_SIZE] = 'N';
 }
 
  bool is_collision(t_data *data, int newX, int newY)
  {
-     int map_posX = newX / 30;
-     int map_posY = newY / 30;
+     int map_posX = newX / TILE_SIZE;
+     int map_posY = newY / TILE_SIZE;
 
      // Vérifier si la position est à l'intérieur d'une cellule de mur
      if (data->head_file->map[map_posY][map_posX] == '1')
@@ -51,48 +51,39 @@ void reset_player_position_on_map(t_data *data)
 
 int ft_key_hook(int keycode, t_data *data)
 {
-    float moveX, moveY;
-    int newX, newY;
+    int new_px, new_py;
 
     if (keycode == 65362) // haut
     {
-        moveX = data->head_player->pdx;
-        moveY = data->head_player->pdy;
+        new_px = data->head_player->px + data->head_player->pdx - 1;
+        new_py = data->head_player->py + data->head_player->pdy - 1;
 
-        newX = data->head_player->px + moveX;
-        newY = data->head_player->py;
+        // Vérifier les collisions pour X
+        if (!is_collision(data, new_px, data->head_player->py))
+            data->head_player->px = new_px + 1;
 
-        if (!is_collision(data, newX, newY))
-            data->head_player->px = newX;
-
-        newX = data->head_player->px;
-        newY = data->head_player->py + moveY;
-
-        if (!is_collision(data, newX, newY))
-            data->head_player->py = newY;
+        // Vérifier les collisions pour Y
+        if (!is_collision(data, data->head_player->px, new_py))
+            data->head_player->py = new_py + 1;
     }
     else if (keycode == 65364) // bas
     {
-        moveX = -data->head_player->pdx;
-        moveY = -data->head_player->pdy;
+        new_px = data->head_player->px - data->head_player->pdx - 1;
+        new_py = data->head_player->py - data->head_player->pdy - 1;
 
-        newX = data->head_player->px + moveX;
-        newY = data->head_player->py;
+        // Vérifier les collisions pour X
+        if (!is_collision(data, new_px, data->head_player->py))
+            data->head_player->px = new_px + 1;
 
-        if (!is_collision(data, newX, newY))
-            data->head_player->px = newX;
-
-        newX = data->head_player->px;
-        newY = data->head_player->py + moveY;
-
-        if (!is_collision(data, newX, newY))
-            data->head_player->py = newY;
+        // Vérifier les collisions pour Y
+        if (!is_collision(data, data->head_player->px, new_py))
+            data->head_player->py = new_py + 1;
     }
     else if (keycode == 65363) // droite
     {
         data->head_player->pa += 0.1;
-        if (data->head_player->pa > 2 * M_PI)
-            data->head_player->pa -= 2 * M_PI;
+        if (data->head_player->pa > 2 * PI)
+            data->head_player->pa -= 2 * PI;
         data->head_player->pdx = cos(data->head_player->pa) * 5;
         data->head_player->pdy = sin(data->head_player->pa) * 5;
     }
@@ -100,12 +91,13 @@ int ft_key_hook(int keycode, t_data *data)
     {
         data->head_player->pa -= 0.1;
         if (data->head_player->pa < 0)
-            data->head_player->pa += 2 * M_PI;
+            data->head_player->pa += 2 * PI;
         data->head_player->pdx = cos(data->head_player->pa) * 5;
         data->head_player->pdy = sin(data->head_player->pa) * 5;
     }
     return (0);
 }
+
 
 
 void draw_line(t_data *data, int x1, int y1, int x2, int y2, int color) {
@@ -138,11 +130,11 @@ void drawsquare(t_data *data, int color, int x, int y)
 	int i = 0;
 	int j;
 	int save = x;
-	while (i < 30)
+	while (i < TILE_SIZE)
 	{
 		j = 0;
 		x = save;
-		while (j < 30)
+		while (j < TILE_SIZE)
 		{
 			if (j == 0 || j == 29 || i == 29 || i == 0)
 				my_mlx_pixel_put(data->head_winmlx, x, y, H_GREY);
@@ -174,10 +166,10 @@ void drawmap(t_data *data)
 				drawsquare(data, H_WHITE, x, y);
 			else if (data->head_file->map[i][j] == 'N')
 				drawsquare(data, H_PINK, x, y);
-			x+=30;
+			x+=TILE_SIZE;
 			j++;
 		}
-		y+=30;
+		y+=TILE_SIZE;
 		i++;
 	}
 }
@@ -213,24 +205,11 @@ float dist(float ax, float ay, float bx, float by, float ang)
     return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
-float FixAng(float angle)
-{
-    while (angle < 0)
-        angle += 2 * PI;
-    while (angle >= 2 * PI)
-        angle -= 2 * PI;
-    return angle;
-}
-float degToRad(float deg)
-{
-    return deg * PI / 180.0;
-}
-
 void drawRays2D(t_data *data)
 {
     int dof, mx, my, r;
     float rx, ry, ra, xo, yo, disT;
-    ra = data->head_player->pa - DR * 30;
+    ra = data->head_player->pa - DR * TILE_SIZE;
     if (ra < 0)
         ra += 2 * PI;
     if (ra > 2 * PI)
@@ -239,11 +218,10 @@ void drawRays2D(t_data *data)
     ry = 0;
     xo = 0;
     yo = 0;
-//    int winWidth = 1920;  // Updated for new window size
-    float winHeight = 1080.0; // Updated for new window size
-    float midHeight = winHeight / 2;
 
-    for (r = 0; r < 1920; r++)
+    float midHeight = WINDOW_HEIGHT / 2;
+
+    for (r = 0; r < WINDOW_WIDTH; r++)
     {
         dof = 0;
         float disH = 100000000, hx=data->head_player->px, hy=data->head_player->py;
@@ -251,16 +229,16 @@ void drawRays2D(t_data *data)
 
         if (ra > PI) // looking up
         {
-            ry = (float)(((int)data->head_player->py / 30) * 30) - 0.0001;
+            ry = (float)(((int)data->head_player->py / TILE_SIZE) * TILE_SIZE) - 0.0001;
             rx = (data->head_player->py - ry) * aTan + data->head_player->px;
-            yo = -30;
+            yo = -TILE_SIZE;
             xo = -yo * aTan;
         }
         else if (ra < PI) // looking down
         {
-            ry = (float)(((int)data->head_player->py / 30) * 30) + 30;
+            ry = (float)(((int)data->head_player->py / TILE_SIZE) * TILE_SIZE) + TILE_SIZE;
             rx = (data->head_player->py - ry) * aTan + data->head_player->px;
-            yo = 30;
+            yo = TILE_SIZE;
             xo = -yo * aTan;
         }
         else //looking straight left or right
@@ -272,14 +250,14 @@ void drawRays2D(t_data *data)
 
         while (dof < data->head_file->greather)
         {
-            mx = (int)(rx / 30);
-            my = (int)(ry / 30);
+            mx = (int)(rx / TILE_SIZE);
+            my = (int)(ry / TILE_SIZE);
 
             if (mx >= 0 && mx < data->head_file->wmap && my >= 0 && my < data->head_file->hmap && data->head_file->map[my][mx] == '1')
             {
                 hx = rx;
                 hy = ry;
-                disH = dist(data->head_player->px, data->head_player->py, hx, hy, ra); // Corrigé ici
+                disH = dist(data->head_player->px, data->head_player->py, hx, hy, ra);
                 dof = data->head_file->greather;
             }
             else
@@ -297,16 +275,16 @@ void drawRays2D(t_data *data)
 
         if (ra > P2 && ra < P3) // looking left
         {
-            rx = (float)(((int)data->head_player->px / 30) * 30) - 0.0001;
+            rx = (float)(((int)data->head_player->px / TILE_SIZE) * TILE_SIZE) - 0.0001;
             ry = (data->head_player->px - rx) * nTan + data->head_player->py;
-            xo = -30;
+            xo = -TILE_SIZE;
             yo = -xo * nTan;
         }
         else if (ra < P2 || ra > P3) // looking right
         {
-            rx = (float)(((int)data->head_player->px / 30) * 30) + 30;
+            rx = (float)(((int)data->head_player->px / TILE_SIZE) * TILE_SIZE) + TILE_SIZE;
             ry = (data->head_player->px - rx) * nTan + data->head_player->py;
-            xo = 30;
+            xo = TILE_SIZE;
             yo = -xo * nTan;
         }
         else // looking straight up and down
@@ -318,14 +296,14 @@ void drawRays2D(t_data *data)
 
         while (dof < data->head_file->greather)
         {
-            mx = (int)(rx / 30);
-            my = (int)(ry / 30);
+            mx = (int)(rx / TILE_SIZE);
+            my = (int)(ry / TILE_SIZE);
 
             if (mx >= 0 && mx < data->head_file->wmap && my >= 0 && my < data->head_file->hmap && data->head_file->map[my][mx] == '1')
             {
                 vx = rx;
                 vy = ry;
-                disV = dist(data->head_player->px, data->head_player->py, vx, vy, ra); // Corrigé ici
+                disV = dist(data->head_player->px, data->head_player->py, vx, vy, ra);
                 break ;
             }
             else
@@ -359,9 +337,9 @@ void drawRays2D(t_data *data)
         disT = disT * cos(ca);
 //        float ca = FixAng(data->head_player->pa - ra);
 //        disT = disT * cos(degToRad(ca));
-        float lineH = (30 * winHeight) / disT;  // Calcul de la hauteur de la colonne
-        if (lineH > winHeight)
-            lineH = winHeight;  // Limite la hauteur à la hauteur de la fenêtre
+        float lineH = (TILE_SIZE * WINDOW_HEIGHT) / disT;  // Calcul de la hauteur de la colonne
+        if (lineH > WINDOW_HEIGHT)
+            lineH = WINDOW_HEIGHT;  // Limite la hauteur à la hauteur de la fenêtre
 
         int lineOff = midHeight - (lineH / 2);  // Calcul de la position de départ de la colonne
 
@@ -373,7 +351,7 @@ void drawRays2D(t_data *data)
                 my_mlx_pixel_put(data->head_winmlx, r, lineOff + i, H_RED);
         }
 //        draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
-        ra += DR * (60.0 / 1920.0);
+        ra += DR * (FOV_ANGLE / WINDOW_WIDTH);
         if (ra < 0)
             ra += 2 * PI;
         if (ra > 2 * PI)
@@ -386,9 +364,9 @@ static int	random_next_frame(t_data *data)
 {
 
 
-	data->head_winmlx->img = mlx_new_image(data->head_winmlx->mlx, 1920, 1080);
+	data->head_winmlx->img = mlx_new_image(data->head_winmlx->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->head_winmlx->addr = mlx_get_data_addr(data->head_winmlx->img, &data->head_winmlx->bits_per_pixel, &data->head_winmlx->line_length, &data->head_winmlx->endian);
-        reset_player_position_on_map(data);
+    reset_player_position_on_map(data);
     drawRays2D(data);
     drawmap(data);
 	drawplayer(data, data->head_player->px, data->head_player->py);
@@ -454,7 +432,14 @@ void getdimention(t_file *file) {
 
 int ft_init(t_winmlx *winmlx, t_data *data)
 {
-	data->head_player->pa = 0;
+    if (data->head_file->orientation == 'N')
+        data->head_player->pa = 3 * PI / 2;
+    else if (data->head_file->orientation == 'S')
+        data->head_player->pa = PI / 2;
+    else if (data->head_file->orientation == 'E')
+        data->head_player->pa = 0;
+    else if (data->head_file->orientation == 'W')
+        data->head_player->pa = PI;
     data->head_player->px = (get_pos(1, data->head_file->map) * 30) + 15;
 	data->head_player->py = (get_pos(0, data->head_file->map) * 30) + 15;
     data->head_player->pdx = cos(data->head_player->pa) * 5;
@@ -470,7 +455,7 @@ int ft_init(t_winmlx *winmlx, t_data *data)
         data->head_file->greather = data->head_file->wmap;
     }
 	winmlx->mlx = mlx_init();
-	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
+	winmlx->mlx_win = mlx_new_window(winmlx->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d");
 	mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, ft_key_hook, data);
 	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
 	mlx_loop(winmlx->mlx);

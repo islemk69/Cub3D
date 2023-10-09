@@ -45,7 +45,7 @@ void	fill_map_tab(t_tmpmap **list, t_file *file)
 
 }
 
-int	check_char(char *str, int *p)
+int	check_char(char *str, int *p, t_file *file)
 {
 	int i = 0;
 	while (str[i])
@@ -54,6 +54,7 @@ int	check_char(char *str, int *p)
 			return (printf("le char %c\n", str[i]), 1);
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
 		{
+            file->orientation = str[i];
 			*p += 1;
 		}
 		i++;
@@ -105,7 +106,7 @@ int parse_map(t_file *file)
 	int p = 0;
 	while (file->map[i])
 	{
-		if (check_char(file->map[i], &p))
+		if (check_char(file->map[i], &p, file))
 			return(1);
 		if (ft_strchr(file->map[i], ' '))
 			replace_space(file->map[i]);
