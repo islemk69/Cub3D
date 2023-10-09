@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/04 13:01:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:47:01 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,22 @@ typedef struct s_tmpmap
 	struct s_tmpmap *next;
 }				t_tmpmap;
 
-typedef struct	s_file
+typedef struct    s_file
 {
-	char	**map;
-	int		hmap;
-	int		wmap;
-	int		greather;
-	char	*path_to_n;
-	char	*path_to_s;
-	char	*path_to_w;
-	char	*path_to_e;
-	char	*color_f_tmp;
-	char	*color_s_tmp;
-	int		color_floor[3];
-	int		color_sky[3];
-}						t_file;
+    char    **map;
+    int        hmap;
+    int        wmap;
+    int        greather;
+    char    *path_to_n;
+    char    *path_to_s;
+    char    *path_to_w;
+    char    *path_to_e;
+    char    *color_f_tmp;
+    char    *color_s_tmp;
+    int        color_floor[3];
+    int        color_sky[3];
+    char    orientation;
+}                        t_file;
 
 typedef struct	s_winmlx
 {
