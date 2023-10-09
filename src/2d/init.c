@@ -14,7 +14,7 @@
 
 void    my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color)
 {
-    if ((x >= 0 && x < 900) && (y >= 0 && y < 900))
+    if ((x >= 0 && x < 1920) && (y >= 0 && y < 1080))
         ((int *)draw->addr)[y * (draw->line_length >> 2) + x] = color;
 }
 
