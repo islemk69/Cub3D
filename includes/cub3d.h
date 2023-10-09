@@ -28,6 +28,7 @@
 # define H_WHITE            0xffffff
 # define H_BLACK            0x000000
 # define H_RED                0xff0000
+# define H_REDDED            0xCC0000
 # define H_GREEN            0x00ff00
 # define H_DARKGREEN        0x01452c
 # define H_BLUE                0x0000ff
