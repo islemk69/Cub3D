@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/08 18:49:10 by blakehal         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:04:31 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,6 +365,7 @@ void drawRays2D(t_data *data)
 
         int lineOff = midHeight - (lineH / 2);  // Calcul de la position de départ de la colonne
 
+        if ()
         for (int i = 0; i < lineH; i++)  // Dessine la colonne
         {
             if (h_redded == 1)
@@ -374,8 +375,8 @@ void drawRays2D(t_data *data)
         }
 //        draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
         ra += DR * (60.0 / 1920.0);
-        if (ra < 0)
-            ra += 2 * PI;
+        if (ra < 0)                                                                                     ffffff          
+            ra += 2 * PI;       
         if (ra > 2 * PI)
             ra -= 2 * PI;
     }
