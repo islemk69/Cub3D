@@ -351,8 +351,14 @@ void drawRays2D(t_data *data)
             ry = hy;
             disT = disH;
         }
-        float ca = FixAng(data->head_player->pa - ra);
-        disT = disT * cos(degToRad(ca));
+        float  ca = data->head_player->pa - ra;
+        if (ca < 0)
+            ca += 2 * PI;
+        if (ca > 2 * PI)
+            ca -= 2 * PI;
+        disT = disT * cos(ca);
+//        float ca = FixAng(data->head_player->pa - ra);
+//        disT = disT * cos(degToRad(ca));
         float lineH = (30 * winHeight) / disT;  // Calcul de la hauteur de la colonne
         if (lineH > winHeight)
             lineH = winHeight;  // Limite la hauteur à la hauteur de la fenêtre
