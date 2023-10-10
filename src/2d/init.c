@@ -336,44 +336,39 @@ void drawRays2D(t_data *data)
 //        float ca = FixAng(data->head_player->pa - ra);
 //        disT = disT * cos(degToRad(ca));
         int lineH = (30 * winHeight) / disT;  // Calcul de la hauteur de la colonne
-        float ty_step = 128.0 / (float)lineH;
+        float ty_step = 120.0 / (float)lineH;
         float ty_off = 0;
-        if (lineH > winHeight)
-        {
+        if (lineH > winHeight) {
             ty_off = (lineH - winHeight) / 2.0;
             lineH = winHeight;  // Limite la hauteur à la hauteur de la fenêtre
         }
         int lineOff = midHeight - (lineH / 2);  // Calcul de la position de départ de la colonne
         float ty = ty_off * ty_step;
-        float tx ;
-        if (h_redded == 1)
-        {
-            tx = (int)(rx / 2.0) % 128;
-            if (ra > 180)
-            {
-                tx = 127 - tx;
+        float tx;
+
+        if (h_redded == 1) {
+            tx = (int)(rx / 2.0) % 30; // Adjusted for 128 pixels wide texture
+            if (ra > 180) {
+                tx = 29 - tx;
+            }
+        } else {
+            tx = (int)(ry / 2.0) % 30; // Adjusted for 128 pixels wide texture
+            if (ra > 90 && ra < 270) {
+                tx = 29 - tx;
             }
         }
-        else
-        {
-            tx = (int)(ry / 2.0) % 128;
-            if (ra > 90 && ra < 270)
-            {
-                tx = 127 - tx;
-            }
-        }
-        for (int i = 0; i < lineOff; i++)
-        {
+
+        for (int i = 0; i < lineOff; i++) {
             my_mlx_pixel_put(data->head_winmlx, r, i, H_BLUE);
         }
-        for (int i = 0; i < lineH; i++)
-        {
+
+        for (int i = 0; i < lineH; i++) {
             float c = get_pixel_color(data, (int)tx, (int)(ty));
             my_mlx_pixel_put(data->head_winmlx, r, i + lineOff, c);
             ty += ty_step;
         }
-        for (int i = lineOff + lineH; i < 1080; i++)
-        {
+
+        for (int i = lineOff + lineH; i < 1080; i++) {
             my_mlx_pixel_put(data->head_winmlx, r, i, H_GREEN);
         }
 //        draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
@@ -534,7 +529,7 @@ int ft_init(t_winmlx *winmlx, t_data *data)
     }
 	winmlx->mlx = mlx_init();
 	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
-    load_texture(data, "src/2d/as.xpm");
+    load_texture(data, "src/2d/30x120.xpm");
 	mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, key_press_hook, data);
     mlx_hook(data->head_winmlx->mlx_win, 3, (1L<<1), key_release_hook, data);
 	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
