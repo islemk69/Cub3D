@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/08 18:49:10 by blakehal         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:43:32 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static bool key_states[65365] = {false};
 
 void    my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color)
 {
@@ -37,64 +39,43 @@ void reset_player_position_on_map(t_data *data)
     data->head_file->map[(int)data->head_player->py / TILE_SIZE][(int)data->head_player->px / TILE_SIZE] = 'N';
 }
 
- bool is_collision(t_data *data, int newX, int newY)
- {
-     int map_posX = newX / TILE_SIZE;
-     int map_posY = newY / TILE_SIZE;
-
-     // Vérifier si la position est à l'intérieur d'une cellule de mur
-     if (data->head_file->map[map_posY][map_posX] == '1')
-         return true;
-
-     return false;
- }
-
-int ft_key_hook(int keycode, t_data *data)
+bool is_collision(t_data *data, float newX, float newY, float marge)
 {
-    int new_px, new_py;
+    // Ajustez la marge de collision en fonction de la direction du déplacement
+    int signX = (data->head_player->pdx > 0) ? 1 : -1;
+    int signY = (data->head_player->pdy > 0) ? 1 : -1;
 
-    if (keycode == 65362) // haut
+    newX += signX * marge; 
+    newY += signY * marge; 
+
+    int map_posX = newX / 30;
+    int map_posY = newY / 30;
+
+    // Vérifier si la position ajustée est à l'intérieur d'une cellule de mur
+    if (map_posX >= 0 && map_posY >= 0 &&
+        map_posY < data->head_file->hmap && map_posX < data->head_file->wmap &&
+        data->head_file->map[map_posY][map_posX] == '1')
     {
-        new_px = data->head_player->px + data->head_player->pdx - 1;
-        new_py = data->head_player->py + data->head_player->pdy - 1;
-
-        // Vérifier les collisions pour X
-        if (!is_collision(data, new_px, data->head_player->py))
-            data->head_player->px = new_px + 1;
-
-        // Vérifier les collisions pour Y
-        if (!is_collision(data, data->head_player->px, new_py))
-            data->head_player->py = new_py + 1;
+        return true;
     }
-    else if (keycode == 65364) // bas
-    {
-        new_px = data->head_player->px - data->head_player->pdx - 1;
-        new_py = data->head_player->py - data->head_player->pdy - 1;
 
-        // Vérifier les collisions pour X
-        if (!is_collision(data, new_px, data->head_player->py))
-            data->head_player->px = new_px + 1;
+    return false;
+}
 
-        // Vérifier les collisions pour Y
-        if (!is_collision(data, data->head_player->px, new_py))
-            data->head_player->py = new_py + 1;
-    }
-    else if (keycode == 65363) // droite
-    {
-        data->head_player->pa += 0.1;
-        if (data->head_player->pa > 2 * PI)
-            data->head_player->pa -= 2 * PI;
-        data->head_player->pdx = cos(data->head_player->pa) * 5;
-        data->head_player->pdy = sin(data->head_player->pa) * 5;
-    }
-    else if (keycode == 65361) // gauche
-    {
-        data->head_player->pa -= 0.1;
-        if (data->head_player->pa < 0)
-            data->head_player->pa += 2 * PI;
-        data->head_player->pdx = cos(data->head_player->pa) * 5;
-        data->head_player->pdy = sin(data->head_player->pa) * 5;
-    }
+
+int key_press_hook(int keycode, t_data *data)
+{
+    (void)data;
+    if (keycode >= 0 && keycode < 65365)
+        key_states[keycode] = true;
+    return (0);
+}
+
+int key_release_hook(int keycode, t_data *data)
+{
+    (void)data;
+    if (keycode >= 0 && keycode < 65365)
+        key_states[keycode] = false;
     return (0);
 }
 
@@ -203,6 +184,22 @@ float dist(float ax, float ay, float bx, float by, float ang)
 {
     (void)ang;
     return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+}
+float FixAng(float angle)
+{
+    while (angle < 0)
+        angle += 2 * PI;
+    while (angle >= 2 * PI)
+        angle -= 2 * PI;
+    return angle;
+}
+float degToRad(float deg)
+{
+    return deg * PI / 180.0;
+}
+
+int get_pixel_color(t_data *data, int x, int y) {
+    return *(int *)(data->head_texture->addr + (y * data->head_texture->line_length + x * (data->head_texture->bits_per_pixel / 8)));
 }
 
 void drawRays2D(t_data *data)
@@ -315,13 +312,13 @@ void drawRays2D(t_data *data)
         }
 
         // Choisir le rayon à dessiner
-        int h_redded = 0;
+        float h_redded = 1;
         if (disV < disH)
         {
             rx = vx;
             ry = vy;
             disT = disV;
-            h_redded = 1;
+            h_redded = 0.5;
         }
         else
         {
@@ -337,23 +334,46 @@ void drawRays2D(t_data *data)
         disT = disT * cos(ca);
 //        float ca = FixAng(data->head_player->pa - ra);
 //        disT = disT * cos(degToRad(ca));
-        float lineH = (TILE_SIZE * WINDOW_HEIGHT) / disT;  // Calcul de la hauteur de la colonne
-        if (lineH > WINDOW_HEIGHT)
-            lineH = WINDOW_HEIGHT;  // Limite la hauteur à la hauteur de la fenêtre
-
+        int lineH = (30 * winHeight) / disT;  // Calcul de la hauteur de la colonne
+        float ty_step = 120.0 / (float)lineH;
+        float ty_off = 0;
+        if (lineH > winHeight) {
+            ty_off = (lineH - winHeight) / 2.0;
+            lineH = winHeight;  // Limite la hauteur à la hauteur de la fenêtre
+        }
         int lineOff = midHeight - (lineH / 2);  // Calcul de la position de départ de la colonne
+        float ty = ty_off * ty_step;
+        float tx;
 
-        for (int i = 0; i < lineH; i++)  // Dessine la colonne
-        {
-            if (h_redded == 1)
-                my_mlx_pixel_put(data->head_winmlx, r, lineOff + i, H_REDDED);
-            else
-                my_mlx_pixel_put(data->head_winmlx, r, lineOff + i, H_RED);
+        if (h_redded == 1) {
+            tx = (int)(rx / 2.0) % 30; // Adjusted for 128 pixels wide texture
+            if (ra > 180) {
+                tx = 29 - tx;
+            }
+        } else {
+            tx = (int)(ry / 2.0) % 30; // Adjusted for 128 pixels wide texture
+            if (ra > 90 && ra < 270) {
+                tx = 29 - tx;
+            }
+        }
+
+        for (int i = 0; i < lineOff; i++) {
+            my_mlx_pixel_put(data->head_winmlx, r, i, H_BLUE);
+        }
+
+        for (int i = 0; i < lineH; i++) {
+            float c = get_pixel_color(data, (int)tx, (int)(ty));
+            my_mlx_pixel_put(data->head_winmlx, r, i + lineOff, c);
+            ty += ty_step;
+        }
+
+        for (int i = lineOff + lineH; i < 1080; i++) {
+            my_mlx_pixel_put(data->head_winmlx, r, i, H_GREEN);
         }
 //        draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
-        ra += DR * (FOV_ANGLE / WINDOW_WIDTH);
-        if (ra < 0)
-            ra += 2 * PI;
+        ra += DR * (60.0 / 1920.0);
+        if (ra < 0)   
+            ra += 2 * PI;       
         if (ra > 2 * PI)
             ra -= 2 * PI;
     }
@@ -366,15 +386,58 @@ static int	random_next_frame(t_data *data)
 
 	data->head_winmlx->img = mlx_new_image(data->head_winmlx->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->head_winmlx->addr = mlx_get_data_addr(data->head_winmlx->img, &data->head_winmlx->bits_per_pixel, &data->head_winmlx->line_length, &data->head_winmlx->endian);
+    float moveSpeed = 0.2;
+    float rotateSpeed = 0.02;
+
+    if (key_states[65362]) // haut
+    {
+        float newX = data->head_player->px + data->head_player->pdx * moveSpeed;
+        float newY = data->head_player->py + data->head_player->pdy * moveSpeed;
+
+        if (!is_collision(data, newX, newY, 5))
+        {
+            data->head_player->px = newX;
+            data->head_player->py = newY;
+        }
+    }
+
+    if (key_states[65364]) // bas
+    {
+        float newX = data->head_player->px - data->head_player->pdx * moveSpeed;
+        float newY = data->head_player->py - data->head_player->pdy * moveSpeed;
+        
+        if (!is_collision(data, newX, newY, -5))
+        {
+            data->head_player->px = newX;
+            data->head_player->py = newY;
+        }
+    }
+
+    if (key_states[65363]) // droite
+    {
+        data->head_player->pa += rotateSpeed;
+        if (data->head_player->pa > 2 * M_PI)
+            data->head_player->pa -= 2 * M_PI;
+        data->head_player->pdx = cos(data->head_player->pa) * 5;
+        data->head_player->pdy = sin(data->head_player->pa) * 5;
+    }
+
+    if (key_states[65361]) // gauche
+    {
+        data->head_player->pa -= rotateSpeed;
+        if (data->head_player->pa < 0)
+            data->head_player->pa += 2 * M_PI;
+        data->head_player->pdx = cos(data->head_player->pa) * 5;
+        data->head_player->pdy = sin(data->head_player->pa) * 5;
+    }
     reset_player_position_on_map(data);
     drawRays2D(data);
     drawmap(data);
-	drawplayer(data, data->head_player->px, data->head_player->py);
-	mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
+    drawplayer(data, data->head_player->px, data->head_player->py);
+    mlx_put_image_to_window(data->head_winmlx->mlx, data->head_winmlx->mlx_win, data->head_winmlx->img, 0, 0);
     mlx_destroy_image(data->head_winmlx->mlx, data->head_winmlx->img);
-	return (0);
+    return (0);
 }
-
 
 int get_pos(int mod, char **map)
 {
@@ -429,10 +492,19 @@ void getdimention(t_file *file) {
     }
 }
 
+int load_texture(t_data *data, char *path)
+{
+    data->head_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, path, &data->head_texture->width, &data->head_texture->height);
+    
+    data->head_texture->addr = mlx_get_data_addr(data->head_texture->img, &data->head_texture->bits_per_pixel, &data->head_texture->line_length, &data->head_texture->endian);
+    return (0);
+}
+
+
 
 int ft_init(t_winmlx *winmlx, t_data *data)
 {
-    if (data->head_file->orientation == 'N')
+	 if (data->head_file->orientation == 'N')
         data->head_player->pa = 3 * PI / 2;
     else if (data->head_file->orientation == 'S')
         data->head_player->pa = PI / 2;
@@ -455,8 +527,10 @@ int ft_init(t_winmlx *winmlx, t_data *data)
         data->head_file->greather = data->head_file->wmap;
     }
 	winmlx->mlx = mlx_init();
-	winmlx->mlx_win = mlx_new_window(winmlx->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d");
-	mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, ft_key_hook, data);
+	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
+    load_texture(data, "src/2d/30x120.xpm");
+	mlx_hook(data->head_winmlx->mlx_win, 2, 1L << 0, key_press_hook, data);
+    mlx_hook(data->head_winmlx->mlx_win, 3, (1L<<1), key_release_hook, data);
 	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
 	mlx_loop(winmlx->mlx);
 	return (0);

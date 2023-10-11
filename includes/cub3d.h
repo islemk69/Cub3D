@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/04 13:01:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:35:36 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,16 @@
 # define WINDOW_WIDTH 1920
 
 
-
-
+typedef struct s_texture
+{
+    void *img;
+    char *addr;
+    int width;
+    int height;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+} t_texture;
 
 typedef struct s_tmpmap
 {
@@ -56,22 +64,23 @@ typedef struct s_tmpmap
 	struct s_tmpmap *next;
 }				t_tmpmap;
 
-typedef struct	s_file
+typedef struct    s_file
 {
-	char	**map;
-	int		hmap;
-	int		wmap;
-	int		greather;
-	char	*path_to_n;
-	char	*path_to_s;
-	char	*path_to_w;
-	char	*path_to_e;
-	char	*color_f_tmp;
-	char	*color_s_tmp;
-	int		color_floor[3];
-	int		color_sky[3];
+    char    **map;
+    int        hmap;
+    int        wmap;
+    int        greather;
+    char    *path_to_n;
+    char    *path_to_s;
+    char    *path_to_w;
+    char    *path_to_e;
+    char    *color_f_tmp;
+    char    *color_s_tmp;
+    int        color_floor[3];
+    int        color_sky[3];
     char    orientation;
-}						t_file;
+}                        t_file;
+
 
 typedef struct	s_winmlx
 {
@@ -98,6 +107,7 @@ typedef struct s_data
 	t_file	*head_file;
 	t_winmlx *head_winmlx;
 	t_player *head_player;
+	t_texture *head_texture;
 }				t_data;
 
 int	parsing(char *file, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/01 17:34:20 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:47:49 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,22 @@ void	fill_map_tab(t_tmpmap **list, t_file *file)
 
 }
 
-int	check_char(char *str, int *p, t_file *file)
+int    check_char(char *str, int *p, t_file *file)
 {
-	int i = 0;
-	while (str[i])
-	{
-		if (str[i] != '0' && str[i] != '1' && str[i] != ' ' && str[i] != '\n' && str[i] != 'N' && str[i] != 'S' && str[i] != 'E' && str[i] != 'W')
-			return (printf("le char %c\n", str[i]), 1);
-		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
-		{
+    int i = 0;
+    while (str[i])
+    {
+        if (str[i] != '0' && str[i] != '1' && str[i] != ' ' && str[i] != '\n' && str[i] != 'N' && str[i] != 'S' && str[i] != 'E' && str[i] != 'W')
+            return (printf("le char %c\n", str[i]), 1);
+        if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
+        {
             file->orientation = str[i];
-			*p += 1;
-		}
-		i++;
-	}
-	return (0);
+            *p += 1;
+        }
+        i++;
+    }
+    return (0);
 }
-
 void replace_space(char *line)
 {
 	while (*line)

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:41:21 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/04 14:00:00 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:36:20 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void init_struct(t_data *data)
 	ft_bzero(data->head_player, sizeof(t_player));
 	data->head_winmlx = ft_calloc(1, sizeof(t_winmlx));
 	ft_bzero(data->head_winmlx, sizeof(t_winmlx));
+	data->head_texture = ft_calloc(1, sizeof(t_texture));
+	ft_bzero(data->head_texture, sizeof(t_texture));
 }
 
 
