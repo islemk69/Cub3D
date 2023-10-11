@@ -37,14 +37,15 @@
 # define H_PINK                0xffc0cb
 # define H_PURPLE            0x800080
 # define H_GREY                0x808080
-#define PI 3.14159265
-#define TILE_SIZE 30
-#define FOV_ANGLE 60
-#define mapX 8      // map width
-#define mapY 8      // map height
-#define P2 PI / 2
-#define P3 3 * PI / 2
-# define DR 0.0174533 //one degre in radiant
+# define PI 3.14159265
+# define TILE_SIZE 30
+# define FOV_ANGLE 60.0
+# define P2 PI / 2
+# define P3 3 * PI / 2
+# define DR 0.0174533
+# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 1920
+
 
 typedef struct s_texture
 {
@@ -79,6 +80,7 @@ typedef struct    s_file
     int        color_sky[3];
     char    orientation;
 }                        t_file;
+
 
 typedef struct	s_winmlx
 {
