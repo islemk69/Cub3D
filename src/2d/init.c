@@ -198,8 +198,34 @@ float degToRad(float deg)
     return deg * PI / 180.0;
 }
 
-int get_pixel_color(t_data *data, int x, int y) {
-    return *(int *)(data->head_texture->addr + (y * data->head_texture->line_length + x * (data->head_texture->bits_per_pixel / 8)));
+int get_pixel_color(t_texture *texture, int x, int y) {
+    return *(int *)(texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8)));
+}
+
+void draw_texture(t_texture *texture, t_data *data, int lineOff, int lineH, int r, float tx, float *ty, float ty_step)
+{
+	for (int i = 0; i < lineOff; i++) {
+		my_mlx_pixel_put(data->head_winmlx, r, i, H_BLUE);
+	}
+
+	for (int i = 0; i < lineH; i++) {
+		float c = get_pixel_color(texture, (int)tx, (int)(*ty));
+		my_mlx_pixel_put(data->head_winmlx, r, i + lineOff, c);
+		*ty += ty_step;
+	}
+
+	for (int i = lineOff + lineH; i < 1080; i++) {
+		my_mlx_pixel_put(data->head_winmlx, r, i, H_GREEN);
+	}
+}
+
+float fix_angle(float angle)
+{
+	while (angle < 0)
+		angle += 2 * PI;
+	while (angle >= 2 * PI)
+		angle -= 2 * PI;
+	return angle;
 }
 
 void drawRays2D(t_data *data)
@@ -357,21 +383,47 @@ void drawRays2D(t_data *data)
                 tx = 29 - tx;
             }
         }
+		if (h_redded == 1) { // Ray hit a horizontal wall
+			if (ra >= 0 && ra < PI) {
+				// South texture
+				draw_texture(data->south_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+			} else {
+				// North texture
+				draw_texture(data->north_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+			}
+		} else { // Ray hit a vertical wall
+			if (ra >= PI/2 && ra < 3*PI/2) {
+				// West texture
+				draw_texture(data->west_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+			} else {
+				// East texture
+				draw_texture(data->east_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+			}
+		}
 
-        for (int i = 0; i < lineOff; i++) {
-            my_mlx_pixel_put(data->head_winmlx, r, i, H_BLUE);
-        }
-
-        for (int i = 0; i < lineH; i++) {
-            float c = get_pixel_color(data, (int)tx, (int)(ty));
-            my_mlx_pixel_put(data->head_winmlx, r, i + lineOff, c);
-            ty += ty_step;
-        }
-
-        for (int i = lineOff + lineH; i < 1080; i++) {
-            my_mlx_pixel_put(data->head_winmlx, r, i, H_GREEN);
-        }
-//        draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
+//		float angle = fix_angle(data->head_player->pa - ra);
+//		if ((angle > 3 * PI / 4 && angle < 5 * PI / 4) || (angle > -PI / 4 && angle < PI / 4)) // nord
+//		{
+//			draw_texture(data->north_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+//			printf("1");
+//		}
+//		else if (angle > PI / 4 && angle < 3 * PI / 4) // est
+//		{
+//			draw_texture(data->east_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+//			printf("2");
+//		}
+//		else if ((angle > 5 * PI / 4 && angle < 7 * PI / 4) || (angle >= -PI && angle < -3 * PI / 4)) // ouest
+//		{
+//			draw_texture(data->west_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+//			printf("3");
+//		}
+//		else // Sud
+//		{
+//			draw_texture(data->south_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+//			printf("4");
+//		}
+//		draw_texture(data->south_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
+//      draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
         ra += DR * (60.0 / 1920.0);
         if (ra < 0)   
             ra += 2 * PI;       
@@ -379,7 +431,6 @@ void drawRays2D(t_data *data)
             ra -= 2 * PI;
     }
 }
-
 
 static int	random_next_frame(t_data *data)
 {
@@ -495,9 +546,15 @@ void getdimention(t_file *file) {
 
 int load_texture(t_data *data, char *path)
 {
-    data->head_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, path, &data->head_texture->width, &data->head_texture->height);
-    
-    data->head_texture->addr = mlx_get_data_addr(data->head_texture->img, &data->head_texture->bits_per_pixel, &data->head_texture->line_length, &data->head_texture->endian);
+	(void)path;
+    data->north_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, "src/2d/north.xpm", &data->north_texture->width, &data->north_texture->height);
+    data->north_texture->addr = mlx_get_data_addr(data->north_texture->img, &data->north_texture->bits_per_pixel, &data->north_texture->line_length, &data->north_texture->endian);
+	data->south_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, "src/2d/sud.xpm", &data->south_texture->width, &data->south_texture->height);
+	data->south_texture->addr = mlx_get_data_addr(data->south_texture->img, &data->south_texture->bits_per_pixel, &data->south_texture->line_length, &data->south_texture->endian);
+	data->east_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, "src/2d/est.xpm", &data->east_texture->width, &data->east_texture->height);
+	data->east_texture->addr = mlx_get_data_addr(data->east_texture->img, &data->east_texture->bits_per_pixel, &data->east_texture->line_length, &data->east_texture->endian);
+	data->west_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, "src/2d/ouest.xpm", &data->west_texture->width, &data->west_texture->height);
+	data->west_texture->addr = mlx_get_data_addr(data->west_texture->img, &data->west_texture->bits_per_pixel, &data->west_texture->line_length, &data->west_texture->endian);
     return (0);
 }
 

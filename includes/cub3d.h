@@ -105,7 +105,10 @@ typedef struct s_data
 	t_file	*head_file;
 	t_winmlx *head_winmlx;
 	t_player *head_player;
-	t_texture *head_texture;
+	t_texture *north_texture;
+	t_texture *south_texture;
+	t_texture *west_texture;
+	t_texture *east_texture;
 }				t_data;
 
 int	parsing(char *file, t_data *data);

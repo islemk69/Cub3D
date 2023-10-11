@@ -21,8 +21,14 @@ void init_struct(t_data *data)
 	ft_bzero(data->head_player, sizeof(t_player));
 	data->head_winmlx = ft_calloc(1, sizeof(t_winmlx));
 	ft_bzero(data->head_winmlx, sizeof(t_winmlx));
-	data->head_texture = ft_calloc(1, sizeof(t_texture));
-	ft_bzero(data->head_texture, sizeof(t_texture));
+	data->north_texture = ft_calloc(1, sizeof(t_texture));
+	ft_bzero(data->north_texture, sizeof(t_texture));
+	data->south_texture = ft_calloc(1, sizeof(t_texture));
+	ft_bzero(data->south_texture, sizeof(t_texture));
+	data->east_texture = ft_calloc(1, sizeof(t_texture));
+	ft_bzero(data->east_texture, sizeof(t_texture));
+	data->west_texture = ft_calloc(1, sizeof(t_texture));
+	ft_bzero(data->west_texture, sizeof(t_texture));
 }
 
 
