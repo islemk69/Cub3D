@@ -204,9 +204,9 @@ int get_pixel_color(t_texture *texture, int x, int y) {
 
 void draw_texture(t_texture *texture, t_data *data, int lineOff, int lineH, int r, float tx, float *ty, float ty_step)
 {
-	for (int i = 0; i < lineOff; i++) {
-		my_mlx_pixel_put(data->head_winmlx, r, i, H_BLUE);
-	}
+	// for (int i = 0; i < lineOff; i++) {
+	// 	my_mlx_pixel_put(data->head_winmlx, r, i, SKY);
+	// }
 
 	for (int i = 0; i < lineH; i++) {
 		float c = get_pixel_color(texture, (int)tx, (int)(*ty));
@@ -215,7 +215,7 @@ void draw_texture(t_texture *texture, t_data *data, int lineOff, int lineH, int 
 	}
 
 	for (int i = lineOff + lineH; i < 1080; i++) {
-		my_mlx_pixel_put(data->head_winmlx, r, i, H_GREEN);
+		my_mlx_pixel_put(data->head_winmlx, r, i, H_GREY);
 	}
 }
 
@@ -245,6 +245,23 @@ void drawRays2D(t_data *data)
     float winHeight = 1080.0; // Updated for new window size
     float midHeight = winHeight / 2;
 
+for (int y = 0; y < 1080 / 2; y++) {
+    for (int x = 0; x < 1920; x++) {
+        float factor = (x * 1.0) / 1920;  // Normalized factor
+        int texX = (int)(factor * data->ciel_texture->width + ra * data->ciel_texture->width / (2 * PI)) % data->ciel_texture->width;
+
+        // Adjust texX based on rotation to avoid repetition
+        texX = (texX + data->ciel_texture->width) % data->ciel_texture->width;
+
+        int texY = data->ciel_texture->height - (y * data->ciel_texture->height / (1080 / 2));
+
+        // Get the color of the texture pixel
+        int color = ((int *)data->ciel_texture->addr)[texY * data->ciel_texture->width + texX];
+
+        // Draw the pixel on the screen
+        my_mlx_pixel_put(data->head_winmlx, x, y, color);
+    }
+}
     for (r = 0; r < 1920; r++)
     {
         dof = 0;
@@ -400,30 +417,6 @@ void drawRays2D(t_data *data)
 				draw_texture(data->east_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
 			}
 		}
-
-//		float angle = fix_angle(data->head_player->pa - ra);
-//		if ((angle > 3 * PI / 4 && angle < 5 * PI / 4) || (angle > -PI / 4 && angle < PI / 4)) // nord
-//		{
-//			draw_texture(data->north_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
-//			printf("1");
-//		}
-//		else if (angle > PI / 4 && angle < 3 * PI / 4) // est
-//		{
-//			draw_texture(data->east_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
-//			printf("2");
-//		}
-//		else if ((angle > 5 * PI / 4 && angle < 7 * PI / 4) || (angle >= -PI && angle < -3 * PI / 4)) // ouest
-//		{
-//			draw_texture(data->west_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
-//			printf("3");
-//		}
-//		else // Sud
-//		{
-//			draw_texture(data->south_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
-//			printf("4");
-//		}
-//		draw_texture(data->south_texture, data, lineOff, lineH, r, tx, &ty, ty_step);
-//      draw_line(data, data->head_player->px, data->head_player->py, rx, ry, H_RED);
         ra += DR * (60.0 / 1920.0);
         if (ra < 0)   
             ra += 2 * PI;       
@@ -555,6 +548,8 @@ int load_texture(t_data *data, char *path)
 	data->east_texture->addr = mlx_get_data_addr(data->east_texture->img, &data->east_texture->bits_per_pixel, &data->east_texture->line_length, &data->east_texture->endian);
 	data->west_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, "src/2d/ouest.xpm", &data->west_texture->width, &data->west_texture->height);
 	data->west_texture->addr = mlx_get_data_addr(data->west_texture->img, &data->west_texture->bits_per_pixel, &data->west_texture->line_length, &data->west_texture->endian);
+    data->ciel_texture->img = mlx_xpm_file_to_image(data->head_winmlx->mlx, "src/2d/ciel.xpm", &data->ciel_texture->width, &data->ciel_texture->height);
+	data->ciel_texture->addr = mlx_get_data_addr(data->ciel_texture->img, &data->ciel_texture->bits_per_pixel, &data->ciel_texture->line_length, &data->ciel_texture->endian);
     return (0);
 }
 

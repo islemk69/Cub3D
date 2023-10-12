@@ -69,23 +69,6 @@ static int	open_file(char *file, t_data *data)
 	return (0);
 }
 
-void	init_struct_file(t_file *file)
-{
-	file->map = NULL;
-	file->path_to_n = NULL;
-	file->path_to_s = NULL;
-	file->path_to_e = NULL;
-	file->path_to_w = NULL;
-	file->color_f_tmp = NULL;
-	file->color_s_tmp = NULL;
-	file->color_floor[0] = 0;
-	file->color_floor[1] = 0;
-	file->color_floor[2] = 0;
-	file->color_sky[0] = 0;
-	file->color_sky[1] = 0;
-	file->color_sky[2] = 0;
-}
-
 void ontest(char *line)
 {
 	printf("%s\n", line);
@@ -98,7 +81,6 @@ static int	check_file(int fd, t_file *file)
 
 	flg = 0;
 	line = NULL;
-	init_struct_file(file);
 	t_tmpmap *listmap;
 	listmap = NULL;
 	while (42)

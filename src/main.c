@@ -29,6 +29,8 @@ void init_struct(t_data *data)
 	ft_bzero(data->east_texture, sizeof(t_texture));
 	data->west_texture = ft_calloc(1, sizeof(t_texture));
 	ft_bzero(data->west_texture, sizeof(t_texture));
+	data->ciel_texture = ft_calloc(1, sizeof(t_texture));
+	ft_bzero(data->ciel_texture, sizeof(t_texture));
 }
 
 

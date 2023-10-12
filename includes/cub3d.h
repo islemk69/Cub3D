@@ -37,6 +37,7 @@
 # define H_PINK                0xffc0cb
 # define H_PURPLE            0x800080
 # define H_GREY                0x808080
+# define SKY				0x77B5FE
 #define PI 3.14159265
 #define TILE_SIZE 30
 #define FOV_ANGLE 60
@@ -109,6 +110,7 @@ typedef struct s_data
 	t_texture *south_texture;
 	t_texture *west_texture;
 	t_texture *east_texture;
+	t_texture *ciel_texture;
 }				t_data;
 
 int	parsing(char *file, t_data *data);
