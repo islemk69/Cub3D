@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/01 17:36:38 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:08:26 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	parsing(char *file, t_data *data)
 {	
 	if (check_extention(file, "ebuc.") || open_file(file, data))
 		return (1);
-	if ( parse_map(data->head_file))
+	if ( parse_map(data->file))
 		return (ft_putstr_fd("Error Map\n", 2), 1);
 	return (0);
 }
@@ -64,7 +64,7 @@ static int	open_file(char *file, t_data *data)
 	fd = open(file, O_RDONLY);
 	if (fd < 1)
 		return (ft_putstr_fd("Error Failed to Open File\n", 2), 1);
-	if (check_file(fd, data->head_file))
+	if (check_file(fd, data->file))
 		return (1);
 	return (0);
 }
