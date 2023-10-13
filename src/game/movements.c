@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:28:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/13 15:41:07 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:36:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int key_press_hook(int keycode, t_data *data)
 {
     (void)data;
+	printf("%d\n", keycode);
     if (keycode >= 0 && keycode < 65365)
         data->player->key_states[keycode] = true;
     return (0);
@@ -28,15 +29,8 @@ int key_release_hook(int keycode, t_data *data)
     return (0);
 }
 
-bool is_collision(t_data *data, float newX, float newY, float marge)
+bool is_collision(t_data *data, float newX, float newY)
 {
-    // Ajustez la marge de collision en fonction de la direction du déplacement
-    int signX = (data->player->pdx > 0) ? 1 : -1;
-    int signY = (data->player->pdy > 0) ? 1 : -1;
-
-    newX += signX * marge; 
-    newY += signY * marge; 
-
     int map_posX = newX / 30;
     int map_posY = newY / 30;
 
@@ -56,28 +50,84 @@ void move(t_data *data)
     float moveSpeed = 0.4;
     float rotateSpeed = 0.02;
 
-    if (data->player->key_states[65362]) // haut
+    if (data->player->key_states[119]) // W
     {
         float newX = data->player->px + data->player->pdx * moveSpeed;
         float newY = data->player->py + data->player->pdy * moveSpeed;
-        if (!is_collision(data, newX, newY, 5))
+        if (!is_collision(data, newX, newY))
         {
             data->player->px = newX;
             data->player->py = newY;
         }
+        else if (!is_collision(data, data->player->px + data->player->pdx * moveSpeed, data->player->py))
+        {
+            data->player->px += data->player->pdx * moveSpeed;
+        }
+        else if (!is_collision(data, data->player->px, data->player->py + data->player->pdy * moveSpeed))
+        {
+            data->player->py += data->player->pdy * moveSpeed;
+        }
     }
-    if (data->player->key_states[65364]) // bas
+    if (data->player->key_states[115]) // S
     {
         float newX = data->player->px - data->player->pdx * moveSpeed;
         float newY = data->player->py - data->player->pdy * moveSpeed;
-        
-        if (!is_collision(data, newX, newY, -5))
+        if (!is_collision(data, newX, newY))
         {
             data->player->px = newX;
             data->player->py = newY;
         }
+        else if (!is_collision(data, data->player->px - data->player->pdx * moveSpeed, data->player->py))
+        {
+            data->player->px -= data->player->pdx * moveSpeed;
+        }
+        else if (!is_collision(data, data->player->px, data->player->py - data->player->pdy * moveSpeed))
+        {
+            data->player->py -= data->player->pdy * moveSpeed;
+        }
     }
-    if (data->player->key_states[65363]) // droite
+    // ... (similar adjustments for 'A', 'D' keys)
+	if (data->player->key_states[97]) // A
+{
+    float newX = data->player->px - cos(data->player->pa + PI/2) * moveSpeed * 3;
+    float newY = data->player->py - sin(data->player->pa + PI/2) * moveSpeed * 3;
+
+    if (!is_collision(data, newX, newY))
+    {
+        data->player->px = newX;
+        data->player->py = newY;
+    }
+    else if (!is_collision(data, data->player->px - cos(data->player->pa + PI/2) * moveSpeed * 3, data->player->py))
+    {
+        data->player->px -= cos(data->player->pa + PI/2) * moveSpeed * 3;
+    }
+    else if (!is_collision(data, data->player->px, data->player->py - sin(data->player->pa + PI/2) * moveSpeed * 3))
+    {
+        data->player->py -= sin(data->player->pa + PI/2) * moveSpeed * 3;
+    }
+}
+
+if (data->player->key_states[100]) // D
+{
+    float newX = data->player->px + cos(data->player->pa + PI/2) * moveSpeed * 3;
+    float newY = data->player->py + sin(data->player->pa + PI/2) * moveSpeed * 3;
+
+    if (!is_collision(data, newX, newY))
+    {
+        data->player->px = newX;
+        data->player->py = newY;
+    }
+    else if (!is_collision(data, data->player->px + cos(data->player->pa + PI/2) * moveSpeed * 3, data->player->py))
+    {
+        data->player->px += cos(data->player->pa + PI/2) * moveSpeed * 3;
+    }
+    else if (!is_collision(data, data->player->px, data->player->py + sin(data->player->pa + PI/2) * moveSpeed * 3))
+    {
+        data->player->py += sin(data->player->pa + PI/2) * moveSpeed * 3;
+    }
+}
+
+    if (data->player->key_states[65363]) // rotation camera fleche droite
     {
         data->player->pa += rotateSpeed;
         if (data->player->pa > 2 * PI)
@@ -85,7 +135,7 @@ void move(t_data *data)
         data->player->pdx = cos(data->player->pa) * 5;
         data->player->pdy = sin(data->player->pa) * 5;
     }
-    if (data->player->key_states[65361]) // gauche
+    if (data->player->key_states[65361]) // rotation camera fleche gauche
     {
         data->player->pa -= rotateSpeed;
         if (data->player->pa < 0)
