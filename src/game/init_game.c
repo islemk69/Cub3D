@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 16:56:52 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:43:31 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	random_next_frame(t_data *data)
 		&data->winmlx->endian);
 	move(data);
 	ray_cast(data, data->scene);
-	drawmap(data);
+	drawmap(data, 0, 0);
 	mlx_put_image_to_window(data->winmlx->mlx, data->winmlx->mlx_win, \
 		data->winmlx->img, 0, 0);
 	mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
