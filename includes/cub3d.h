@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 13:28:29 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:36:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ typedef struct s_scene
     int     lineOff;
     float   ty;
     float   tx;
+	int		dof;
+	int		mx;
+	int		my; 
+	float	xo;
+	float	yo;
+	
 }				t_scene;
 
 typedef struct s_tmpmap
@@ -177,6 +183,12 @@ void draw_scene(t_data *data, t_scene *scene, int r, float ra);
 ///////////////////RAYCASTING////////////////////
 int		init_game(t_winmlx *winmlx, t_data *data);
 void ray_cast(t_data *data, t_scene *scene);
+void	looking_vertical(t_scene *scene, t_data *data);
+void	looking_horizontal(t_scene *scene, t_data *data);
+void	check_vertical_line(t_scene *s, t_data *d);
+void	check_horizontal_line(t_scene *s, t_data *d);
+float	dist(float ax, float ay, float bx, float by);
+
 
 int	key_press_hook(int keycode, t_data *data);
 int	key_release_hook(int keycode, t_data *data);

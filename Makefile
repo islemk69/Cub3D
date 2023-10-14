@@ -3,57 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
+#    By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/10/13 17:40:49 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/10/14 17:00:16 by blakehal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# CC = gcc
-
-# SRCS =		src/main.c \
-# 			src/parsing/parsing.c \
-# 			src/parsing/param.c \
-# 			src/utils/list.c \
-# 			src/parsing/map.c
-
-# OBJS = $(SRCS:.c=.o)
-
-# FLAGS = -Wall -Wextra -Werror
-
-# NAME = cub3d
-
-# HEAD = includes/cun3d.h
-
-# RM = rm -f
-
-# %.o: %.c Makefile ${HEAD}
-# 		${CC} ${FLAGS} -I libft -c $< -o $@
-
-# all:
-# 	make -C libft
-# 	make ${NAME}
-
-# $(NAME): $(OBJS) libft/libft.a
-# 	$(CC) $(OBJS)  libft/libft.a -o $(NAME)
-
-# clean:
-# 	${MAKE} clean -C libft/
-
-# libft:
-# 	${MAKE} -C libft
-
-# fclean: clean
-# 	${MAKE} fclean -C libft/
-# 	$(RM) $(OBJS)
-# 	$(RM) $(NAME)
-
-# re: fclean
-# 	make all
-
-# .PHONY:	all clean fclean re bonus libft
-
 
 NAME		=	cub3d
 
@@ -75,6 +30,8 @@ SRC			=	main.c \
 				game/drawmap.c \
 				game/scene.c \
 				game/raycast.c \
+				game/raycast_horizontal.c \
+				game/raycast_vertical.c \ \
 				game/key_management.c
 
 

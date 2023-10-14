@@ -6,37 +6,39 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:46:36 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 13:40:18 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:49:10 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void reset_player_position_on_map(t_data *data)
+void	reset_player_position_on_map(t_data *data)
 {
-    int i = 0;
-    int j = 0;
+	int	i;
+	int	j;
 
-    while (data->file->map[i])
-    {
-        j = 0;
-        while (data->file->map[i][j])
-        {
-            if (data->file->map[i][j] == 'N')
-                data->file->map[i][j] = '0';
-            j++;
-        }
-        i++;
-    }
-    data->file->map[(int)data->player->py / 30][(int)data->player->px / 30] = 'N';
+	i = -1;
+	while (data->file->map[++i])
+	{
+		j = -1;
+		while (data->file->map[i][++j])
+		{
+			if (data->file->map[i][j] == 'N')
+				data->file->map[i][j] = '0';
+		}
+	}
+	data->file->map[(int)data->player->py / 30] \
+		[(int)data->player->px / 30] = 'N';
 }
 
-
-void drawsquare(t_data *data, int color, int x, int y)
+int	drawsquare(t_data *data, int color, int x, int y)
 {
-	int i = 0;
-	int j;
-	int save = x;
+	int	i;
+	int	j;
+	int	save;
+
+	save = x;
+	i = 0;
 	while (i < 30)
 	{
 		j = 0;
@@ -53,55 +55,57 @@ void drawsquare(t_data *data, int color, int x, int y)
 		y++;
 		i++;
 	}
+	return (30);
 }
 
-void drawplayer(t_data *data, int posx, int posy) {
-    int i = 0;
-    int j;
-
-    int squareSize = 10;  // Taille du carré du joueur
-    int halfSize = squareSize / 2;  // Demi-taille pour le centrage
-
-    int saveposx = posx - halfSize;  // Position initiale ajustée au centre horizontalement
-    int saveposy = posy - halfSize;  // Position initiale ajustée au centre verticalement
-
-    while (i < squareSize) {
-        j = 0;
-        posx = saveposx;
-        while (j < squareSize) {
-            my_mlx_pixel_put(data->winmlx, posx, saveposy + i, H_YELLOW);
-            j++;
-            posx++;
-        }
-        posy++;
-        i++;
-    }
-}
-
-void drawmap(t_data *data)
+void	drawplayer(t_data *data, int posx, int posy)
 {
-    int x = 0;
-	int y = 0;
-    int i = 0;
-	int j;
-    while(data->file->map[i])
+	int	i;
+	int	j;
+	int	saveposx;
+	int	saveposy;
+
+	saveposx = posx - 10 / 2;
+	saveposy = posy - 10 / 2;
+	i = -1;
+	while (++i < 10)
 	{
-		j = 0;
+		j = -1;
+		posx = saveposx;
+		while (++j < 10)
+		{
+			my_mlx_pixel_put(data->winmlx, posx, saveposy + i, H_YELLOW);
+			posx++;
+		}
+		posy++;
+	}
+}
+
+void	drawmap(t_data *data)
+{
+	int	x;
+	int	y;
+	int	i;
+	int	j;
+
+	x = 0;
+	y = 0;
+	i = -1;
+	while (data->file->map[++i])
+	{
+		j = -1;
 		x = 0;
-		while (data->file->map[i][j])
+		while (data->file->map[i][++j])
 		{
 			if (data->file->map[i][j] == '1')
-				drawsquare(data, H_BLACK, x, y);
+				x += drawsquare(data, H_BLACK, x, y);
 			else if (data->file->map[i][j] == '0')
-				drawsquare(data, H_WHITE, x, y);
+				x += drawsquare(data, H_WHITE, x, y);
 			else if (data->file->map[i][j] == 'N')
-				drawsquare(data, H_PINK, x, y);
-			x+=30;
-			j++;
+				x += drawsquare(data, H_PINK, x, y);
 		}
-		y+=30;
-		i++;
+		y += 30;
 	}
 	reset_player_position_on_map(data);
-    drawplayer(data, data->player->px, data->player->py);
+	drawplayer(data, data->player->px, data->player->py);
 }
