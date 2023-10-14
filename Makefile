@@ -6,7 +6,7 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/10/14 17:26:05 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/10/14 17:35:48 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,18 +22,17 @@ SRC_DIR		=	./src/
 SRC			=	main.c \
 				parsing/parsing.c \
 				parsing/param.c \
+				parsing/map.c \
 				utils/list.c \
 				utils/init_struct.c \
-				parsing/map.c \
 				game/init_game.c \
 				game/movements.c \
 				game/drawmap.c \
 				game/scene.c \
-				game/raycast.c
 				game/raycast.c \
 				game/raycast_horizontal.c \
 				game/raycast_vertical.c \
-
+				game/key_management.c
 
 LIBFT_DIR	=	libft/
 LIBFT_A		=	$(LIBFT_DIR)libft.a
