@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:46:36 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 16:49:10 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:07:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	reset_player_position_on_map(t_data *data)
 		[(int)data->player->px / 30] = 'N';
 }
 
-int	drawsquare(t_data *data, int color, int x, int y)
+void	drawsquare(t_data *data, int color, int x, int y)
 {
 	int	i;
 	int	j;
@@ -55,7 +55,6 @@ int	drawsquare(t_data *data, int color, int x, int y)
 		y++;
 		i++;
 	}
-	return (30);
 }
 
 void	drawplayer(t_data *data, int posx, int posy)
@@ -90,21 +89,24 @@ void	drawmap(t_data *data)
 
 	x = 0;
 	y = 0;
-	i = -1;
-	while (data->file->map[++i])
+	i = 0;
+	while (data->file->map[i])
 	{
-		j = -1;
+		j = 0;
 		x = 0;
-		while (data->file->map[i][++j])
+		while (data->file->map[i][j])
 		{
 			if (data->file->map[i][j] == '1')
-				x += drawsquare(data, H_BLACK, x, y);
+				drawsquare(data, H_BLACK, x, y);
 			else if (data->file->map[i][j] == '0')
-				x += drawsquare(data, H_WHITE, x, y);
+				drawsquare(data, H_WHITE, x, y);
 			else if (data->file->map[i][j] == 'N')
-				x += drawsquare(data, H_PINK, x, y);
+				drawsquare(data, H_PINK, x, y);
+			x += 30;
+			j++;
 		}
 		y += 30;
+		i++;
 	}
 	reset_player_position_on_map(data);
 	drawplayer(data, data->player->px, data->player->py);
