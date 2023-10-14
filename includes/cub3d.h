@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 17:44:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:50:49 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void	move(t_data *data);
 
 
 /////////////////DRAWMAP////////////////////////
-void	drawmap(t_data *data, int x, int y);
+void	drawmap(t_data *data);
 
 /////////////////SCENE//////////////////////////
 void draw_scene(t_data *data, t_scene *scene, int r, float ra);
