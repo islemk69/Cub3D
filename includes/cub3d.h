@@ -178,4 +178,8 @@ void draw_scene(t_data *data, t_scene *scene, int r, float ra);
 int		init_game(t_winmlx *winmlx, t_data *data);
 void ray_cast(t_data *data, t_scene *scene);
 
+int	key_press_hook(int keycode, t_data *data);
+int	key_release_hook(int keycode, t_data *data);
+bool	is_collision(t_data *data, float newx, float newy);
+
 #endif

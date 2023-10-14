@@ -74,7 +74,8 @@ SRC			=	main.c \
 				game/movements.c \
 				game/drawmap.c \
 				game/scene.c \
-				game/raycast.c
+				game/raycast.c \
+				game/key_management.c
 
 
 LIBFT_DIR	=	libft/
