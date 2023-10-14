@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:29:27 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/13 17:41:31 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:23:39 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void ray_cast(t_data *data, t_scene *scene)
             scene->ry = data->player->py;
             dof = data->file->greather;
         }
-
         while (dof < data->file->greather)
         {
             mx = (int)(scene->rx / 30);
@@ -72,7 +71,6 @@ void ray_cast(t_data *data, t_scene *scene)
                 dof += 1;
             }
         }
-
         // Check vertical lines
         dof = 0;
         scene->vx=data->player->px;
@@ -119,6 +117,20 @@ void ray_cast(t_data *data, t_scene *scene)
                 scene->ry += yo;
                 dof += 1;
             }
+        }
+        scene->h_redded = 1;
+        if (scene->disV < scene->disH)
+        {
+            scene->rx = scene->vx;
+            scene->ry = scene->vy;
+            scene->disT = scene->disV;
+            scene->h_redded = 0;
+        }
+        else
+        {
+            scene->rx = scene->hx;
+            scene->ry = scene->hy;
+            scene->disT = scene->disH;
         }
         draw_scene(data, scene, r , ra);
         ra += DR * (60.0 / 1920.0);

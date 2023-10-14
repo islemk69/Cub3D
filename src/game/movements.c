@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:28:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/13 19:02:52 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:15:51 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void move(t_data *data)
             data->player->py = newY;
         }
     }
-
     if (data->player->key_states[65363]) // rotation camera fleche droite
     {
         data->player->pa += rotateSpeed;

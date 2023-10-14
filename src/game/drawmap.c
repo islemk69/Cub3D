@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:46:36 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/13 19:02:28 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:40:18 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ void drawmap(t_data *data)
 		y+=30;
 		i++;
 	}
-		reset_player_position_on_map(data);
+	reset_player_position_on_map(data);
     drawplayer(data, data->player->px, data->player->py);
 }
