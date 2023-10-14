@@ -190,4 +190,8 @@ void	check_horizontal_line(t_scene *s, t_data *d);
 float	dist(float ax, float ay, float bx, float by);
 
 
+int	key_press_hook(int keycode, t_data *data);
+int	key_release_hook(int keycode, t_data *data);
+bool	is_collision(t_data *data, float newx, float newy);
+
 #endif
