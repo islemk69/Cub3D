@@ -37,7 +37,6 @@
 # define H_PINK                0xffc0cb
 # define H_PURPLE            0x800080
 # define H_GREY                0x808080
-# define SKY				0x77B5FE
 #define PI 3.14159265
 #define TILE_SIZE 30
 #define FOV_ANGLE 60
@@ -108,7 +107,9 @@ typedef struct    s_file
 	char	*color_f_tmp;
 	char	*color_s_tmp;
 	int		color_floor[3];
+    unsigned long int color_floor_hex;
 	int		color_sky[3];
+    unsigned long int color_sky_hex;
 	char	orientation;
 }					t_file;
 

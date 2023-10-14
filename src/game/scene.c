@@ -26,7 +26,7 @@ void	draw_texture(t_texture *texture, t_data *data, int r)
 	i = -1;
 	while (++i < data->scene->lineOff)
 	{
-		my_mlx_pixel_put(data->winmlx, r, i, SKY);
+		my_mlx_pixel_put(data->winmlx, r, i, data->file->color_sky_hex);
 	}
 	i = -1;
 	while (++i < data->scene->lineH)
@@ -39,7 +39,7 @@ void	draw_texture(t_texture *texture, t_data *data, int r)
 	i = data->scene->lineOff + data->scene->lineH - 1;
 	while (++i < 1080)
 	{
-		my_mlx_pixel_put(data->winmlx, r, i, H_GREY);
+		my_mlx_pixel_put(data->winmlx, r, i, data->file->color_floor_hex);
 	}
 }
 
