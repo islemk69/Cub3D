@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:28:45 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 16:36:59 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:44:19 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	looking_vertical(t_scene *scene, t_data *data)
 	n_tan = -tan(scene->ra);
 	if (scene->ra > P2 && scene->ra < P3)
 	{
-		scene->rx = (float)(((int)data->player->px / 30) * 30) - 0.0001;
+		scene->rx = (float)(((int)data->player->px / 32) * 32) - 0.0001;
 		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
-		scene->xo = -30;
+		scene->xo = -32;
 		scene->yo = -scene->xo * n_tan;
 	}
 	else if (scene->ra < P2 || scene->ra > P3)
 	{
-		scene->rx = (float)(((int)data->player->px / 30) * 30) + 30;
+		scene->rx = (float)(((int)data->player->px / 32) * 32) + 32;
 		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
-		scene->xo = 30;
+		scene->xo = 32;
 		scene->yo = -scene->xo * n_tan;
 	}
 	else
@@ -48,8 +48,8 @@ void	check_vertical_line(t_scene *s, t_data *d)
 	looking_vertical(s, d);
 	while (s->dof < d->file->greather)
 	{
-		s->mx = (int)(s->rx / 30);
-		s->my = (int)(s->ry / 30);
+		s->mx = (int)(s->rx / 32);
+		s->my = (int)(s->ry / 32);
 		if (s->mx >= 0 && s->mx < d->file->wmap && s->my >= 0
 			&& s->my < d->file->hmap && d->file->map[s->my][s->mx] == '1')
 		{

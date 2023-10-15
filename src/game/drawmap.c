@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:46:36 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 13:42:12 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:45:40 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	reset_player_position_on_map(t_data *data)
 				data->file->map[i][j] = '0';
 		}
 	}
-	data->file->map[(int)data->player->py / 30] \
-		[(int)data->player->px / 30] = 'N';
+	data->file->map[(int)data->player->py / 32] \
+		[(int)data->player->px / 32] = 'N';
 }
 
 void	drawsquare(t_data *data, int color, int x, int y)
@@ -39,13 +39,13 @@ void	drawsquare(t_data *data, int color, int x, int y)
 
 	save = x;
 	i = 0;
-	while (i < 30)
+	while (i < 32)
 	{
 		j = 0;
 		x = save;
-		while (j < 30)
+		while (j < 32)
 		{
-			if (j == 0 || j == 29 || i == 29 || i == 0)
+			if (j == 0 || j == 31 || i == 31 || i == 0)
 				my_mlx_pixel_put(data->winmlx, x, y, H_GREY);
 			else
 				my_mlx_pixel_put(data->winmlx, x, y, color);
@@ -70,8 +70,8 @@ void	drawmap(t_data *data, int i, int j, int x)
 	int	starty;
 	int	y;
 
-	startx = (int)data->player->px / 30 - 10 / 2;
-	starty = (int)data->player->py / 30 - 10 / 2;
+	startx = (int)data->player->px / 32 - 10 / 2;
+	starty = (int)data->player->py / 32 - 10 / 2;
 	if (startx < 0)
 		startx = 0;
 	if (starty < 0)
@@ -90,9 +90,9 @@ void	drawmap(t_data *data, int i, int j, int x)
 				drawsquare(data, H_WHITE, x, y);
 			else if (is_player(data->file->map[i][j]))
 				drawsquare(data, H_PINK, x, y);
-			x += 30;
+			x += 32;
 		}
-		y += 30;
+		y += 32;
 	}
 	reset_player_position_on_map(data);
 }

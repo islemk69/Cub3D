@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:32:58 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 16:37:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:57:44 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ray_cast(t_data *data, t_scene *scene)
 {
 	int		r;
 
-	scene->ra = data->player->pa - DR * 30;
+	scene->ra = data->player->pa - DR * 32;
 	r = -1;
 	while (++r < 1920)
 	{

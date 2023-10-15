@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:29:25 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/14 14:24:35 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 15:02:43 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	draw_textured_column(t_data *data, int r, float ra)
 {
 	if (data->scene->h_redded)
 	{
-		data->scene->tx = (int)(data->scene->rx / 2.0) % 30;
+		data->scene->tx = (int)(data->scene->rx) % 32;
 		if (ra > 180)
-			data->scene->tx = 29 - data->scene->tx;
+			data->scene->tx = 31 - data->scene->tx;
 		if (ra >= 0 && ra < PI)
 			draw_texture(data->stex, data, r);
 		else
@@ -57,9 +57,9 @@ void	draw_textured_column(t_data *data, int r, float ra)
 	}
 	else
 	{
-		data->scene->tx = (int)(data->scene->ry / 2.0) % 30;
+		data->scene->tx = (int)(data->scene->ry) % 32;
 		if (ra > 90 && ra < 270)
-			data->scene->tx = 29 - data->scene->tx;
+			data->scene->tx = 31 - data->scene->tx;
 		if (ra >= PI / 2 && ra < 3 * PI / 2)
 			draw_texture(data->wtex, data, r);
 		else
@@ -75,8 +75,8 @@ void	draw_scene(t_data *data, t_scene *scene, int r, float ra)
 	if (scene->ca > 2 * PI)
 		scene->ca -= 2 * PI;
 	scene->disT = scene->disT * cos(scene->ca);
-	scene->lineH = (30 * winHeight) / scene->disT;
-	scene->ty_step = 120.0 / (float)scene->lineH;
+	scene->lineH = (46 * winHeight) / scene->disT;
+	scene->ty_step = 32.0 / (float)scene->lineH;
 	scene->ty_off = 0;
 	if (scene->lineH > winHeight)
 	{
