@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	cub3d
+NAME		=	cub3D
 
 INC			=	cub3d.h
 
@@ -23,6 +23,7 @@ SRC			=	main.c \
 				parsing/parsing.c \
 				parsing/param.c \
 				parsing/map.c \
+				parsing/check_file.c \
 				utils/list.c \
 				utils/init_struct.c \
 				game/init_game.c \

@@ -163,6 +163,7 @@ void    fill_struct_map(t_tmpmap **map, char *line);
 void	fill_map_tab(t_tmpmap **list, t_file *file);
 int		parse_map(t_file *file);
 int		complete_param(t_file *file);
+int		check_file(int fd, t_file *file);
 
 //////////////////INIT STUCT//////////////////////
 int		init_struct(t_data *data, int flg);

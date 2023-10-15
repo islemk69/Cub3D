@@ -12,10 +12,37 @@
 
 #include "../includes/cub3d.h"
 
-void    my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color)
+static int	alloc_struct(t_data *data);
+static int	get_pos(int mod, char **map);
+static void	getdimention(t_file *file);
+
+int	init_struct(t_data *data, int flg)
 {
-    if ((x >= 0 && x < 1920) && (y >= 0 && y < 1080))
-        ((int *)draw->addr)[y * (draw->line_length >> 2) + x] = color;
+	if (!flg)
+	{
+		if (alloc_struct(data))
+			return (1);
+		return (0);
+	}
+	if (data->file->orientation == 'N')
+		data->player->pa = 3 * PI / 2;
+	else if (data->file->orientation == 'S')
+		data->player->pa = PI / 2;
+	else if (data->file->orientation == 'E')
+		data->player->pa = 0;
+	else if (data->file->orientation == 'W')
+		data->player->pa = PI;
+	data->player->px = (get_pos(1, data->file->map) * 30) + 15;
+	data->player->py = (get_pos(0, data->file->map) * 30) + 15;
+	data->player->pdx = cos(data->player->pa) * 5;
+	data->player->pdy = sin(data->player->pa) * 5;
+	getdimention(data->file);
+	data->file->wmap -= 1;
+	if (data->file->hmap > data->file->wmap)
+		data->file->greather = data->file->hmap;
+	else
+		data->file->greather = data->file->wmap;
+	return (0);
 }
 
 static int	alloc_struct(t_data *data)
@@ -83,31 +110,8 @@ static void	getdimention(t_file *file)
 	}
 }
 
-int	init_struct(t_data *data, int flg)
+void	my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color)
 {
-	if (!flg)
-	{
-		if (alloc_struct(data))
-			return (1);
-		return (0);
-	}
-	if (data->file->orientation == 'N')
-		data->player->pa = 3 * PI / 2;
-	else if (data->file->orientation == 'S')
-		data->player->pa = PI / 2;
-	else if (data->file->orientation == 'E')
-		data->player->pa = 0;
-	else if (data->file->orientation == 'W')
-		data->player->pa = PI;
-	data->player->px = (get_pos(1, data->file->map) * 30) + 15;
-	data->player->py = (get_pos(0, data->file->map) * 30) + 15;
-	data->player->pdx = cos(data->player->pa) * 5;
-	data->player->pdy = sin(data->player->pa) * 5;
-	getdimention(data->file);
-	data->file->wmap -= 1;
-	if (data->file->hmap > data->file->wmap)
-		data->file->greather = data->file->hmap;
-	else
-		data->file->greather = data->file->wmap;
-	return (0);
+	if ((x >= 0 && x < 1920) && (y >= 0 && y < 1080))
+		((int *)draw->addr)[y * (draw->line_length >> 2) + x] = color;
 }
