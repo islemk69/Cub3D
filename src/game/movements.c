@@ -18,11 +18,27 @@ float c_margin);
 void	check_key_and_set_new_position(t_data *data, float moveSpeed, \
 float *newX, float *newY);
 
+
+
 void	check_esc_key(t_data *data)
 {
 	if (data->player->key_states[65307])
 	{
-		mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
+		if (data->winmlx->img)
+			mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
+		if (data->ntex->img)
+			mlx_destroy_image(data->winmlx->mlx, data->ntex->img);
+		if (data->stex->img)
+			mlx_destroy_image(data->winmlx->mlx, data->stex->img);
+		if (data->wtex->img)
+			mlx_destroy_image(data->winmlx->mlx, data->wtex->img);
+		if (data->etex->img)
+			mlx_destroy_image(data->winmlx->mlx, data->etex->img);
+		if (data->winmlx->mlx_win)
+			mlx_destroy_window(data->winmlx->mlx, data->winmlx->mlx_win);
+		if (data->winmlx->mlx)
+			mlx_destroy_display(data->winmlx->mlx);
+		ft_free_all(data);
 		exit(0);
 	}
 }

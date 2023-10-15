@@ -24,7 +24,7 @@ void	free_file(t_file *file)
 		free(file->path_to_e);
 	if (file->path_to_w)
 		free(file->path_to_w);
-	
+
 }
 
 void	free_struct(t_data *data)
@@ -32,9 +32,12 @@ void	free_struct(t_data *data)
 	if(data->file)
 		free(data->file);
 	if(data->winmlx)
+	{
+		free(data->winmlx->mlx);
 		free(data->winmlx);
+	}
 	if(data->player)
-		free(data->player);	
+		free(data->player);
 	if(data->scene)
 		free(data->scene);
 	if(data->ntex)

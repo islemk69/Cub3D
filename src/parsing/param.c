@@ -98,7 +98,7 @@ static int	check_color(char **color_split, char *color, int i, int nb)
 {
 	if (color[0] == ',' || color[ft_strlen(color) - 2] == ',')
 		return (1);
-	while (color[i])
+	while (color[i] != '\n')
 	{
 		if (color[i] == ',' && color[i + 1] && color[i + 1] == ',')
 			return (1);
