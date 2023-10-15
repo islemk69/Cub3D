@@ -48,6 +48,11 @@ int	load_texture(t_data *d, t_file *file)
 	return (0);
 }
 
+int	close_window(void)
+{
+	exit(0);
+}
+
 int	init_game(t_winmlx *winmlx, t_data *data)
 {
 	winmlx->mlx = mlx_init();
@@ -56,6 +61,7 @@ int	init_game(t_winmlx *winmlx, t_data *data)
 	mlx_hook(data->winmlx->mlx_win, 2, 1L << 0, key_press_hook, data);
 	mlx_hook(data->winmlx->mlx_win, 3, (1L << 1), key_release_hook, data);
 	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
+	mlx_hook(data->winmlx->mlx_win, 17, 0, close_window, data);
 	mlx_loop(winmlx->mlx);
 	return (0);
 }

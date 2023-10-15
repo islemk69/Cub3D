@@ -18,6 +18,15 @@ float c_margin);
 void	check_key_and_set_new_position(t_data *data, float moveSpeed, \
 float *newX, float *newY);
 
+void	check_esc_key(t_data *data)
+{
+	if (data->player->key_states[65307])
+	{
+		mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
+		exit(0);
+	}
+}
+
 void	move(t_data *data)
 {
 	float	move_speed;
@@ -34,6 +43,7 @@ void	move(t_data *data)
 	check_key_and_set_new_position(data, move_speed, &newx, &newy);
 	check_collision(data, newx, newy, collision_margin);
 	check_key_and_set_new_angle(data, rotate_speed);
+	check_esc_key(data);
 }
 
 void	check_key_and_set_new_angle(t_data *data, float rotateSpeed)
