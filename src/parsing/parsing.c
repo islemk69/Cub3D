@@ -6,7 +6,7 @@
 /*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 16:31:40 by blakehal         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:11:50 by blakehal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,37 @@ static void	set_sky_and_floor_color(t_data *data)
 
 static int	check_path(t_data *data)
 {
-	if (open_file(data->file->path_to_e, data, 0) || \
-	open_file(data->file->path_to_w, data, 0) || \
-	open_file(data->file->path_to_s, data, 0) || \
-	open_file(data->file->path_to_n, data, 0))
-		return (1);
-	return (0);
+	char	*line;
+	int		flg;
+
+	flg = 0;
+	line = NULL;
+	t_tmpmap *listmap;
+	listmap = NULL;
+	while (42)
+	{
+		line = get_next_line(fd);
+		if (!line)
+		{
+			if (complete_param(file))
+				return (free(line), ft_putstr_fd("Error Parameters\n", 2), 1);
+			fill_map_tab(&listmap, file);
+			return (free(line), lstclear(&listmap), 0);
+		}
+		if (flg)
+		{
+			if (line[0] == '\n')
+			{
+				free(line);
+				continue ;
+			}
+			fill_struct_map(&listmap, line);
+		}
+		else if (param(line, file, &flg))
+		{
+			free(line);
+			return (ft_putstr_fd("Error Parameters\n", 2) ,1);
+		}
+		free(line);
+	}
 }

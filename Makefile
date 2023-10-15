@@ -6,7 +6,7 @@
 #    By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/10/15 16:31:51 by blakehal         ###   ########.fr        #
+#    Updated: 2023/10/15 18:08:38 by blakehal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC			=	main.c \
 				utils/list.c \
 				utils/init_struct.c \
 				utils/drawsquare_utils.c \
+				utils/free.c \
 				game/init_game.c \
 				game/movements.c \
 				game/drawmap.c \

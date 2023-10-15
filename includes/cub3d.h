@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 17:39:48 by blakehal         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:10:06 by blakehal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ typedef struct	s_player
 	float	pdx;
 	float	pdy;
 	float	pa;
-	bool key_states[65365];
+	bool	key_states[65365];
 }						t_player;
 
 typedef struct s_data
@@ -147,12 +147,14 @@ typedef struct s_data
 
 /////////////////UTILS////////////////////////
 int		is_empty(char *line);
-int    check_char(char *str, int *p, t_file *file);
+int		check_char(char *str, int *p, t_file *file);
 void	replace_space(char *line);
 int only_wall(char *str);
 void	reset_player_position_on_map(t_data *data);
 void	drawsquare(t_data *data, int color, int x, int y);
 int	is_player(char p);
+int		only_wall(char *str);
+void	ft_free_all(t_data *data);
 
 //////////////////LIST////////////////////////
 t_tmpmap	*lstlast(t_tmpmap *lst);

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:41:21 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/13 15:27:21 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:03:01 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	if (init_struct(&data, 0))
 		return (1);
 	if (parsing(argv[1], &data))
-		return (free(data.file), 1);
+		return (ft_free_all(&data), 1);
 	init_struct(&data, 1);
 	init_game(data.winmlx, &data);
 	return (0);
