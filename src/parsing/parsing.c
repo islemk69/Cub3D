@@ -98,32 +98,4 @@ static int	check_path(t_data *data)
 	open_file(data->file->path_to_n, data, 0))
 		return (1);
 	return (0);
-	char	*line;
-	int		flg;
-
-	flg = 0;
-	line = NULL;
-	t_tmpmap *listmap;
-	listmap = NULL;
-	while (42)
-	{
-		if (line)
-			free(line);
-		line = get_next_line(fd);
-		if (!line)
-		{
-			if (complete_param(file))
-				return (ft_putstr_fd("Error Parameters\n", 2), 1);
-			fill_map_tab(&listmap, file);
-			return (free(line), lstclear(&listmap), 0);
-		}
-		if (flg)
-		{
-			if (line[0] == '\n')
-				continue ;
-			fill_struct_map(&listmap, line);
-		}
-		else if (param(line, file, &flg))
-			return (ft_putstr_fd("Error Parameters\n", 2), free(line),1);
-	}
 }

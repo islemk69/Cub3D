@@ -37,7 +37,7 @@ static int	handle_line_error(t_file *file, char *line, t_tmpmap **listmap)
 static int	process_line(int *flg, t_file *file, char *line, t_tmpmap **listmap)
 {
 	handle_line_map(flg, listmap, line);
-	if (!*flg && fill_param(line, file, flg))
+	if (!*flg && param(line, file, flg))
 		return (ft_putstr_fd("Error Parameters\n", 2), free(line), 1);
 	return (0);
 }

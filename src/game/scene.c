@@ -47,7 +47,7 @@ void	draw_textured_column(t_data *data, int r, float ra)
 {
 	if (data->scene->h_redded)
 	{
-		data->scene->tx = (int)(data->scene->rx) % 32;
+		data->scene->tx = (int)(data->scene->rx) % TILE_SIZE;
 		if (ra > 180)
 			data->scene->tx = 31 - data->scene->tx;
 		if (ra >= 0 && ra < PI)
@@ -57,7 +57,7 @@ void	draw_textured_column(t_data *data, int r, float ra)
 	}
 	else
 	{
-		data->scene->tx = (int)(data->scene->ry) % 32;
+		data->scene->tx = (int)(data->scene->ry) % TILE_SIZE;
 		if (ra > 90 && ra < 270)
 			data->scene->tx = 31 - data->scene->tx;
 		if (ra >= PI / 2 && ra < 3 * PI / 2)

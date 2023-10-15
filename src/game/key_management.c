@@ -31,8 +31,8 @@ bool	is_collision(t_data *data, float newx, float newy)
 	int	map_posx;
 	int	map_posy;
 
-	map_posx = newx / 32;
-	map_posy = newy / 32;
+	map_posx = newx / TILE_SIZE;
+	map_posy = newy / TILE_SIZE;
 	if (map_posx >= 0 && map_posy >= 0 && \
 	map_posy < data->file->hmap && map_posx < data->file->wmap && \
 	data->file->map[map_posy][map_posx] == '1')

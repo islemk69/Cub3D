@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 16:10:26 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:39:48 by blakehal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,23 @@
 # define H_PURPLE            0x800080
 # define H_GREY                0x808080
 #define PI 3.14159265
-#define TILE_SIZE 30
-#define FOV_ANGLE 60
-#define mapX 8      // map width
-#define mapY 8      // map height
+#define TILE_SIZE 32
+#define FOV_ANGLE 60.0
 #define P2 PI / 2
 #define P3 3 * PI / 2
-# define DR 0.0174533 //one degre in radiant
+# define DR 0.0174533
 # define winHeight 1080
 # define midHeight winHeight / 2
 
 typedef struct s_texture
 {
-    void	*img;
-    char	*addr;
-    int		width;
-    int		height;
-    int		bits_per_pixel;
-    int		line_length;
-    int		endian;
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 }				t_texture;
 
 typedef struct s_scene
@@ -73,19 +71,19 @@ typedef struct s_scene
 	int		r;
 	float	ra;
 	float   h_redded;
-    int     lineH;
-    float   ca;
-    float   ty_step;
-    float   ty_off;
-    int     lineOff;
-    float   ty;
-    float   tx;
+	int     lineH;
+	float   ca;
+	float   ty_step;
+	float   ty_off;
+	int     lineOff;
+	float   ty;
+	float   tx;
 	int		dof;
 	int		mx;
 	int		my; 
 	float	xo;
 	float	yo;
-	
+
 }				t_scene;
 
 typedef struct s_tmpmap
@@ -107,9 +105,9 @@ typedef struct    s_file
 	char	*color_f_tmp;
 	char	*color_s_tmp;
 	int		color_floor[3];
-    unsigned long int color_floor_hex;
+	unsigned long int color_floor_hex;
 	int		color_sky[3];
-    unsigned long int color_sky_hex;
+	unsigned long int color_sky_hex;
 	char	orientation;
 }					t_file;
 
@@ -152,6 +150,9 @@ int		is_empty(char *line);
 int    check_char(char *str, int *p, t_file *file);
 void	replace_space(char *line);
 int only_wall(char *str);
+void	reset_player_position_on_map(t_data *data);
+void	drawsquare(t_data *data, int color, int x, int y);
+int	is_player(char p);
 
 //////////////////LIST////////////////////////
 t_tmpmap	*lstlast(t_tmpmap *lst);

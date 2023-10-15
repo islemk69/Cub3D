@@ -27,6 +27,7 @@ SRC			=	main.c \
 				utils/parsing_utils.c \
 				utils/list.c \
 				utils/init_struct.c \
+				utils/drawsquare_utils.c \
 				game/init_game.c \
 				game/movements.c \
 				game/drawmap.c \

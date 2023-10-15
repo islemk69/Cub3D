@@ -19,16 +19,18 @@ void	looking_vertical(t_scene *scene, t_data *data)
 	n_tan = -tan(scene->ra);
 	if (scene->ra > P2 && scene->ra < P3)
 	{
-		scene->rx = (float)(((int)data->player->px / 32) * 32) - 0.0001;
+		scene->rx = (float)(((int)data->player->px / TILE_SIZE) * \
+		TILE_SIZE) - 0.0001;
 		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
-		scene->xo = -32;
+		scene->xo = -TILE_SIZE;
 		scene->yo = -scene->xo * n_tan;
 	}
 	else if (scene->ra < P2 || scene->ra > P3)
 	{
-		scene->rx = (float)(((int)data->player->px / 32) * 32) + 32;
+		scene->rx = (float)(((int)data->player->px / TILE_SIZE) * \
+		TILE_SIZE) + TILE_SIZE;
 		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
-		scene->xo = 32;
+		scene->xo = TILE_SIZE;
 		scene->yo = -scene->xo * n_tan;
 	}
 	else
@@ -48,8 +50,8 @@ void	check_vertical_line(t_scene *s, t_data *d)
 	looking_vertical(s, d);
 	while (s->dof < d->file->greather)
 	{
-		s->mx = (int)(s->rx / 32);
-		s->my = (int)(s->ry / 32);
+		s->mx = (int)(s->rx / TILE_SIZE);
+		s->my = (int)(s->ry / TILE_SIZE);
 		if (s->mx >= 0 && s->mx < d->file->wmap && s->my >= 0
 			&& s->my < d->file->hmap && d->file->map[s->my][s->mx] == '1')
 		{

@@ -12,57 +12,8 @@
 
 #include "../../includes/cub3d.h"
 
-void	reset_player_position_on_map(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (data->file->map[++i])
-	{
-		j = -1;
-		while (data->file->map[i][++j])
-		{
-			if (data->file->map[i][j] == 'N')
-				data->file->map[i][j] = '0';
-		}
-	}
-	data->file->map[(int)data->player->py / 32] \
-		[(int)data->player->px / 32] = 'N';
-}
-
-void	drawsquare(t_data *data, int color, int x, int y)
-{
-	int	i;
-	int	j;
-	int	save;
-
-	save = x;
-	i = 0;
-	while (i < 32)
-	{
-		j = 0;
-		x = save;
-		while (j < 32)
-		{
-			if (j == 0 || j == 31 || i == 31 || i == 0)
-				my_mlx_pixel_put(data->winmlx, x, y, H_GREY);
-			else
-				my_mlx_pixel_put(data->winmlx, x, y, color);
-			j++;
-			x++;
-		}
-		y++;
-		i++;
-	}
-}
-
-int	is_player(char p)
-{
-	if (p == 'N' || p == 'S' || p == 'E' || p == 'W')
-		return (1);
-	return (0);
-}
+void	initialize_start_coords(t_data *data, int *startx, int *starty);
+void	draw_square_based_on_map(t_data *data, char map_val, int x, int y);
 
 void	drawmap(t_data *data, int i, int j, int x)
 {
@@ -70,12 +21,7 @@ void	drawmap(t_data *data, int i, int j, int x)
 	int	starty;
 	int	y;
 
-	startx = (int)data->player->px / 32 - 10 / 2;
-	starty = (int)data->player->py / 32 - 10 / 2;
-	if (startx < 0)
-		startx = 0;
-	if (starty < 0)
-		starty = 0;
+	initialize_start_coords(data, &startx, &starty);
 	y = 0;
 	i = starty - 1;
 	while (++i < starty + 10 && i < data->file->hmap)
@@ -84,15 +30,30 @@ void	drawmap(t_data *data, int i, int j, int x)
 		j = startx - 1;
 		while (++j < startx + 10 && j < data->file->wmap)
 		{
-			if (data->file->map[i][j] == '1')
-				drawsquare(data, H_BLACK, x, y);
-			else if (data->file->map[i][j] == '0')
-				drawsquare(data, H_WHITE, x, y);
-			else if (is_player(data->file->map[i][j]))
-				drawsquare(data, H_PINK, x, y);
-			x += 32;
+			draw_square_based_on_map(data, data->file->map[i][j], x, y);
+			x += TILE_SIZE;
 		}
-		y += 32;
+		y += TILE_SIZE;
 	}
 	reset_player_position_on_map(data);
+}
+
+void	initialize_start_coords(t_data *data, int *startx, int *starty)
+{
+	*startx = (int)data->player->px / TILE_SIZE - 10 / 2;
+	*starty = (int)data->player->py / TILE_SIZE - 10 / 2;
+	if (*startx < 0)
+		*startx = 0;
+	if (*starty < 0)
+		*starty = 0;
+}
+
+void	draw_square_based_on_map(t_data *data, char map_val, int x, int y)
+{
+	if (map_val == '1')
+		drawsquare(data, H_BLACK, x, y);
+	else if (map_val == '0')
+		drawsquare(data, H_WHITE, x, y);
+	else if (is_player(map_val))
+		drawsquare(data, H_PINK, x, y);
 }
