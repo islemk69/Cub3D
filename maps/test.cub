@@ -1,7 +1,6 @@
 NO ./src/xpm/north.xpm
 SO ./src/xpm/south.xpm
 WE ./src/xpm/west.xpm
-EA ./src/xpm/east.xpm
 F 48,48,48
 C 255,255,255
 

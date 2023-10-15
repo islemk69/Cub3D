@@ -27,6 +27,7 @@ SRCS = 	ft_is/ft_isalpha.c			\
 		ft_malloc/ft_split.c		\
 		ft_malloc/ft_substr.c		\
 		ft_malloc/ft_free_tab.c		\
+		ft_malloc/ft_split2.c		\
 		ft_mem/ft_memset.c			\
 		ft_mem/ft_memcpy.c			\
 		ft_mem/ft_memmove.c			\

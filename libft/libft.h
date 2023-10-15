@@ -75,6 +75,7 @@ char	*ft_strndup(char *s, size_t n);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 void    ft_free_tab(char **tab);
 int    ft_strlen_dtab(char **tab);
+char **ft_split2(char const *s);
 
 //GNL
 char	*get_next_line(int fd);
