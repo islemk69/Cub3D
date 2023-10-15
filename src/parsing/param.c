@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:44:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 17:49:14 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:52:55 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,16 @@ static int	check_color(char **color_split, char *color, int i, int nb)
 {
 	if (color[0] == ',' || color[ft_strlen(color) - 2] == ',')
 		return (1);
-	while (color[i])
+	while (color[i] != '\n')
 	{
+		printf("%c", color[i]);
 		if (color[i] == ',' && color[i + 1] && color[i + 1] == ',')
 			return (1);
-		else if ((color[i] == ',' && color[i + 1] != ',' && color[i + 1])
-			|| color[i] == '\n')
-			i++;
-		else if (!ft_isdigit(color[i]))
+		else if (color[i] != ',' && !ft_isdigit(color[i]))
 			return (1);
 		i++;
 	}
+	printf("\n");
 	i = -1;
 	while (color_split[++i])
 	{
