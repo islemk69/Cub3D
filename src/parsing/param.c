@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:44:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 16:20:57 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:49:14 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	get_colors(char *color, int mod, t_file *file)
 	i = -1;
 	color_split = ft_split2(color);
 	if (check_color(color_split, color, 0, 0))
-		return (printf("get_colors\n"), 1);
+		return (ft_free_tab(color_split), 1);
 	while (color_split[++i])
 	{
 		if (mod)

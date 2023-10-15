@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 16:10:26 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:18:05 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ typedef struct	s_player
 	float	pdx;
 	float	pdy;
 	float	pa;
-	bool key_states[65365];
+	bool	key_states[65365];
 }						t_player;
 
 typedef struct s_data
@@ -149,9 +149,10 @@ typedef struct s_data
 
 /////////////////UTILS////////////////////////
 int		is_empty(char *line);
-int    check_char(char *str, int *p, t_file *file);
+int		check_char(char *str, int *p, t_file *file);
 void	replace_space(char *line);
-int only_wall(char *str);
+int		only_wall(char *str);
+void	ft_free_all(t_data *data);
 
 //////////////////LIST////////////////////////
 t_tmpmap	*lstlast(t_tmpmap *lst);

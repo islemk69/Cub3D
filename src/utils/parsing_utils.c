@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:42:39 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 16:09:30 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:01:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int    check_char(char *str, int *p, t_file *file)
     }
     return (0);
 }
+
 void replace_space(char *line)
 {
 	while (*line)

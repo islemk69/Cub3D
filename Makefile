@@ -6,7 +6,7 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/10/15 15:43:40 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/10/15 16:59:31 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC			=	main.c \
 				utils/parsing_utils.c \
 				utils/list.c \
 				utils/init_struct.c \
+				utils/free.c \
 				game/init_game.c \
 				game/movements.c \
 				game/drawmap.c \
