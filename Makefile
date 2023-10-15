@@ -6,7 +6,7 @@
 #    By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/10/14 17:45:44 by blakehal         ###   ########.fr        #
+#    Updated: 2023/10/15 16:31:51 by blakehal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC			=	main.c \
 				parsing/param.c \
 				parsing/map.c \
 				parsing/check_file.c \
+				utils/parsing_utils.c \
 				utils/list.c \
 				utils/init_struct.c \
 				game/init_game.c \

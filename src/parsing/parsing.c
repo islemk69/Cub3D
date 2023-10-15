@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 14:04:57 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:31:40 by blakehal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,32 @@ static int	check_path(t_data *data)
 	open_file(data->file->path_to_n, data, 0))
 		return (1);
 	return (0);
+	char	*line;
+	int		flg;
+
+	flg = 0;
+	line = NULL;
+	t_tmpmap *listmap;
+	listmap = NULL;
+	while (42)
+	{
+		if (line)
+			free(line);
+		line = get_next_line(fd);
+		if (!line)
+		{
+			if (complete_param(file))
+				return (ft_putstr_fd("Error Parameters\n", 2), 1);
+			fill_map_tab(&listmap, file);
+			return (free(line), lstclear(&listmap), 0);
+		}
+		if (flg)
+		{
+			if (line[0] == '\n')
+				continue ;
+			fill_struct_map(&listmap, line);
+		}
+		else if (param(line, file, &flg))
+			return (ft_putstr_fd("Error Parameters\n", 2), free(line),1);
+	}
 }
