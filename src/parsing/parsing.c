@@ -195,6 +195,23 @@ static int	check_extention(char *path_file, char *extention)
 
 //Check si le fichier existe, si les droit sont dispo et ouvre le fichier
 
+static int	check_map(char **map)
+{
+	size_t i = 0;
+	if (!map[0])
+		return (1);
+	while (map[i] && map[i][0] == '\n')
+		i++;
+	while (map[i] && map[i][0] == '1')
+		i++;
+	if (map[i - 1][ft_strlen(map[i - 1]) - 1] == '\n')
+	{
+		printf("Error Map\n");
+		return (1);
+	}
+	return (0);
+}
+
 static int	open_file(char *file, t_data *data, int flg)
 {
 	int	fd;
@@ -211,7 +228,7 @@ static int	open_file(char *file, t_data *data, int flg)
 		return (ft_putstr_fd("Error Failed to Open File\n", 2), 1);
 	if (flg)
 	{
-		if (check_file(fd, data->file))
+		if (check_file(fd, data->file) || check_map(data->file->map))
 			return (1);
 	}
 	return (0);
@@ -236,6 +253,8 @@ static int	check_file(int fd, t_file *file)
 		if (line)
 			free(line);
 		line = get_next_line(fd);
+//		if (line)
+//			printf("line = %s\n", line);
 		if (!line)
 		{
 			if (complete_param(file))
@@ -244,12 +263,9 @@ static int	check_file(int fd, t_file *file)
 			return (free(line), lstclear(&listmap), 0);
 		}
 		if (flg)
-		{
-			if (line[0] == '\n')
-				continue ;
 			fill_struct_map(&listmap, line);
-		}
 		else if (param(line, file, &flg))
 			return (ft_putstr_fd("Error Parameters\n", 2), free(line),1);
 	}
 }
+

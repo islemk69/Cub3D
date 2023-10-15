@@ -62,7 +62,8 @@ void	check_vertical_line(t_scene *s, t_data *d)
 	{
 		s->mx = (int)(s->rx / TILE_SIZE);
 		s->my = (int)(s->ry / TILE_SIZE);
-		if (s->mx >= 0 && s->my >= 0 && s->mx < (int)ft_strlen(d->file->map[s->my]) && s->my < (int)ft_tablen(d->file->map) && d->file->map[s->my][s->mx] == '1')
+		if (s->mx >= 0 && s->mx < d->file->wmap && s->my >= 0
+			 && s->my < d->file->hmap &&  s->mx < (int)ft_strlen(d->file->map[s->my]) && s->my < (int)ft_tablen(d->file->map) && d->file->map[s->my][s->mx] == '1')
 		{
 			s->vx = s->rx;
 			s->vy = s->ry;
