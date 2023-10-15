@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 14:04:57 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 15:36:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ static int	check_file(int fd, t_file *file)
 				continue ;
 			fill_struct_map(&listmap, line);
 		}
-		else if (fill_param(line, file, &flg))
+		else if (param(line, file, &flg))
 			return (ft_putstr_fd("Error Parameters\n", 2), free(line),1);
 	}
 }

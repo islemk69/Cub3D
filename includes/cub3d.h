@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 13:36:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:10:26 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,12 @@ typedef struct s_data
 	t_texture	*skytex;
 }				t_data;
 
+/////////////////UTILS////////////////////////
+int		is_empty(char *line);
+int    check_char(char *str, int *p, t_file *file);
+void	replace_space(char *line);
+int only_wall(char *str);
+
 //////////////////LIST////////////////////////
 t_tmpmap	*lstlast(t_tmpmap *lst);
 t_tmpmap	*create_cell(char *line);
@@ -157,7 +163,7 @@ void		lstclear(t_tmpmap **lst);
 
 ////////////////////PARSING////////////////////////
 int		parsing(char *file, t_data *data);
-int		fill_param(char *line, t_file *file, int *flg);
+int		param(char *line, t_file *file, int *flg);
 int		complete_param(t_file *file);
 void    fill_struct_map(t_tmpmap **map, char *line);
 void	fill_map_tab(t_tmpmap **list, t_file *file);

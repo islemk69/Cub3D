@@ -6,18 +6,42 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:44:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 13:55:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:20:57 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	is_empty(char *line);
 int			complete_param(t_file *file);
 static int	get_colors(char *color, int mod, t_file *file);
-static int	check_color(char **color_split, char *color);
+static int	check_color(char **color_split, char *color, int i, int nb);
 
-int fill_param(char *line, t_file *file, int *flg)
+int	fill_param(t_file *file, char **l_split)
+{
+	if (!ft_strncmp(l_split[0], "WE\0", 3) && !file->path_to_w)
+		file->path_to_w = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
+	else if (!ft_strncmp(l_split[0], "EA\0", 3) && !file->path_to_e)
+		file->path_to_e = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
+	else if (!ft_strncmp(l_split[0], "SO\0", 3) && !file->path_to_s)
+		file->path_to_s = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
+	else if (!ft_strncmp(l_split[0], "NO\0", 3) && !file->path_to_n)
+		file->path_to_n = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
+	else if (!ft_strncmp(l_split[0], "C\0", 2) && !file->color_s_tmp)
+	{
+		if (l_split[1] && get_colors(l_split[1], 1, file))
+			return (1);
+	}
+	else if (!ft_strncmp(l_split[0], "F\0", 2) && !file->color_f_tmp)
+	{
+		if (l_split[1] && get_colors(l_split[1], 0, file))
+			return (1);
+	}
+	else
+		return (1);
+	return (0);
+}
+
+int	param(char *line, t_file *file, int *flg)
 {
 	char	**line_split;
 
@@ -26,25 +50,7 @@ int fill_param(char *line, t_file *file, int *flg)
 		return (ft_free_tab(line_split), 0);
 	if (line_split[1])
 	{
-		if (!ft_strncmp(line_split[0], "WE\0", 3) && !file->path_to_w)
-			file->path_to_w = ft_strndup(line_split[1], ft_strlen(line_split[1]) - 1);
-		else if (!ft_strncmp(line_split[0], "EA\0", 3) && !file->path_to_e)
-			file->path_to_e = ft_strndup(line_split[1], ft_strlen(line_split[1]) - 1);
-		else if (!ft_strncmp(line_split[0], "SO\0", 3) && !file->path_to_s)
-			file->path_to_s = ft_strndup(line_split[1], ft_strlen(line_split[1]) - 1);
-		else if (!ft_strncmp(line_split[0], "NO\0", 3) && !file->path_to_n)
-			file->path_to_n = ft_strndup(line_split[1], ft_strlen(line_split[1]) - 1);
-		else if (!ft_strncmp(line_split[0], "C\0", 2) && !file->color_s_tmp)
-		{
-			if (line_split[1] && get_colors(line_split[1], 1, file))
-				return (ft_free_tab(line_split), 1);
-		}
-		else if (!ft_strncmp(line_split[0], "F\0", 2) && !file->color_f_tmp)
-		{
-			if (line_split[1] && get_colors(line_split[1], 0, file))
-				return (ft_free_tab(line_split), 1);
-		}
-		else
+		if (fill_param(file, line_split))
 			return (ft_free_tab(line_split), 1);
 	}
 	else
@@ -52,15 +58,6 @@ int fill_param(char *line, t_file *file, int *flg)
 	if (!complete_param(file))
 		*flg = 1;
 	return (ft_free_tab(line_split), 0);
-}
-
-//check si la ligne est vide et ignore celle ci
-
-static int	is_empty(char *line)
-{
-	if (*line == '\n')
-		return (1);
-	return (0);
 }
 
 int	complete_param(t_file *file)
@@ -78,7 +75,7 @@ static int	get_colors(char *color, int mod, t_file *file)
 
 	i = -1;
 	color_split = ft_split2(color);
-	if (check_color(color_split, color))
+	if (check_color(color_split, color, 0, 0))
 		return (printf("get_colors\n"), 1);
 	while (color_split[++i])
 	{
@@ -97,13 +94,8 @@ static int	get_colors(char *color, int mod, t_file *file)
 	return (0);
 }
 
-static int	check_color(char **color_split, char *color)
+static int	check_color(char **color_split, char *color, int i, int nb)
 {
-	int	i;
-	int	nb;
-
-	i = 0;
-	nb = 0;
 	if (color[0] == ',' || color[ft_strlen(color) - 2] == ',')
 		return (1);
 	while (color[i])
