@@ -6,24 +6,36 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/13 14:08:26 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:04:57 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
 static int	check_file(int fd, t_file *file);
-static int	open_file(char *file, t_data *data);
+static int	open_file(char *file, t_data *data, int flg);
 static int	check_extention(char *path_file, char *extention);
 static void set_sky_and_floor_color(t_data *data);
 
+int	check_path(t_data *data)
+{
+	if (open_file(data->file->path_to_e, data, 0) 
+		|| open_file(data->file->path_to_w, data, 0)
+		|| open_file(data->file->path_to_s, data, 0) 
+		|| open_file(data->file->path_to_n, data, 0))
+		return (1);
+	return (0);
+}
+
 int	parsing(char *file, t_data *data)
 {	
-	if (check_extention(file, "ebuc.") || open_file(file, data))
+	if (check_extention(file, "ebuc.") || open_file(file, data, 1))
 		return (1);
 	if (parse_map(data->file))
 		return (ft_putstr_fd("Error Map\n", 2), 1);
     set_sky_and_floor_color(data);
+	if (check_path(data))
+		return (ft_putstr_fd("Error path\n", 2), 1);
 	return (0);
 }
 
@@ -68,7 +80,7 @@ static int	check_extention(char *path_file, char *extention)
 
 //Check si le fichier existe, si les droit sont dispo et ouvre le fichier
 
-static int	open_file(char *file, t_data *data)
+static int	open_file(char *file, t_data *data, int flg)
 {
 	int	fd;
 
@@ -82,8 +94,11 @@ static int	open_file(char *file, t_data *data)
 	fd = open(file, O_RDONLY);
 	if (fd < 1)
 		return (ft_putstr_fd("Error Failed to Open File\n", 2), 1);
-	if (check_file(fd, data->file))
-		return (1);
+	if (flg)
+	{
+		if (check_file(fd, data->file))
+			return (1);
+	}
 	return (0);
 }
 
