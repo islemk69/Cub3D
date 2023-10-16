@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:04:31 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 17:10:50 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:05:36 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	open_file(char *file, t_data *data, int flg)
 		return (ft_putstr_fd("Error Failed to Open File\n", 2), 1);
 	if (flg)
 	{
-		if (check_file(fd, data->file) || check_map(data->file->map))
+		if (check_file(fd, data->file))
 			return (1);
 	}
 	return (0);
@@ -55,13 +55,12 @@ int	check_map(char **map)
 		return (1);
 	while (map[i] && map[i][0] == '\n')
 		i++;
+	while (map[i] && map[i][0] == 'x')
+		i++;
 	while (map[i] && map[i][0] == '1')
 		i++;
 	if (map[i - 1][ft_strlen(map[i - 1]) - 1] == '\n')
-	{
-		printf("Error Map\n");
-		return (1);
-	}
+		return (ft_putstr_fd("Error Pemission File\n", 2), 1);
 	return (0);
 }
 
@@ -81,14 +80,14 @@ int	check_file(int fd, t_file *file)
 		line = get_next_line(fd);
 		if (!line)
 		{
-			if (complete_param(file))
+			if (complete_param(file) || fill_map_tab(&listmap, file))
 				return (ft_putstr_fd("Error Parameters\n", 2), 1);
-			fill_map_tab(&listmap, file);
 			return (free(line), lstclear(&listmap), 0);
 		}
 		if (flg)
-			fill_struct_map(&listmap, line);
-		else if (param(line, file, &flg))
+			if (fill_struct_map(&listmap, line))
+				return (free(line), 1);
+		if (!flg && param(line, file, &flg))
 			return (ft_putstr_fd("Error Parameters\n", 2), free(line), 1);
 	}
 }

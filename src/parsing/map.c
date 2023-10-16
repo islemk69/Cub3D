@@ -6,21 +6,24 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 16:20:21 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:48:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	fill_struct_map(t_tmpmap **map, char *line)
+int	fill_struct_map(t_tmpmap **map, char *line)
 {
 	t_tmpmap	*cell;
 
 	cell = create_cell(line);
+	if (!cell)
+		return (1);
 	ft_lstad_back(map, cell);
+	return (0);
 }
 
-void	fill_map_tab(t_tmpmap **list, t_file *file)
+int	fill_map_tab(t_tmpmap **list, t_file *file)
 {
 	int			i;
 	t_tmpmap	*head;
@@ -33,15 +36,20 @@ void	fill_map_tab(t_tmpmap **list, t_file *file)
 		i++;
 	}
 	file->map = malloc(sizeof(char **) * (i + 1));
+	if (!file->map)
+		return(free(file->map), 1);
 	i = 0;
 	head = *list;
 	while (head)
 	{
 		file->map[i] = ft_strdup(head->line);
+		if (!file->map[i])
+			return (ft_free_tab(file->map), 1);
 		i++;
 		head = head->next;
 	}
 	file->map[i] = 0;
+	return (0);
 }
 
 int	get_border(char **str, int index)

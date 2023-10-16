@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:50:18 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 17:36:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:27:37 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_tmpmap	*create_cell(char *line)
 
 	cell = malloc(sizeof(t_tmpmap));
 	if (!cell)
-		return (cell);
+		return (NULL);
 	cell->line = ft_strdup(line);
 	cell->next = NULL;
 	return (cell);

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:41:21 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 16:23:21 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:06:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	main(int argc, char **argv)
 		return (1);
 	if (parsing(argv[1], &data))
 		return (ft_free_all(&data, 1), 1);
-	init_struct(&data, 1);
-	init_game(data.winmlx, &data);
+	if (init_struct(&data, 1))
+		return (ft_free_all(&data, 1), 1);
+	if (init_game(data.winmlx, &data))
+		return (ft_free_all(&data, 1), 1);
 	return (0);
 }

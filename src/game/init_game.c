@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 16:16:47 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:09:44 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static int	random_next_frame(t_data *data)
 {
 	data->winmlx->img = mlx_new_image(data->winmlx->mlx, 1920, 1080);
+	if (!data->winmlx->img)
+		return (ft_free_all(data, 1), exit(0), 1);
 	data->winmlx->addr = mlx_get_data_addr(data->winmlx->img, \
 		&data->winmlx->bits_per_pixel, &data->winmlx->line_length, \
 		&data->winmlx->endian);
@@ -45,6 +47,8 @@ int	load_texture(t_data *d, t_file *file)
 		file->path_to_w, &d->wtex->width, &d->wtex->height);
 	d->wtex->addr = mlx_get_data_addr(d->wtex->img, \
 		&d->wtex->bits_per_pixel, &d->wtex->line_length, &d->wtex->endian);
+	if (!d->wtex->img || !d->ntex->img || !d->stex->img || !d->etex->img)
+		return (1);
 	return (0);
 }
 
@@ -57,8 +61,11 @@ int	close_window(t_data *data)
 int	init_game(t_winmlx *winmlx, t_data *data)
 {
 	winmlx->mlx = mlx_init();
+	if (!winmlx->mlx)
+		return (1);
 	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
-	load_texture(data, data->file);
+	if (!winmlx->mlx_win || load_texture(data, data->file))
+		return (1);
 	mlx_hook(data->winmlx->mlx_win, 17, 0, close_window, data);
 	mlx_hook(data->winmlx->mlx_win, 2, 1L << 0, key_press_hook, data);
 	mlx_hook(data->winmlx->mlx_win, 3, (1L << 1), key_release_hook, data);
@@ -66,3 +73,4 @@ int	init_game(t_winmlx *winmlx, t_data *data)
 	mlx_loop(winmlx->mlx);
 	return (0);
 }
+

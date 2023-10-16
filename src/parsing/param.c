@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:44:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 17:49:14 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:52:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	param(char *line, t_file *file, int *flg)
 	char	**line_split;
 
 	line_split = ft_split(line, ' ');
+	if (!line_split)
+		return (ft_free_tab(line_split), 1);
 	if (is_empty(line_split[0]) && !line_split[1])
 		return (ft_free_tab(line_split), 0);
 	if (line_split[1])
@@ -75,6 +77,8 @@ static int	get_colors(char *color, int mod, t_file *file)
 
 	i = -1;
 	color_split = ft_split2(color);
+	if (!color_split)
+		return (ft_free_tab(color_split), 1);
 	if (check_color(color_split, color, 0, 0))
 		return (ft_free_tab(color_split), 1);
 	while (color_split[++i])

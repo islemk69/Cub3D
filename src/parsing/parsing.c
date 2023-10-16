@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 17:16:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:01:53 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	parsing(char *file, t_data *data)
 {
 	if (check_extention(file, "buc.") || open_file(file, data, 1))
 		return (1);
-	if (parse_map(data->file))
+	if (parse_map(data->file) || check_map(data->file->map))
 		return (ft_putstr_fd("Error Map\n", 2), 1);
 	set_sky_and_floor_color(data);
 	if (check_path(data))
@@ -53,6 +53,8 @@ static int	check_extention(char *path_file, char *extention)
 	char	*file;
 
 	tab = ft_split(path_file, '/');
+	if (!tab)
+		return (ft_free_tab(tab), 1);
 	file = tab[ft_strlen_dtab(tab) - 1];
 	while (*file)
 		file++;
