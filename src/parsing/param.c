@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:44:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 19:54:18 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:00:25 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ int	check_color(char **color_split, char *color, int i, int nb)
 	{
 		if (color[i] == ',' && color[i + 1] && color[i + 1] == ',')
 			return (1);
+		else if ((color[i] == ',' && color[i + 1] != ',' && color[i + 1])
+			|| color[i] == '\n')
+			i++;
 		else if (!ft_isdigit(color[i]))
 			return (1);
 		i++;
