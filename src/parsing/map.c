@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 17:48:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:48:15 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	fill_map_tab(t_tmpmap **list, t_file *file)
 	}
 	file->map = malloc(sizeof(char **) * (i + 1));
 	if (!file->map)
-		return(free(file->map), 1);
+		return (free(file->map), 1);
 	i = 0;
 	head = *list;
 	while (head)

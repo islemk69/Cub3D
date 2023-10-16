@@ -6,40 +6,13 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:44:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 18:52:38 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:47:27 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
 int			complete_param(t_file *file);
-static int	get_colors(char *color, int mod, t_file *file);
-static int	check_color(char **color_split, char *color, int i, int nb);
-
-int	fill_param(t_file *file, char **l_split)
-{
-	if (!ft_strncmp(l_split[0], "WE\0", 3) && !file->path_to_w)
-		file->path_to_w = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
-	else if (!ft_strncmp(l_split[0], "EA\0", 3) && !file->path_to_e)
-		file->path_to_e = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
-	else if (!ft_strncmp(l_split[0], "SO\0", 3) && !file->path_to_s)
-		file->path_to_s = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
-	else if (!ft_strncmp(l_split[0], "NO\0", 3) && !file->path_to_n)
-		file->path_to_n = ft_strndup(l_split[1], ft_strlen(l_split[1]) - 1);
-	else if (!ft_strncmp(l_split[0], "C\0", 2) && !file->color_s_tmp)
-	{
-		if (l_split[1] && get_colors(l_split[1], 1, file))
-			return (1);
-	}
-	else if (!ft_strncmp(l_split[0], "F\0", 2) && !file->color_f_tmp)
-	{
-		if (l_split[1] && get_colors(l_split[1], 0, file))
-			return (1);
-	}
-	else
-		return (1);
-	return (0);
-}
 
 int	param(char *line, t_file *file, int *flg)
 {
@@ -70,7 +43,7 @@ int	complete_param(t_file *file)
 	return (0);
 }
 
-static int	get_colors(char *color, int mod, t_file *file)
+int	get_colors(char *color, int mod, t_file *file)
 {
 	char	**color_split;
 	int		i;
@@ -98,7 +71,7 @@ static int	get_colors(char *color, int mod, t_file *file)
 	return (0);
 }
 
-static int	check_color(char **color_split, char *color, int i, int nb)
+int	check_color(char **color_split, char *color, int i, int nb)
 {
 	if (color[0] == ',' || color[ft_strlen(color) - 2] == ',')
 		return (1);

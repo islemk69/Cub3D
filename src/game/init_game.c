@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 18:09:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:42:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,3 @@ int	init_game(t_winmlx *winmlx, t_data *data)
 	mlx_loop(winmlx->mlx);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 17:47:24 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:47:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,9 @@ int			open_file(char *file, t_data *data, int flg);
 int			check_path(t_data *data);
 int			check_map(char **map);
 int			check_file(int fd, t_file *file);
+int			fill_param(t_file *file, char **l_split);
+int			check_color(char **color_split, char *color, int i, int nb);
+int			get_colors(char *color, int mod, t_file *file);
 //////////////////INIT STUCT//////////////////////
 int			init_struct(t_data *data, int flg);
 void		my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color);
