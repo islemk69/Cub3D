@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 16:55:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 17:12:24 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:15:06 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,53 @@ void	free_file(t_file *file)
 		free(file->path_to_e);
 	if (file->path_to_w)
 		free(file->path_to_w);
-
 }
 
 void	free_struct(t_data *data)
 {
-	if(data->file)
+	if (data->file)
 		free(data->file);
-	if(data->winmlx)
+	if (data->winmlx)
 	{
-		free(data->winmlx->mlx);
 		free(data->winmlx);
 	}
-	if(data->player)
+	if (data->player)
 		free(data->player);
-	if(data->scene)
+	if (data->scene)
 		free(data->scene);
-	if(data->ntex)
+	if (data->ntex)
 		free(data->ntex);
-	if(data->stex)
+	if (data->stex)
 		free(data->stex);
-	if(data->wtex)
+	if (data->wtex)
 		free(data->wtex);
-	if(data->etex)
+	if (data->etex)
 		free(data->etex);
 }
 
-void	ft_free_all(t_data *data)
+void	free_mlx(t_data *data, int flg)
 {
+	if (data->ntex->img)
+		mlx_destroy_image(data->winmlx->mlx, data->ntex->img);
+	if (data->stex->img)
+		mlx_destroy_image(data->winmlx->mlx, data->stex->img);
+	if (data->wtex->img)
+		mlx_destroy_image(data->winmlx->mlx, data->wtex->img);
+	if (data->etex->img)
+		mlx_destroy_image(data->winmlx->mlx, data->etex->img);
+	if (data->winmlx->img && flg)
+		mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
+	if (data->winmlx->mlx_win)
+		mlx_destroy_window(data->winmlx->mlx, data->winmlx->mlx_win);
+	if (data->winmlx->mlx)
+		mlx_destroy_display(data->winmlx->mlx);
+	if (data->winmlx->mlx)
+		free(data->winmlx->mlx);
+}
+
+void	ft_free_all(t_data *data, int flg)
+{
+	free_mlx(data, flg);
 	free_file(data->file);
 	free_struct(data);
 }

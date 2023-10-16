@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:29:27 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 14:44:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:31:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	looking_horizontal(t_scene *scene, t_data *d)
 void	check_horizontal_line(t_scene *s, t_data *d)
 {
 	s->dof = 0;
-	s->disH = 100000000;
+	s->dis_h = 100000000;
 	s->hx = d->player->px;
 	s->hy = d->player->py;
 	looking_horizontal(s, d);
@@ -57,7 +57,7 @@ void	check_horizontal_line(t_scene *s, t_data *d)
 		{
 			s->hx = s->rx;
 			s->hy = s->ry;
-			s->disH = dist(d->player->px, d->player->py, s->hx, s->hy);
+			s->dis_h = dist(d->player->px, d->player->py, s->hx, s->hy);
 			s->dof = d->file->greather;
 		}
 		else

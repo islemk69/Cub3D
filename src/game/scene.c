@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:29:25 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 15:02:43 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:59:53 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	draw_texture(t_texture *texture, t_data *data, int r)
 	float	c;
 
 	i = -1;
-	while (++i < data->scene->lineOff)
+	while (++i < data->scene->line_off)
 	{
 		my_mlx_pixel_put(data->winmlx, r, i, data->file->color_sky_hex);
 	}
 	i = -1;
-	while (++i < data->scene->lineH)
+	while (++i < data->scene->line_h)
 	{
 		c = get_pixel_color(texture, (int)data->scene->tx \
 			, (int)(data->scene->ty));
-		my_mlx_pixel_put(data->winmlx, r, i + data->scene->lineOff, c);
+		my_mlx_pixel_put(data->winmlx, r, i + data->scene->line_off, c);
 		data->scene->ty += data->scene->ty_step;
 	}
-	i = data->scene->lineOff + data->scene->lineH - 1;
+	i = data->scene->line_off + data->scene->line_h - 1;
 	while (++i < 1080)
 	{
 		my_mlx_pixel_put(data->winmlx, r, i, data->file->color_floor_hex);
@@ -74,16 +74,16 @@ void	draw_scene(t_data *data, t_scene *scene, int r, float ra)
 		scene->ca += 2 * PI;
 	if (scene->ca > 2 * PI)
 		scene->ca -= 2 * PI;
-	scene->disT = scene->disT * cos(scene->ca);
-	scene->lineH = (46 * winHeight) / scene->disT;
-	scene->ty_step = 32.0 / (float)scene->lineH;
+	scene->dist = scene->dist * cos(scene->ca);
+	scene->line_h = (46 * WINHEIGHT) / scene->dist;
+	scene->ty_step = 32.0 / (float)scene->line_h;
 	scene->ty_off = 0;
-	if (scene->lineH > winHeight)
+	if (scene->line_h > WINHEIGHT)
 	{
-		scene->ty_off = (scene->lineH - winHeight) / 2.0;
-		scene->lineH = winHeight;
+		scene->ty_off = (scene->line_h - WINHEIGHT) / 2.0;
+		scene->line_h = WINHEIGHT;
 	}
-	scene->lineOff = midHeight - (scene->lineH / 2);
+	scene->line_off = WINHEIGHT / 2 - (scene->line_h / 2);
 	scene->ty = scene->ty_off * scene->ty_step;
 	scene->tx = 0;
 	draw_textured_column(data, r, ra);

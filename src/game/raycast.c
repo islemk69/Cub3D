@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:32:58 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 14:57:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:32:36 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ float	dist(float ax, float ay, float bx, float by)
 static void	choose_line(t_scene *scene)
 {
 	scene->h_redded = 1;
-	if (scene->disV < scene->disH)
+	if (scene->dis_v < scene->dis_h)
 	{
 		scene->rx = scene->vx;
 		scene->ry = scene->vy;
-		scene->disT = scene->disV;
+		scene->dist = scene->dis_v;
 		scene->h_redded = 0;
 	}
 	else
 	{
 		scene->rx = scene->hx;
 		scene->ry = scene->hy;
-		scene->disT = scene->disH;
+		scene->dist = scene->dis_h;
 	}
 }
 

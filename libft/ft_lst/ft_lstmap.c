@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blakehal <blakehal@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 07:24:06 by blakehal          #+#    #+#             */
-/*   Updated: 2022/11/14 10:57:29 by blakehal         ###   ########lyon.fr   */
+/*   Updated: 2023/10/16 17:15:05 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {

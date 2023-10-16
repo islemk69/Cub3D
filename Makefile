@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+         #
+#    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/10/15 18:08:38 by blakehal         ###   ########.fr        #
+#    Updated: 2023/10/16 17:07:23 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC			=	main.c \
 				parsing/parsing.c \
 				parsing/param.c \
 				parsing/map.c \
-				parsing/check_file.c \
+				parsing/check_files.c \
 				utils/parsing_utils.c \
 				utils/list.c \
 				utils/init_struct.c \

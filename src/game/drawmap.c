@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:46:36 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 14:45:40 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:11:41 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void	initialize_start_coords(t_data *data, int *startx, int *starty);
 void	draw_square_based_on_map(t_data *data, char map_val, int x, int y);
 
-#include <string.h>  // pour utiliser strlen
-
-void drawmap(t_data *data, int i, int j, int x)
+void	drawmap(t_data *data, int i, int j, int x)
 {
-	int startx;
-	int starty;
-	int y;
+	int	startx;
+	int	starty;
+	int	y;
 
 	initialize_start_coords(data, &startx, &starty);
 	y = 0;
@@ -30,7 +28,8 @@ void drawmap(t_data *data, int i, int j, int x)
 	{
 		x = 0;
 		j = startx - 1;
-		while (++j < startx + 10 && j < data->file->wmap && j < (int)strlen(data->file->map[i]))
+		while (++j < startx + 10 && j < data->file->wmap
+			&& j < (int)ft_strlen(data->file->map[i]))
 		{
 			draw_square_based_on_map(data, data->file->map[i][j], x, y);
 			x += TILE_SIZE;
@@ -39,7 +38,6 @@ void drawmap(t_data *data, int i, int j, int x)
 	}
 	reset_player_position_on_map(data);
 }
-
 
 void	initialize_start_coords(t_data *data, int *startx, int *starty)
 {

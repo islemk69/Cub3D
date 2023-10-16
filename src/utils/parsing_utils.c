@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:42:39 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 18:11:58 by blakehal         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:15:34 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_char(char *str, int *p, t_file *file)
 	return (0);
 }
 
-void replace_space(char *line)
+void	replace_space(char *line)
 {
 	while (*line)
 	{

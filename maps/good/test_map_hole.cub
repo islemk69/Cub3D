@@ -1,0 +1,17 @@
+WE src/xpm/west.xpm
+SO src/xpm/south.xpm
+EA src/xpm/east.xpm
+NO src/xpm/north.xpm
+
+
+C 135,206,235
+F 119,136,153
+
+111111111111
+1         11
+1       0001
+1000000 0011
+10S000000001
+111111111111
+11         1
+111111111111

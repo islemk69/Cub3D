@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:33:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/15 14:43:36 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:16:47 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int	load_texture(t_data *d, t_file *file)
 	return (0);
 }
 
-int	close_window(void)
+int	close_window(t_data *data)
 {
+	ft_free_all(data, 0);
 	exit(0);
 }
 
@@ -58,10 +59,10 @@ int	init_game(t_winmlx *winmlx, t_data *data)
 	winmlx->mlx = mlx_init();
 	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
 	load_texture(data, data->file);
+	mlx_hook(data->winmlx->mlx_win, 17, 0, close_window, data);
 	mlx_hook(data->winmlx->mlx_win, 2, 1L << 0, key_press_hook, data);
 	mlx_hook(data->winmlx->mlx_win, 3, (1L << 1), key_release_hook, data);
 	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
-	mlx_hook(data->winmlx->mlx_win, 17, 0, close_window, data);
 	mlx_loop(winmlx->mlx);
 	return (0);
 }

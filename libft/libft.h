@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blakehal <blakehal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:03:16 by blakehal          #+#    #+#             */
-/*   Updated: 2023/03/07 14:40:17 by blakehal         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:13:30 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int		ft_atoi(const char *s);
 int		ft_wordcount(char const *s, char c);
 char	*ft_strndup(char *s, size_t n);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
-void    ft_free_tab(char **tab);
-int    ft_strlen_dtab(char **tab);
-char **ft_split2(char const *s);
+void	ft_free_tab(char **tab);
+int		ft_strlen_dtab(char **tab);
+char	**ft_split2(char const *s);
 
 //GNL
 char	*get_next_line(int fd);
