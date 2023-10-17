@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 18:03:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:33:21 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,20 @@ int	check_wall(t_file *file, int i, int j)
 		j = 0;
 		while (file->map[i][j])
 		{
-			if (file->map[i][j] == '0' && (
-					(i < 0 && !file->map[i - 1][j] && file->map[i - 1][j] == '\n') ||
-					(!file->map[i + 1] && !file->map[i + 1][j] && file->map[i + 1][j] == '\n') ||
-					(j < 0 && !file->map[i][j - 1] && file->map[i][j - 1] == '\n') ||
-					(!file->map[i][j + 1] && file->map[i][j + 1] == '\n')))
+			if (file->map[i][j] == '0' && (!file->map[i - 1][j]
+				|| file->map[i - 1][j] == '\n'
+				|| !file->map[i + 1][j] || file->map[i + 1][j] == '\n'
+				|| !file->map[i][j + 1] || file->map[i][j + 1] == '\n'
+				|| !file->map[i][j - 1] || file->map[i][j - 1] == '\n'))
 				return (1);
-			else if (file->map[i][j] == 'x' && (
-					(i < 0 && !file->map[i - 1][j] && file->map[i - 1][j] == '0') ||
-					(!file->map[i + 1] && !file->map[i + 1][j] && file->map[i + 1][j] == '0') ||
-					(j < 0 && !file->map[i][j - 1] && file->map[i][j - 1] == '0') ||
-					(!file->map[i][j + 1] && file->map[i][j + 1] == '0')))
-				return (1);
+			else if (file->map[i][j] == 'x')
+			{
+				if ((i > 0 && file->map[i - 1][j] == '0')
+					|| (file->map[i + 1] && file->map[i + 1][j] == '0')
+					|| (j > 0 && file->map[i][j - 1] == '0')
+					|| (file->map[i][j + 1] && file->map[i][j + 1] == '0'))
+					return (1);
+			}
 			j++;
 		}
 		i++;
