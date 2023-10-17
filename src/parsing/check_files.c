@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:04:31 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 14:27:34 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:00:36 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	check_file(int fd, t_file *file)
 		if (!line)
 		{
 			if (complete_param(file) || fill_map_tab(&listmap, file))
-				return (ft_putstr_fd("Error Parameters\n", 2), lstclear(&listmap), 1);
+				return (ft_putstr_fd("Error Parameters\n", 2), \
+					lstclear(&listmap), 1);
 			return (free(line), lstclear(&listmap), 0);
 		}
 		if (flg)

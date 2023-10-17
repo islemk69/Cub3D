@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 16:55:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 17:50:19 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:02:06 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_file(t_file *file)
 {
-	if(file)
+	if (file)
 	{
 		if (file->map)
 			ft_free_tab(file->map);

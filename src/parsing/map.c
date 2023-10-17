@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 14:27:28 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:03:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	check_wall(t_file *file, int i, int j)
 					(!file->map[i][j + 1] && file->map[i][j + 1] == '\n')))
 				return (1);
 			else if (file->map[i][j] == 'x' && (
-				   (i < 0 && !file->map[i - 1][j] && file->map[i - 1][j] == '0') ||
-				   (!file->map[i + 1] && !file->map[i + 1][j] && file->map[i + 1][j] == '0') ||
-				   (j < 0 && !file->map[i][j - 1] && file->map[i][j - 1] == '0') ||
-				   (!file->map[i][j + 1] && file->map[i][j + 1] == '0')))
+					(i < 0 && !file->map[i - 1][j] && file->map[i - 1][j] == '0') ||
+					(!file->map[i + 1] && !file->map[i + 1][j] && file->map[i + 1][j] == '0') ||
+					(j < 0 && !file->map[i][j - 1] && file->map[i][j - 1] == '0') ||
+					(!file->map[i][j + 1] && file->map[i][j + 1] == '0')))
 				return (1);
 			j++;
 		}
@@ -90,7 +90,6 @@ int	check_wall(t_file *file, int i, int j)
 	}
 	return (0);
 }
-
 
 int	parse_map(t_file *file)
 {
