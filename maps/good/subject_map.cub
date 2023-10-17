@@ -1,7 +1,7 @@
-WE src/xpm/west.xpm
-SO src/xpm/south.xpm
-EA src/xpm/east.xpm
-NO src/xpm/north.xpm
+WE src/xpm/BRICKS.xpm
+SO src/xpm/techwall.xpm
+EA src/xpm/STARWALLB.xpm
+NO src/xpm/METALTILE.xpm
 
 
 C 135,206,235

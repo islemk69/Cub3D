@@ -1,11 +1,25 @@
-WE src/xpm/west.xpm
-SO src/xpm/south.xpm
-EA src/xpm/east.xpm
+WE                                                        src/xpm/west.xpm
+
+
+
+
+EA       src/xpm/east.xpm
+
+
+
+
+
+C                  135,206,235
 NO src/xpm/north.xpm
 
 
-C 135,206,235
-F 119,136,153
+
+SO           src/xpm/south.xpm
+
+
+
+
+F                                           119,136,153
 
 11111
 10001

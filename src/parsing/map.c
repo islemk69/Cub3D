@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 19:48:15 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:27:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,3 @@ int	parse_map(t_file *file)
 		return (1);
 	return (0);
 }
-
-// if (i == 0 || ft_strlen(file->map[i - 1]) < ft_strlen(file->map[i]))
-// 	return (1);

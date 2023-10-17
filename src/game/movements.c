@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:28:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 16:12:03 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:33:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	move(t_data *data)
 	float	newy;
 
 	move_speed = 0.4;
-	rotate_speed = 0.02;
+	rotate_speed = 0.04;
 	collision_margin = 6.0;
 	newx = data->player->px;
 	newy = data->player->py;
