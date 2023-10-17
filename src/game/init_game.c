@@ -33,22 +33,22 @@ int	load_texture(t_data *d, t_file *file)
 {
 	d->ntex->img = mlx_xpm_file_to_image(d->winmlx->mlx, \
 		file->path_to_n, &d->ntex->width, &d->ntex->height);
-	d->ntex->addr = mlx_get_data_addr(d->ntex->img, \
-		&d->ntex->bits_per_pixel, &d->ntex->line_length, &d->ntex->endian);
 	d->stex->img = mlx_xpm_file_to_image(d->winmlx->mlx, \
 		file->path_to_s, &d->stex->width, &d->stex->height);
-	d->stex->addr = mlx_get_data_addr(d->stex->img, \
-		&d->stex->bits_per_pixel, &d->stex->line_length, &d->stex->endian);
 	d->etex->img = mlx_xpm_file_to_image(d->winmlx->mlx, \
 		file->path_to_e, &d->etex->width, &d->etex->height);
-	d->etex->addr = mlx_get_data_addr(d->etex->img, \
-		&d->etex->bits_per_pixel, &d->etex->line_length, &d->etex->endian);
 	d->wtex->img = mlx_xpm_file_to_image(d->winmlx->mlx, \
 		file->path_to_w, &d->wtex->width, &d->wtex->height);
-	d->wtex->addr = mlx_get_data_addr(d->wtex->img, \
-		&d->wtex->bits_per_pixel, &d->wtex->line_length, &d->wtex->endian);
 	if (!d->wtex->img || !d->ntex->img || !d->stex->img || !d->etex->img)
 		return (1);
+	d->ntex->addr = mlx_get_data_addr(d->ntex->img, \
+		&d->ntex->bits_per_pixel, &d->ntex->line_length, &d->ntex->endian);
+	d->stex->addr = mlx_get_data_addr(d->stex->img, \
+		&d->stex->bits_per_pixel, &d->stex->line_length, &d->stex->endian);
+	d->etex->addr = mlx_get_data_addr(d->etex->img, \
+		&d->etex->bits_per_pixel, &d->etex->line_length, &d->etex->endian);
+	d->wtex->addr = mlx_get_data_addr(d->wtex->img, \
+		&d->wtex->bits_per_pixel, &d->wtex->line_length, &d->wtex->endian);
 	return (0);
 }
 

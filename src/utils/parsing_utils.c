@@ -63,3 +63,13 @@ int	only_wall(char *str)
 	}
 	return (0);
 }
+
+size_t	ft_tablen(char **arr)
+{
+	size_t	len;
+
+	len = 0;
+	while (arr[len])
+		len++;
+	return (len);
+}

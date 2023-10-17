@@ -164,6 +164,7 @@ int			check_file(int fd, t_file *file);
 int			fill_param(t_file *file, char **l_split);
 int			check_color(char **color_split, char *color, int i, int nb);
 int			get_colors(char *color, int mod, t_file *file);
+size_t		ft_tablen(char **arr);
 //////////////////INIT STUCT//////////////////////
 int			init_struct(t_data *data, int flg);
 void		my_mlx_pixel_put(t_winmlx *draw, int x, int y, int color);

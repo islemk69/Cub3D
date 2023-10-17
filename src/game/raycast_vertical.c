@@ -41,16 +41,6 @@ void	looking_vertical(t_scene *scene, t_data *data)
 	}
 }
 
-size_t	ft_tablen(char **arr)
-{
-	size_t	len;
-
-	len = 0;
-	while (arr[len])
-		len++;
-	return (len);
-}
-
 void	init_vertical(t_scene *s, t_data *d)
 {
 	s->dof = 0;
