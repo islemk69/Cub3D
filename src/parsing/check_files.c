@@ -81,7 +81,7 @@ int	check_file(int fd, t_file *file)
 		if (!line)
 		{
 			if (complete_param(file) || fill_map_tab(&listmap, file))
-				return (ft_putstr_fd("Error Parameters\n", 2), 1);
+				return (ft_putstr_fd("Error Parameters\n", 2), lstclear(&listmap), 1);
 			return (free(line), lstclear(&listmap), 0);
 		}
 		if (flg)

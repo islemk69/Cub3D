@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_putstr_fd("Error Number of Args\n", 2), 1);
 	if (init_struct(&data, 0))
-		return (1);
+		return (ft_free_all(&data, 0), 1);
 	if (parsing(argv[1], &data))
 		return (ft_free_all(&data, 1), 1);
 	if (init_struct(&data, 1))

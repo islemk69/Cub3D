@@ -48,24 +48,24 @@ int	init_struct(t_data *data, int flg)
 static int	alloc_struct(t_data *data)
 {
 	data->file = ft_calloc(1, sizeof(t_file));
-	ft_bzero(data->file, sizeof(t_file));
 	data->player = ft_calloc(1, sizeof(t_player));
-	ft_bzero(data->player, sizeof(t_player));
 	data->winmlx = ft_calloc(1, sizeof(t_winmlx));
-	ft_bzero(data->winmlx, sizeof(t_winmlx));
 	data->ntex = ft_calloc(1, sizeof(t_texture));
-	ft_bzero(data->ntex, sizeof(t_texture));
 	data->stex = ft_calloc(1, sizeof(t_texture));
-	ft_bzero(data->stex, sizeof(t_texture));
 	data->etex = ft_calloc(1, sizeof(t_texture));
-	ft_bzero(data->etex, sizeof(t_texture));
 	data->wtex = ft_calloc(1, sizeof(t_texture));
-	ft_bzero(data->wtex, sizeof(t_texture));
 	data->scene = ft_calloc(1, sizeof(t_scene));
-	ft_bzero(data->scene, sizeof(t_scene));
 	if (!data->file || !data->player | !data->winmlx || !data->ntex
 		|| !data->stex || !data->wtex || !data->etex || !data->scene)
 		return (1);
+	ft_bzero(data->file, sizeof(t_file));
+	ft_bzero(data->player, sizeof(t_player));
+	ft_bzero(data->winmlx, sizeof(t_winmlx));
+	ft_bzero(data->ntex, sizeof(t_texture));
+	ft_bzero(data->stex, sizeof(t_texture));
+	ft_bzero(data->etex, sizeof(t_texture));
+	ft_bzero(data->wtex, sizeof(t_texture));
+	ft_bzero(data->scene, sizeof(t_scene));
 	return (0);
 }
 

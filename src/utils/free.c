@@ -14,16 +14,19 @@
 
 void	free_file(t_file *file)
 {
-	if (file->map)
-		ft_free_tab(file->map);
-	if (file->path_to_n)
-		free(file->path_to_n);
-	if (file->path_to_s)
-		free(file->path_to_s);
-	if (file->path_to_e)
-		free(file->path_to_e);
-	if (file->path_to_w)
-		free(file->path_to_w);
+	if(file)
+	{
+		if (file->map)
+			ft_free_tab(file->map);
+		if (file->path_to_n)
+			free(file->path_to_n);
+		if (file->path_to_s)
+			free(file->path_to_s);
+		if (file->path_to_e)
+			free(file->path_to_e);
+		if (file->path_to_w)
+			free(file->path_to_w);
+	}
 }
 
 void	free_struct(t_data *data)
@@ -50,22 +53,26 @@ void	free_struct(t_data *data)
 
 void	free_mlx(t_data *data, int flg)
 {
-	if (data->ntex->img)
+
+	if (data->ntex && data->ntex->img)
 		mlx_destroy_image(data->winmlx->mlx, data->ntex->img);
-	if (data->stex->img)
+	if (data->stex && data->stex->img)
 		mlx_destroy_image(data->winmlx->mlx, data->stex->img);
-	if (data->wtex->img)
+	if (data->wtex && data->wtex->img)
 		mlx_destroy_image(data->winmlx->mlx, data->wtex->img);
-	if (data->etex->img)
+	if (data->etex && data->etex->img)
 		mlx_destroy_image(data->winmlx->mlx, data->etex->img);
 	if (data->winmlx->img && flg)
 		mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
-	if (data->winmlx->mlx_win)
-		mlx_destroy_window(data->winmlx->mlx, data->winmlx->mlx_win);
-	if (data->winmlx->mlx)
-		mlx_destroy_display(data->winmlx->mlx);
-	if (data->winmlx->mlx)
-		free(data->winmlx->mlx);
+	if (data->winmlx)
+	{
+		if (data->ntex && data->winmlx->mlx_win)
+			mlx_destroy_window(data->winmlx->mlx, data->winmlx->mlx_win);
+		if (data->ntex && data->winmlx->mlx)
+			mlx_destroy_display(data->winmlx->mlx);
+		if (data->winmlx->mlx)
+			free(data->winmlx->mlx);
+	}
 }
 
 void	ft_free_all(t_data *data, int flg)
