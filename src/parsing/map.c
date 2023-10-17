@@ -23,35 +23,6 @@ int	fill_struct_map(t_tmpmap **map, char *line)
 	return (0);
 }
 
-//int	fill_map_tab(t_tmpmap **list, t_file *file)
-//{
-//	int			i;
-//	t_tmpmap	*head;
-//
-//	head = *list;
-//	i = 0;
-//	while (head)
-//	{
-//		head = head->next;
-//		i++;
-//	}
-//	file->map = malloc(sizeof(char **) * (i + 1));
-//	if (!file->map)
-//		return (free(file->map), 1);
-//	i = 0;
-//	head = *list;
-//	while (head)
-//	{
-//		file->map[i] = ft_strdup(head->line);
-//		if (!file->map[i])
-//			return (ft_free_tab(file->map), 1);
-//		i++;
-//		head = head->next;
-//	}
-//	file->map[i] = 0;
-//	return (0);
-//}
-
 int	fill_map_tab(t_tmpmap **list, t_file *file)
 {
 	int			i;
@@ -73,7 +44,7 @@ int	fill_map_tab(t_tmpmap **list, t_file *file)
 	{
 		file->map[i] = ft_strdup(head->line);
 		if (!file->map[i])
-			return (ft_free_tab(file->map), 1);
+			return (1);
 		i++;
 		head = head->next;
 	}
@@ -93,34 +64,6 @@ int	get_border(char **str, int index)
 		index--;
 	return (index);
 }
-
-//int	check_wall(t_file *file, int i, int j)
-//{
-//	while (file->map[i])
-//	{
-//		j = 0;
-//		while (file->map[i][j])
-//		{
-//			if (file->map[i][j] == '0' && (!file->map[i - 1][j]
-//				|| file->map[i - 1][j] == '\n'
-//				|| !file->map[i + 1][j] || file->map[i + 1][j] == '\n'
-//				|| !file->map[i][j + 1] || file->map[i][j + 1] == '\n'
-//				|| !file->map[i][j - 1] || file->map[i][j - 1] == '\n'))
-//				return (1);
-//			else if (file->map[i][j] == 'x')
-//			{
-//				if ((i > 0 && file->map[i - 1][j] == '0')
-//					|| (file->map[i + 1] && file->map[i + 1][j] == '0')
-//					|| (j > 0 && file->map[i][j - 1] == '0')
-//					|| (file->map[i][j + 1] && file->map[i][j + 1] == '0'))
-//					return (1);
-//			}
-//			j++;
-//		}
-//		i++;
-//	}
-//	return (0);
-//}
 
 int	check_wall(t_file *file, int i, int j)
 {
