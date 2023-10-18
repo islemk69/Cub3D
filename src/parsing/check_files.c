@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:04:31 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 18:00:36 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:25:04 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	open_file(char *file, t_data *data, int flg)
 	if (access(file, F_OK) != -1)
 	{
 		if (access(file, R_OK) == -1)
-			return (ft_putstr_fd("Error Pemission File\n", 2), 1);
+			return (ft_putstr_fd("Error\nPemission File\n", 2), 1);
 	}
 	else
-		return (ft_putstr_fd("Error File not Found\n", 2), 1);
+		return (ft_putstr_fd("Error\nFile not Found\n", 2), 1);
 	fd = open(file, O_RDONLY);
 	if (fd < 1)
-		return (ft_putstr_fd("Error Failed to Open File\n", 2), 1);
+		return (ft_putstr_fd("Error\nFailed to Open File\n", 2), 1);
 	if (flg)
 	{
 		if (check_file(fd, data->file))
@@ -60,7 +60,7 @@ int	check_map(char **map)
 	while (map[i] && map[i][0] == '1')
 		i++;
 	if (map[i - 1][ft_strlen(map[i - 1]) - 1] == '\n')
-		return (ft_putstr_fd("Error Pemission File\n", 2), 1);
+		return (1);
 	return (0);
 }
 
@@ -81,7 +81,7 @@ int	check_file(int fd, t_file *file)
 		if (!line)
 		{
 			if (complete_param(file) || fill_map_tab(&listmap, file))
-				return (ft_putstr_fd("Error Parameters\n", 2), \
+				return (ft_putstr_fd("Error\nParameters Missing\n", 2), \
 					lstclear(&listmap), 1);
 			return (free(line), lstclear(&listmap), 0);
 		}
@@ -89,6 +89,6 @@ int	check_file(int fd, t_file *file)
 			if (fill_struct_map(&listmap, line))
 				return (free(line), 1);
 		if (!flg && param(line, file, &flg))
-			return (ft_putstr_fd("Error Parameters\n", 2), free(line), 1);
+			return (ft_putstr_fd("Error\nParameters\n", 2), free(line), 1);
 	}
 }

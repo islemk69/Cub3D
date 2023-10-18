@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:52:50 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 14:26:29 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:23:57 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	parsing(char *file, t_data *data)
 	if (check_extention(file, "buc.") || open_file(file, data, 1))
 		return (1);
 	if (parse_map(data->file) || check_map(data->file->map))
-		return (ft_putstr_fd("Error Map\n", 2), 1);
+		return (ft_putstr_fd("Error\nMap Wrong\n", 2), 1);
 	set_sky_and_floor_color(data);
 	if (check_path(data))
-		return (ft_putstr_fd("Error path\n", 2), 1);
+		return (ft_putstr_fd("Error\nWrong Path\n", 2), 1);
 	return (0);
 }
 
@@ -65,6 +65,7 @@ static int	check_extention(char *path_file, char *extention)
 		extention++;
 	}
 	if (*extention)
-		return (ft_putstr_fd("Error Extention\n", 2), ft_free_tab(tab), 1);
+		return (ft_putstr_fd("Error\nWrong extention\n", 2), \
+			ft_free_tab(tab), 1);
 	return (ft_free_tab(tab), 0);
 }

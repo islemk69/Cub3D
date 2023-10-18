@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:42:39 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 18:02:15 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 12:38:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_char(char *str, int *p, t_file *file)
 		if (str[i] != '0' && str[i] != '1' && str[i] != ' ' && \
 		str[i] != '\n' && str[i] != 'N' && str[i] != 'S' && \
 		str[i] != 'E' && str[i] != 'W')
-			return (printf("le char %c\n", str[i]), 1);
+			return (1);
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
 		{
 			file->orientation = str[i];
@@ -57,7 +57,7 @@ int	only_wall(char *str)
 		if (*str != '1')
 		{
 			if (*str != 'x')
-				return (printf("biip %c\n", *str), 1);
+				return (1);
 		}
 		str++;
 	}

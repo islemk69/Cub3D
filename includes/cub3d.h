@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 19:47:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:26:40 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void		lstclear(t_tmpmap **lst);
 ////////////////////PARSING////////////////////////
 int			parsing(char *file, t_data *data);
 int			param(char *line, t_file *file, int *flg);
+int			check_player(char **map);
 int			complete_param(t_file *file);
 int			fill_struct_map(t_tmpmap **map, char *line);
 int			fill_map_tab(t_tmpmap **list, t_file *file);

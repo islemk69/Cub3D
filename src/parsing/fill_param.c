@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 19:44:05 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/16 19:49:29 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:28:32 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,30 @@ static int	fill_color_param(t_file *file, char **l_split)
 	}
 	else
 		return (1);
+	return (0);
+}
+
+int	check_player(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (is_player(map[i][j]) && ((map[i][j + 1]
+				&& map[i][j + 1] == '\n')
+				|| !map[i][j - 1] || !map[i + 1][j]
+				|| !map[i - 1][j]))
+				return (1);
+			j++;
+		}
+		i++;
+	}
 	return (0);
 }
 

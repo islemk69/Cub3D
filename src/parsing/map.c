@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/17 18:33:21 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:26:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	parse_map(t_file *file)
 		return (1);
 	if (only_wall(file->map[0])
 		|| only_wall(file->map[ft_strlen_dtab(file->map) - 1])
-		|| check_wall(file, 0, 0))
+		|| check_wall(file, 0, 0) || check_player(file->map))
 		return (1);
 	return (0);
 }
