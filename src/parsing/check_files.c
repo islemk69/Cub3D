@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:04:31 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/18 13:25:04 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:27:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_map(char **map)
 		i++;
 	while (map[i] && map[i][0] == 'x')
 		i++;
-	while (map[i] && map[i][0] == '1')
+	while (map[i] && (map[i][0] == '1' || map[i][0] == 'x'))
 		i++;
 	if (map[i - 1][ft_strlen(map[i - 1]) - 1] == '\n')
 		return (1);
