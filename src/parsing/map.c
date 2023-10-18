@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:08:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/18 13:26:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:44:39 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,24 @@ int	get_border(char **str, int index)
 
 int	check_wall(t_file *file, int i, int j)
 {
-
 	while (file->map[i])
 	{
 		j = 0;
 		while (file->map[i][j])
-		{									/*(j > 0 && (!file->map[i][j - 1] || file->map[i][j - 1] == '\n'))*/
-			if (file->map[i][j] == '0' && ((i > 0 || (!file->map[i - 1][j] || file->map[i - 1][j] == '\n')) || (i > 0 && (!file->map[i + 1][j] || file->map[i + 1][j] == '\n')) || (j > 0 && (!file->map[i][j - 1] || file->map[i][j - 1] == '\n')) || (j > 0 && (!file->map[i][j + 1] || file->map[i][j + 1] == '\n'))))
+		{
+			if (file->map[i][j] == '0' && (file->map[i - 1][0] == '\n' || ft_strlen(file->map[i - 1]) < ft_strlen(file->map[i])
+				|| file->map[i - 1][j] == '\n'
+				|| !file->map[i + 1][j] || file->map[i + 1][j] == '\n'
+				|| !file->map[i][j + 1] || file->map[i][j + 1] == '\n'
+				|| (j > 0 && (!file->map[i][j - 1] || file->map[i][j - 1] == '\n'))))
 				return (1);
 			else if (file->map[i][j] == 'x')
 			{
-				if ((i > 0 || file->map[i - 1][j] == '0')
+				if (i == 0)
+					return (1);
+				if ((i > 0 && file->map[i - 1][j] == '0') || file->map[i - 1][0] == '\n' || ft_strlen(file->map[i - 1]) < ft_strlen(file->map[i])
 					|| (file->map[i + 1] && file->map[i + 1][j] == '0')
-					|| (j > 0 || file->map[i][j - 1] == '0')
+					|| (j > 0 && file->map[i][j - 1] == '0')
 					|| (file->map[i][j + 1] && file->map[i][j + 1] == '0'))
 					return (1);
 			}

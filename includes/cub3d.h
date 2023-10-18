@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:02:29 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/10/18 13:26:40 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:59:55 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef struct s_file
 	char			*color_s_tmp;
 	int				color_floor[3];
 	unsigned int	color_floor_hex;
+	size_t				rows;
+	size_t				columns;
 	int				color_sky[3];
 	unsigned int	color_sky_hex;
 	char			orientation;
