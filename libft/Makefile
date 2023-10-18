@@ -75,7 +75,7 @@ SRCS = 	ft_is/ft_isalpha.c			\
 		ft_itoa.c					\
 		ft_printf/ft_printf.c		\
 
-CC				=	gcc
+CC				=	cc
 RM				=	rm -rf
 CFLAGS			=	-Wall -Wextra -Werror
 NAME			=	libft.a

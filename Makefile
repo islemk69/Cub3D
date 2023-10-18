@@ -30,6 +30,7 @@ SRC			=	main.c \
 				utils/init_struct.c \
 				utils/drawsquare_utils.c \
 				utils/free.c \
+				utils/map_utils.c \
 				game/init_game.c \
 				game/movements.c \
 				game/drawmap.c \
@@ -61,7 +62,7 @@ $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(LIBFT_A) $(LIBFT_DIR)libft.h
 $(NAME): $(OBJ)
 		$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT_A) -o $@ -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm 
 
-${LIBFT_A}: FORCE
+$()LIBFT_A): FORCE
 	$(MAKE) -C ${LIBFT_DIR}
 
 FORCE:

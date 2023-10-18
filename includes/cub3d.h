@@ -143,6 +143,9 @@ void		drawsquare(t_data *data, int color, int x, int y);
 int			is_player(char p);
 int			only_wall(char *str);
 void		ft_free_all(t_data *data, int flg);
+int			get_border(char **str, int index);
+int			is_space(char *str);
+int			nb_of_space(char **str, int *i);
 //////////////////LIST////////////////////////
 t_tmpmap	*lstlast(t_tmpmap *lst);
 t_tmpmap	*create_cell(char *line);

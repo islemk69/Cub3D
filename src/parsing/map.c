@@ -52,55 +52,26 @@ int	fill_map_tab(t_tmpmap **list, t_file *file)
 	return (0);
 }
 
-int	get_border(char **str, int index)
+int	check_wall(t_file *file, int i, int j, int save)
 {
-	if (!index)
-	{
-		while (only_wall(str[index]))
-			index++;
-		return (index);
-	}
-	while (only_wall(str[index]))
-		index--;
-	return (index);
-}
-
-int is_space(char *str)
-{
-	while (*str)
-	{
-		if (*str == 'x')
-			str++;
-		else if (*str == '\n')
-			str++;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-int	check_wall(t_file *file, int i, int j)
-{
-	while (is_space(file->map[i]))
-		i++;
-	int save = i;
+	save = nb_of_space(file->map, &i);
 	while (file->map[i])
 	{
 		j = 0;
 		while (file->map[i][j])
 		{
-			if (file->map[i][j] == '0' && (i == save || !file->map[i - 1][j]
-				|| file->map[i - 1][j] == '\n'
-				|| !file->map[i + 1][j] || file->map[i + 1][j] == '\n' || file->map[i + 1][j] == 'x'
-				|| !file->map[i][j + 1] || file->map[i][j + 1] == '\n'
-				|| (j > 0 && (!file->map[i][j - 1] || file->map[i][j - 1] == '\n'))))
+			if (file->map[i][j] == '0' && (i == save || !file->map[i - 1][j] || \
+			file->map[i - 1][j] == '\n' || !file->map[i + 1][j] || \
+			file->map[i + 1][j] == '\n' || file->map[i + 1][j] == 'x' || \
+			!file->map[i][j + 1] || file->map[i][j + 1] == '\n' || \
+			(j > 0 && (!file->map[i][j - 1] || file->map[i][j - 1] == '\n'))))
 				return (1);
 			else if (file->map[i][j] == 'x')
 			{
-				if ((file->map[i + 1] && file->map[i + 1][j] == '0')
-					|| (j > 0 && file->map[i][j - 1] == '0')
-					|| (file->map[i][j + 1] && file->map[i][j + 1] == '0'))
-					return (printf("dasads\n"), 1);
+				if ((file->map[i + 1] && file->map[i + 1][j] == '0') || \
+				(j > 0 && file->map[i][j - 1] == '0') || \
+				(file->map[i][j + 1] && file->map[i][j + 1] == '0'))
+					return (1);
 			}
 			j++;
 		}
@@ -128,7 +99,7 @@ int	parse_map(t_file *file)
 		return (1);
 	if (only_wall(file->map[0])
 		|| only_wall(file->map[ft_strlen_dtab(file->map) - 1])
-		|| check_wall(file, 0, 0) || check_player(file->map))
+		|| check_wall(file, 0, 0, 0) || check_player(file->map))
 		return (1);
 	return (0);
 }
