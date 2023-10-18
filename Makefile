@@ -44,6 +44,8 @@ LIBFT_DIR	=	libft/
 LIBFT_A		=	$(LIBFT_DIR)libft.a
 LIBFT_INC	=	libft
 
+MLX_A		=	mlx_linux/libmlx.a
+
 OBJ_DIR		=	.objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
@@ -55,7 +57,7 @@ all:
 	make -C mlx_linux
 	make ${NAME}
 
-$(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(LIBFT_A) $(LIBFT_DIR)libft.h
+$(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(LIBFT_A) $(LIBFT_DIR)libft.h $(MLX_A)
 		mkdir -p $(@D)
 		$(CC) $(CC_FLAGS) -I$(INC_DIR) -I$(LIBFT_INC) -I/usr/include -Imlx_linux -c $< -o $@
 
