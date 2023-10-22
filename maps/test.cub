@@ -1,7 +1,7 @@
 WE src/xpm/xp-_1_.xpm
-SO src/xpm/test_jojo.xpm
-EA src/xpm/xp.xpm
-NO src/xpm/test_jojo.xpm
+SO src/xpm/xp.xpm
+EA src/xpm/xp-_1_.xpm
+NO src/xpm/xp.xpm
 F 255,255,255
 C 0,0,0
         1111111111111111111111111
