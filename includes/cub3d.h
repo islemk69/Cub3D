@@ -146,6 +146,9 @@ void		ft_free_all(t_data *data, int flg);
 int			get_border(char **str, int index);
 int			is_space(char *str);
 int			nb_of_space(char **str, int *i);
+int			get_pixel_color(t_texture *texture, int x, int y);
+float		get_texture_scale(t_texture *texture);
+void		define_which_texture(t_data *data, t_texture **texture, float ra);
 //////////////////LIST////////////////////////
 t_tmpmap	*lstlast(t_tmpmap *lst);
 t_tmpmap	*create_cell(char *line);

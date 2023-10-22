@@ -31,6 +31,7 @@ SRC			=	main.c \
 				utils/drawsquare_utils.c \
 				utils/free.c \
 				utils/map_utils.c \
+				utils/scene_utils.c \
 				game/init_game.c \
 				game/movements.c \
 				game/drawmap.c \

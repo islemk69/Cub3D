@@ -35,7 +35,7 @@ void	move(t_data *data)
 	float	newx;
 	float	newy;
 
-	move_speed = 1;
+	move_speed = 0.6;
 	rotate_speed = 0.04;
 	collision_margin = 6.0;
 	newx = data->player->px;
