@@ -12,20 +12,12 @@
 
 #include "../../includes/cub3d.h"
 
-void	check_key_and_set_new_angle(t_data *data, float rotateSpeed);
-void	check_collision(t_data *data, float newX, float newY, \
+static void	check_key_and_set_new_angle(t_data *data, float rotateSpeed);
+static void	check_collision(t_data *data, float newX, float newY, \
 float c_margin);
-void	check_key_and_set_new_position(t_data *data, float moveSpeed, \
+static void	check_key_and_set_new_position(t_data *data, float moveSpeed, \
 float *newX, float *newY);
-
-void	check_esc_key(t_data *data)
-{
-	if (data->player->key_states[65307])
-	{
-		ft_free_all(data, 1);
-		exit(0);
-	}
-}
+static void	check_esc_key(t_data *data);
 
 void	move(t_data *data)
 {
@@ -46,7 +38,7 @@ void	move(t_data *data)
 	check_esc_key(data);
 }
 
-void	check_key_and_set_new_angle(t_data *data, float rotateSpeed)
+static void	check_key_and_set_new_angle(t_data *data, float rotateSpeed)
 {
 	if (data->player->key_states[65363])
 	{
@@ -66,7 +58,7 @@ void	check_key_and_set_new_angle(t_data *data, float rotateSpeed)
 	}
 }
 
-void	check_collision(t_data *data, float newX, float newY, \
+static void	check_collision(t_data *data, float newX, float newY, \
 float c_margin)
 {
 	if (!is_collision(data, newX, data->player->py) && \
@@ -83,7 +75,7 @@ float c_margin)
 		data->player->py = newY;
 }
 
-void	check_key_and_set_new_position(t_data *data, float moveSpeed, \
+static void	check_key_and_set_new_position(t_data *data, float moveSpeed, \
 float *newX, float *newY)
 {
 	if (data->player->key_states[119])
@@ -105,5 +97,14 @@ float *newX, float *newY)
 	{
 		*newX += cos(data->player->pa + PI / 2) * moveSpeed * 3;
 		*newY += sin(data->player->pa + PI / 2) * moveSpeed * 3;
+	}
+}
+
+static void	check_esc_key(t_data *data)
+{
+	if (data->player->key_states[65307])
+	{
+		ft_free_all(data, 1);
+		exit(0);
 	}
 }

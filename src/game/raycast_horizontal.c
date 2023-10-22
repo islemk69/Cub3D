@@ -12,42 +12,8 @@
 
 #include "../../includes/cub3d.h"
 
-void	looking_horizontal(t_scene *scene, t_data *d)
-{
-	float	a_tan;
-
-	a_tan = -1 / tan(scene->ra);
-	if (scene->ra > PI)
-	{
-		scene->ry = (float)(((int)d->player->py / TILE_SIZE) * \
-		TILE_SIZE) - 0.0001;
-		scene->rx = (d->player->py - scene->ry) * a_tan + d->player->px;
-		scene->yo = -TILE_SIZE;
-		scene->xo = -scene->yo * a_tan;
-	}
-	else if (scene->ra < PI)
-	{
-		scene->ry = (float)(((int)d->player->py / TILE_SIZE) * \
-		TILE_SIZE) + TILE_SIZE;
-		scene->rx = (d->player->py - scene->ry) * a_tan + d->player->px;
-		scene->yo = TILE_SIZE;
-		scene->xo = -scene->yo * a_tan;
-	}
-	else
-	{
-		scene->rx = d->player->px;
-		scene->ry = d->player->py;
-		scene->dof = d->file->greather;
-	}
-}
-
-void	init_horizontal(t_scene *s, t_data *d)
-{
-	s->dof = 0;
-	s->dis_h = 100000000;
-	s->hx = d->player->px;
-	s->hy = d->player->py;
-}
+static void	looking_horizontal(t_scene *scene, t_data *d);
+static void	init_horizontal(t_scene *s, t_data *d);
 
 void	check_horizontal_line(t_scene *s, t_data *d)
 {
@@ -74,5 +40,42 @@ void	check_horizontal_line(t_scene *s, t_data *d)
 			s->ry += s->yo;
 			s->dof += 1;
 		}
+	}
+}
+
+static void	init_horizontal(t_scene *s, t_data *d)
+{
+	s->dof = 0;
+	s->dis_h = 100000000;
+	s->hx = d->player->px;
+	s->hy = d->player->py;
+}
+
+static void	looking_horizontal(t_scene *scene, t_data *d)
+{
+	float	a_tan;
+
+	a_tan = -1 / tan(scene->ra);
+	if (scene->ra > PI)
+	{
+		scene->ry = (float)(((int)d->player->py / TILE_SIZE) * \
+		TILE_SIZE) - 0.0001;
+		scene->rx = (d->player->py - scene->ry) * a_tan + d->player->px;
+		scene->yo = -TILE_SIZE;
+		scene->xo = -scene->yo * a_tan;
+	}
+	else if (scene->ra < PI)
+	{
+		scene->ry = (float)(((int)d->player->py / TILE_SIZE) * \
+		TILE_SIZE) + TILE_SIZE;
+		scene->rx = (d->player->py - scene->ry) * a_tan + d->player->px;
+		scene->yo = TILE_SIZE;
+		scene->xo = -scene->yo * a_tan;
+	}
+	else
+	{
+		scene->rx = d->player->px;
+		scene->ry = d->player->py;
+		scene->dof = d->file->greather;
 	}
 }

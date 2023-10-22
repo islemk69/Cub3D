@@ -12,8 +12,8 @@
 
 #include "../../includes/cub3d.h"
 
-void	initialize_start_coords(t_data *data, int *startx, int *starty);
-void	draw_square_based_on_map(t_data *data, char map_val, int x, int y);
+static void	initialize_start_coords(t_data *data, int *startx, int *starty);
+static void	draw_square_based_on_map(t_data *data, char map_val, int x, int y);
 
 void	drawmap(t_data *data, int i, int j, int x)
 {
@@ -39,7 +39,7 @@ void	drawmap(t_data *data, int i, int j, int x)
 	reset_player_position_on_map(data);
 }
 
-void	initialize_start_coords(t_data *data, int *startx, int *starty)
+static void	initialize_start_coords(t_data *data, int *startx, int *starty)
 {
 	*startx = (int)data->player->px / TILE_SIZE - 10 / 2;
 	*starty = (int)data->player->py / TILE_SIZE - 10 / 2;
@@ -49,7 +49,7 @@ void	initialize_start_coords(t_data *data, int *startx, int *starty)
 		*starty = 0;
 }
 
-void	draw_square_based_on_map(t_data *data, char map_val, int x, int y)
+static void	draw_square_based_on_map(t_data *data, char map_val, int x, int y)
 {
 	if (map_val == '1')
 		drawsquare(data, H_BLACK, x, y);

@@ -12,10 +12,10 @@
 
 #include "../../includes/cub3d.h"
 
-void	put_texture(t_texture *texture, t_data *data, int r);
-void	draw_s_and_n_texture(t_data *data, float ra, t_texture **texture);
-void	draw_e_and_w_texture(t_data *data, float ra, t_texture **texture);
-void	draw_textured_column(t_data *data, int r, float ra);
+static void	put_texture(t_texture *texture, t_data *data, int r);
+static void	draw_s_and_n_texture(t_data *data, float ra, t_texture **texture);
+static void	draw_e_and_w_texture(t_data *data, float ra, t_texture **texture);
+static void	draw_textured_column(t_data *data, int r, float ra);
 
 void	draw_scene(t_data *data, t_scene *scene, int r, float ra)
 {
@@ -45,7 +45,7 @@ void	draw_scene(t_data *data, t_scene *scene, int r, float ra)
 	draw_textured_column(data, r, ra);
 }
 
-void	draw_textured_column(t_data *data, int r, float ra)
+static void	draw_textured_column(t_data *data, int r, float ra)
 {
 	t_texture	*texture;
 
@@ -54,7 +54,7 @@ void	draw_textured_column(t_data *data, int r, float ra)
 	put_texture(texture, data, r);
 }
 
-void	draw_s_and_n_texture(t_data *data, float ra, t_texture **texture)
+static void	draw_s_and_n_texture(t_data *data, float ra, t_texture **texture)
 {
 	if (data->scene->h_redded)
 	{
@@ -74,7 +74,7 @@ void	draw_s_and_n_texture(t_data *data, float ra, t_texture **texture)
 	}
 }
 
-void	draw_e_and_w_texture(t_data *data, float ra, t_texture **texture)
+static void	draw_e_and_w_texture(t_data *data, float ra, t_texture **texture)
 {
 	if (!data->scene->h_redded)
 	{
@@ -92,7 +92,7 @@ void	draw_e_and_w_texture(t_data *data, float ra, t_texture **texture)
 	}
 }
 
-void	put_texture(t_texture *texture, t_data *data, int r)
+static void	put_texture(t_texture *texture, t_data *data, int r)
 {
 	int		i;
 	float	c;

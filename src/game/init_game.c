@@ -12,24 +12,27 @@
 
 #include "../../includes/cub3d.h"
 
-static int	random_next_frame(t_data *data)
+static int	random_next_frame(t_data *data);
+static int	load_texture(t_data *d, t_file *file);
+static int	close_window(t_data *data);
+
+int	init_game(t_winmlx *winmlx, t_data *data)
 {
-	data->winmlx->img = mlx_new_image(data->winmlx->mlx, 1920, 1080);
-	if (!data->winmlx->img)
-		return (ft_free_all(data, 1), exit(0), 1);
-	data->winmlx->addr = mlx_get_data_addr(data->winmlx->img, \
-		&data->winmlx->bits_per_pixel, &data->winmlx->line_length, \
-		&data->winmlx->endian);
-	move(data);
-	ray_cast(data, data->scene);
-	drawmap(data, 0, 0, 0);
-	mlx_put_image_to_window(data->winmlx->mlx, data->winmlx->mlx_win, \
-		data->winmlx->img, 0, 0);
-	mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
+	winmlx->mlx = mlx_init();
+	if (!winmlx->mlx)
+		return (1);
+	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
+	if (!winmlx->mlx_win || load_texture(data, data->file))
+		return (1);
+	mlx_hook(data->winmlx->mlx_win, 17, 0, close_window, data);
+	mlx_hook(data->winmlx->mlx_win, 2, 1L << 0, key_press_hook, data);
+	mlx_hook(data->winmlx->mlx_win, 3, (1L << 1), key_release_hook, data);
+	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
+	mlx_loop(winmlx->mlx);
 	return (0);
 }
 
-int	load_texture(t_data *d, t_file *file)
+static int	load_texture(t_data *d, t_file *file)
 {
 	d->ntex->img = mlx_xpm_file_to_image(d->winmlx->mlx, \
 		file->path_to_n, &d->ntex->width, &d->ntex->height);
@@ -52,24 +55,25 @@ int	load_texture(t_data *d, t_file *file)
 	return (0);
 }
 
-int	close_window(t_data *data)
+static int	random_next_frame(t_data *data)
+{
+	data->winmlx->img = mlx_new_image(data->winmlx->mlx, 1920, 1080);
+	if (!data->winmlx->img)
+		return (ft_free_all(data, 1), exit(0), 1);
+	data->winmlx->addr = mlx_get_data_addr(data->winmlx->img, \
+		&data->winmlx->bits_per_pixel, &data->winmlx->line_length, \
+		&data->winmlx->endian);
+	move(data);
+	ray_cast(data, data->scene);
+	drawmap(data, 0, 0, 0);
+	mlx_put_image_to_window(data->winmlx->mlx, data->winmlx->mlx_win, \
+		data->winmlx->img, 0, 0);
+	mlx_destroy_image(data->winmlx->mlx, data->winmlx->img);
+	return (0);
+}
+
+static int	close_window(t_data *data)
 {
 	ft_free_all(data, 0);
 	exit(0);
-}
-
-int	init_game(t_winmlx *winmlx, t_data *data)
-{
-	winmlx->mlx = mlx_init();
-	if (!winmlx->mlx)
-		return (1);
-	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
-	if (!winmlx->mlx_win || load_texture(data, data->file))
-		return (1);
-	mlx_hook(data->winmlx->mlx_win, 17, 0, close_window, data);
-	mlx_hook(data->winmlx->mlx_win, 2, 1L << 0, key_press_hook, data);
-	mlx_hook(data->winmlx->mlx_win, 3, (1L << 1), key_release_hook, data);
-	mlx_loop_hook(winmlx->mlx, random_next_frame, data);
-	mlx_loop(winmlx->mlx);
-	return (0);
 }

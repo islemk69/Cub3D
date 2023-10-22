@@ -12,42 +12,8 @@
 
 #include "../../includes/cub3d.h"
 
-void	looking_vertical(t_scene *scene, t_data *data)
-{
-	float	n_tan;
-
-	n_tan = -tan(scene->ra);
-	if (scene->ra > PI / 2 && scene->ra < 3 * PI / 2)
-	{
-		scene->rx = (float)(((int)data->player->px / TILE_SIZE) * \
-		TILE_SIZE) - 0.0001;
-		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
-		scene->xo = -TILE_SIZE;
-		scene->yo = -scene->xo * n_tan;
-	}
-	else if (scene->ra < PI / 2 || scene->ra > 3 * PI / 2)
-	{
-		scene->rx = (float)(((int)data->player->px / TILE_SIZE) * \
-		TILE_SIZE) + TILE_SIZE;
-		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
-		scene->xo = TILE_SIZE;
-		scene->yo = -scene->xo * n_tan;
-	}
-	else
-	{
-		scene->rx = data->player->px;
-		scene->ry = data->player->py;
-		scene->dof = data->file->greather;
-	}
-}
-
-void	init_vertical(t_scene *s, t_data *d)
-{
-	s->dof = 0;
-	s->vx = d->player->px;
-	s->vy = d->player->py;
-	s->dis_v = 1000000;
-}
+static void	looking_vertical(t_scene *scene, t_data *data);
+static void	init_vertical(t_scene *s, t_data *d);
 
 void	check_vertical_line(t_scene *s, t_data *d)
 {
@@ -74,5 +40,42 @@ void	check_vertical_line(t_scene *s, t_data *d)
 			s->ry += s->yo;
 			s->dof += 1;
 		}
+	}
+}
+
+static void	init_vertical(t_scene *s, t_data *d)
+{
+	s->dof = 0;
+	s->vx = d->player->px;
+	s->vy = d->player->py;
+	s->dis_v = 1000000;
+}
+
+static void	looking_vertical(t_scene *scene, t_data *data)
+{
+	float	n_tan;
+
+	n_tan = -tan(scene->ra);
+	if (scene->ra > PI / 2 && scene->ra < 3 * PI / 2)
+	{
+		scene->rx = (float)(((int)data->player->px / TILE_SIZE) * \
+		TILE_SIZE) - 0.0001;
+		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
+		scene->xo = -TILE_SIZE;
+		scene->yo = -scene->xo * n_tan;
+	}
+	else if (scene->ra < PI / 2 || scene->ra > 3 * PI / 2)
+	{
+		scene->rx = (float)(((int)data->player->px / TILE_SIZE) * \
+		TILE_SIZE) + TILE_SIZE;
+		scene->ry = (data->player->px - scene->rx) * n_tan + data->player->py;
+		scene->xo = TILE_SIZE;
+		scene->yo = -scene->xo * n_tan;
+	}
+	else
+	{
+		scene->rx = data->player->px;
+		scene->ry = data->player->py;
+		scene->dof = data->file->greather;
 	}
 }

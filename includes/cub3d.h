@@ -31,7 +31,7 @@
 # define PI 3.14159265
 # define TILE_SIZE 32
 # define FOV_ANGLE 60.0
-# define DR 0.0174533
+# define DwR 0.0174533
 # define WINHEIGHT 1080
 
 typedef struct s_texture
@@ -186,8 +186,6 @@ void		draw_scene(t_data *data, t_scene *scene, int r, float ra);
 ///////////////////RAYCASTING////////////////////
 int			init_game(t_winmlx *winmlx, t_data *data);
 void		ray_cast(t_data *data, t_scene *scene);
-void		looking_vertical(t_scene *scene, t_data *data);
-void		looking_horizontal(t_scene *scene, t_data *data);
 void		check_vertical_line(t_scene *s, t_data *d);
 void		check_horizontal_line(t_scene *s, t_data *d);
 float		dist(float ax, float ay, float bx, float by);
