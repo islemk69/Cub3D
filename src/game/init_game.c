@@ -21,7 +21,7 @@ int	init_game(t_winmlx *winmlx, t_data *data)
 	winmlx->mlx = mlx_init();
 	if (!winmlx->mlx)
 		return (1);
-	winmlx->mlx_win = mlx_new_window(winmlx->mlx, 1920, 1080, "Cub3d");
+	winmlx->mlx_win = mlx_new_window(winmlx->mlx, WINWIDTH, WINHEIGHT, "Cub3d");
 	if (!winmlx->mlx_win || load_texture(data, data->file))
 		return (1);
 	mlx_hook(data->winmlx->mlx_win, 17, 0, close_window, data);

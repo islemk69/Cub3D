@@ -62,14 +62,14 @@ static void	draw_s_and_n_texture(t_data *data, float ra, t_texture **texture)
 		{
 			*texture = data->stex;
 			data->scene->tx = (int)data->scene->rx % TILE_SIZE;
-			data->scene->tx = 31 - data->scene->tx;
+			data->scene->tx = (TILE_SIZE - 1) - data->scene->tx;
 		}
 		else
 		{
 			*texture = data->ntex;
 			data->scene->tx = TILE_SIZE - \
 			((int)data->scene->rx % TILE_SIZE) - 1;
-			data->scene->tx = 31 - data->scene->tx;
+			data->scene->tx = (TILE_SIZE - 1) - data->scene->tx;
 		}
 	}
 }
@@ -111,6 +111,6 @@ static void	put_texture(t_texture *texture, t_data *data, int r)
 		data->scene->ty += data->scene->ty_step;
 	}
 	i--;
-	while (++i < 1080)
+	while (++i < WINHEIGHT)
 		my_mlx_pixel_put(data->winmlx, r, i, data->file->color_floor_hex);
 }

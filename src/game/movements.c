@@ -40,7 +40,7 @@ void	move(t_data *data)
 
 static void	check_key_and_set_new_angle(t_data *data, float rotateSpeed)
 {
-	if (data->player->key_states[65363])
+	if (data->player->key_states[RIGHT])
 	{
 		data->player->pa += rotateSpeed;
 		if (data->player->pa > 2 * PI)
@@ -48,7 +48,7 @@ static void	check_key_and_set_new_angle(t_data *data, float rotateSpeed)
 		data->player->pdx = cos(data->player->pa) * 5;
 		data->player->pdy = sin(data->player->pa) * 5;
 	}
-	if (data->player->key_states[65361])
+	if (data->player->key_states[LEFT])
 	{
 		data->player->pa -= rotateSpeed;
 		if (data->player->pa < 0)
@@ -78,22 +78,22 @@ float c_margin)
 static void	check_key_and_set_new_position(t_data *data, float moveSpeed, \
 float *newX, float *newY)
 {
-	if (data->player->key_states[119])
+	if (data->player->key_states[W])
 	{
 		*newX += data->player->pdx * moveSpeed;
 		*newY += data->player->pdy * moveSpeed;
 	}
-	if (data->player->key_states[115])
+	if (data->player->key_states[S])
 	{
 		*newX -= data->player->pdx * moveSpeed;
 		*newY -= data->player->pdy * moveSpeed;
 	}
-	if (data->player->key_states[97])
+	if (data->player->key_states[A])
 	{
 		*newX -= cos(data->player->pa + PI / 2) * moveSpeed * 3;
 		*newY -= sin(data->player->pa + PI / 2) * moveSpeed * 3;
 	}
-	if (data->player->key_states[100])
+	if (data->player->key_states[D])
 	{
 		*newX += cos(data->player->pa + PI / 2) * moveSpeed * 3;
 		*newY += sin(data->player->pa + PI / 2) * moveSpeed * 3;
@@ -102,7 +102,7 @@ float *newX, float *newY)
 
 static void	check_esc_key(t_data *data)
 {
-	if (data->player->key_states[65307])
+	if (data->player->key_states[ESC])
 	{
 		ft_free_all(data, 1);
 		exit(0);

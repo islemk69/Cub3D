@@ -31,8 +31,16 @@
 # define PI 3.14159265
 # define TILE_SIZE 32
 # define FOV_ANGLE 60.0
-# define DwR 0.0174533
+# define DR 0.0174533
 # define WINHEIGHT 1080
+# define WINWIDTH 1920
+# define ESC 65307
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define LEFT 65361
+# define RIGHT 65363
 
 typedef struct s_texture
 {

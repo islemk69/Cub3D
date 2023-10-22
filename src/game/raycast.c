@@ -20,13 +20,13 @@ void	ray_cast(t_data *data, t_scene *scene)
 
 	scene->ra = data->player->pa - DR * TILE_SIZE;
 	r = -1;
-	while (++r < 1920)
+	while (++r < WINWIDTH)
 	{
 		check_horizontal_line(scene, data);
 		check_vertical_line(scene, data);
 		choose_line(scene);
 		draw_scene(data, scene, r, scene->ra);
-		scene->ra += DR * (FOV_ANGLE / 1920.0);
+		scene->ra += DR * (FOV_ANGLE / WINWIDTH);
 		if (scene->ra < 0)
 			scene->ra += 2 * PI;
 		if (scene->ra > 2 * PI)
